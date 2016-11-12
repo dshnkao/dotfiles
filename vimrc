@@ -16,7 +16,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'derekwyatt/vim-scala'
 "Plug 'ensime/ensime-vim'
 Plug 'fatih/vim-go'
-Plug 'scrooloose/syntastic'
+"Plug 'scrooloose/syntastic'
 call plug#end()
 
 filetype plugin indent on

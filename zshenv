@@ -16,4 +16,5 @@ ZSH_HIGHLIGHT_STYLES[alias]='none'
 ZSH_HIGHLIGHT_STYLES[command]='none'
 ZSH_HIGHLIGHT_STYLES[builtin]='none'
 ZSH_HIGHLIGHT_STYLES[function]='none'
-source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+

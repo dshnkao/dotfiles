@@ -301,6 +301,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (push '("melpa-stable" . "stable.melpa.org/packages/") configuration-layer--elpa-archives)
   (push '(ensime . "melpa-stable") package-pinned-packages)
+  (setq-default dotspacemacs-themes '(sanityinc-tomorrow-night))
   )
 
 (defun dotspacemacs/user-config ()
@@ -310,11 +311,13 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (server-start)
   (setq neo-theme (if window-system 'icons 'arrow))
   (add-to-list 'exec-path "~/sbt-extras")
   (mac-auto-operator-composition-mode)
   (setq ensime-startup-snapshot-notification nil)
   (setq-default indent-tabs-mode nil)
+  (global-vi-tilde-fringe-mode -1)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

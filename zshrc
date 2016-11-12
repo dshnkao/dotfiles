@@ -27,6 +27,8 @@ alias ls="gls -X --color"
 alias t="tmux"
 alias gsb="git status -sb"
 alias gst="git status -sb"
+alias emacs='open -a /Applications/Emacs.app $1'
+alias ec='open -a /Applications/Emacs.app $1'
 
 # The following lines were added by compinstall
 

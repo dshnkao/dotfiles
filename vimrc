@@ -1,4 +1,4 @@
-call plug#begin('~/.vim/bundle')
+call plug#begin('~/.vim/plugged')
 if !has("nvim")
     Plug 'Shougo/neocomplete.vim'
 endif

@@ -46,11 +46,11 @@ values."
      markdown
      org
      osx
+     syntax-checking
      (shell :variables
+            shell-default-shell 'ansi-term
             shell-default-height 30
             shell-default-position 'bottom)
-     spell-checking
-     syntax-checking
      (version-control :variables
                       version-control-global-margin t)
      haskell

@@ -5,10 +5,6 @@ export PATH="/usr/local/bin:$PATH"
 #export PATH="$PATH:/usr/local/go/bin"
 #export GOBIN="$GOPATH/bin"
 
-# cammy
-source ~/.cammyenv
-
-
 ## zsh-syntax-highlighting
 typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[globbing]='none'

@@ -91,3 +91,8 @@ test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_in
 # password-store tab complete
 autoload -Uz _pass
 
+source ~/.cammyenv
+
+# cammy
+source ~/.cammyenv
+

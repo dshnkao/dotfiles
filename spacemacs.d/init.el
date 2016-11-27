@@ -314,13 +314,17 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (server-start)
+  ;; (server-start)
   (setq neo-theme (if window-system 'icons 'arrow))
   (add-to-list 'exec-path "~/sbt-extras")
   (mac-auto-operator-composition-mode)
   (setq ensime-startup-snapshot-notification nil)
   (setq-default indent-tabs-mode nil)
   (global-vi-tilde-fringe-mode -1)
+  (spacemacs/set-leader-keys-for-major-mode 'haskell-mode
+    "cx" 'inferior-haskell-load-and-run)
+  (setq-default flycheck-disabled-checkers '(haskell-stack-ghc))
+  (setq-default flycheck-pos-tip-timeout '60)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

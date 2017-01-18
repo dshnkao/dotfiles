@@ -1,10 +1,7 @@
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/scripts:$PATH"
+export PATH="$HOME/Sync/scripts:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.cabal/bin:$PATH"
-#export GOPATH="$HOME/Drive/go"
-#export PATH="$PATH:/usr/local/go/bin"
-#export GOBIN="$GOPATH/bin"
 
 ## zsh-syntax-highlighting
 typeset -A ZSH_HIGHLIGHT_STYLES

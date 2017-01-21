@@ -325,7 +325,19 @@ you should place your code here."
     "cx" 'inferior-haskell-load-and-run)
   (setq-default flycheck-disabled-checkers '(haskell-stack-ghc))
   (setq-default flycheck-pos-tip-timeout '60)
+
+  (set-border-color "#00f5f5")
+  (setq-default powerline-default-separator (if window-system 'arrow 'utf-8))
+  (setq-default spaceline-highlight-face-func 'spaceline-highlight-face-default)
+  (set-face-attribute 'mode-line nil
+                      :foreground "Grey"
+                      :background "#005f5f"
+                      :box nil)
+  ;;(set-face-background 'vertical-border (face-background ))
+  (set-face-foreground 'vertical-border "#005f5f")
   )
+
+
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.

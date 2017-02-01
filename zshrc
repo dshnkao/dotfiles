@@ -28,8 +28,9 @@ alias t="tmux"
 alias gsb="git status -sb"
 alias gst="git status -sb"
 alias egui="open -a /Applications/Emacs.app $1"
+alias ecg="/usr/local/Cellar/emacs-mac/emacs-25.1-z-mac-6.1/bin/emacsclient -nc"
 alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
-alias ec="emacsclient -nw"
+alias ect="emacsclient -nw"
 
 # The following lines were added by compinstall
 

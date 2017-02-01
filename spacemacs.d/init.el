@@ -340,6 +340,7 @@ you should place your code here."
                       :box nil)
   ;;(set-face-background 'vertical-border (face-background ))
   (set-face-foreground 'vertical-border "#005f5f")
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
   )
 
 

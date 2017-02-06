@@ -66,6 +66,7 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+     evil-terminal-cursor-changer
      all-the-icons
      )
    ;; A list of packages that cannot be updated.
@@ -333,7 +334,8 @@ you should place your code here."
     (setq linum-relative-format "%3s "))
 
   (set-border-color "#00f5f5")
-  (setq-default powerline-default-separator (if window-system 'arrow 'utf-8))
+  ;;(setq-default powerline-default-separator (if window-system 'arrow 'utf-8))
+  (setq-default powerline-default-separator 'utf-8)
   (setq-default spaceline-highlight-face-func 'spaceline-highlight-face-default)
   (set-face-attribute 'mode-line nil
                       :foreground "Grey"
@@ -343,6 +345,7 @@ you should place your code here."
   (set-face-foreground 'vertical-border "#005f5f")
   (custom-set-variables '(markdown-command "/usr/local/bin/pandoc"))
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  (evil-terminal-cursor-changer-activate)
   )
 
 
@@ -354,9 +357,10 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data vimrc-mode dactyl-mode jinja2-mode ansible-doc ansible yaml-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode sql-indent web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode pcache helm dash mwim helm-company helm-c-yasnippet company-statistics auto-yasnippet ac-ispell auto-complete hydra hide-comnt projectile pkg-info epl flx powerline spinner parent-mode smartparens iedit anzu highlight f font-lock+ all-the-icons xterm-color shell-pop org-projectile org-present org-pomodoro alert log4e gntp org-download noflet multi-term mmm-mode markdown-toc markdown-mode htmlize gnuplot git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck eshell-z eshell-prompt-extras esh-help ensime company yasnippet sbt-mode scala-mode diff-hl auto-dictionary smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+    (web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data evil-terminal-cursor-changer vimrc-mode dactyl-mode jinja2-mode ansible-doc ansible yaml-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode sql-indent web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode pcache helm dash mwim helm-company helm-c-yasnippet company-statistics auto-yasnippet ac-ispell auto-complete hydra hide-comnt projectile pkg-info epl flx powerline spinner parent-mode smartparens iedit anzu highlight f font-lock+ all-the-icons xterm-color shell-pop org-projectile org-present org-pomodoro alert log4e gntp org-download noflet multi-term mmm-mode markdown-toc markdown-mode htmlize gnuplot git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck eshell-z eshell-prompt-extras esh-help ensime company yasnippet sbt-mode scala-mode diff-hl auto-dictionary smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

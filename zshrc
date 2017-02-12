@@ -1,7 +1,7 @@
 FPATH="$HOME/.zsh/zfunc:$FPATH"
 
 export TERM=xterm-256color
-export EDITOR=/usr/local/bin/nvim
+export EDITOR=/usr/bin/nvim
 
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
@@ -22,16 +22,18 @@ PS1="%{$fg[green]%}%m %{$reset_color%}%2c%{$reset_color%}> % "
 alias ..="cd .."
 alias ...="cd ../.."
 alias grep="grep --color=auto"
+alias v=vi
+alias vi=vim
 alias vim="nvim"
-alias ls="gls -X --color"
+alias ls="ls -X --color"
 alias t="tmux"
 alias gsb="git status -sb"
 alias gst="git status -sb"
-alias emacs="/usr/local/Cellar/emacs-mac/emacs-25.1-z-mac-6.1/bin/emacs"
-alias egui="open -a /Applications/Emacs.app -n $1"
-alias edm="/usr/local/Cellar/emacs-mac/emacs-25.1-z-mac-6.1/bin/emacs --daemon"
-alias ecg="/usr/local/Cellar/emacs-mac/emacs-25.1-z-mac-6.1/bin/emacsclient -nc"
-alias ect="/usr/local/Cellar/emacs-mac/emacs-25.1-z-mac-6.1/bin/emacsclient -nw"
+alias xclip="xclip -select c"
+alias ect="emacsclient -nw"
+alias ecg="emacsclient -nc"
+#alias emacs='open -a /Applications/Emacs.app $1'
+#alias ec='open -a /Applications/Emacs.app $1'
 
 # The following lines were added by compinstall
 
@@ -86,7 +88,7 @@ bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down
 
 # iterm2
-test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+# test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
 # fzf 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -94,8 +96,6 @@ test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_in
 # password-store tab complete
 autoload -Uz _pass
 
-source ~/.cammyenv
-
 # cammy
-source ~/.cammyenv
+# source ~/.cammyenv
 

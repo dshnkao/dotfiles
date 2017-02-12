@@ -125,7 +125,7 @@ endif
 
 " neovim only
 if has("nvim")
-    let g:python3_host_prog = '/usr/local/bin/python3'
+    let g:python3_host_prog = '/usr/bin/python3'
     """ terminal buffer
     tnoremap <Esc> <C-\><C-n>
 
@@ -226,7 +226,7 @@ hi PmenuSel     cterm=none ctermfg=Black     ctermbg=37
 "hi PmenuThumb   cterm=none ctermfg=DarkGreen ctermbg=DarkGreen
 
 " cursor shape on insert/normal mode
-:let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+":let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 " parentheses
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 

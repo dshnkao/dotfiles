@@ -2,7 +2,7 @@
 
 ## ln all dotfiles in dotfiles dir
 
-dotfiles=~/linux_dotfiles/*
+dotfiles=~/dotfiles/*
 for src in $dotfiles; do
     f=$(basename "$src")
     target="$HOME/.$f"
@@ -10,5 +10,5 @@ for src in $dotfiles; do
 done
 
 # neovim
-ln -sfn ~/linux_dotfiles/vimrc ~/.config/nvim/init.vim
+ln -sfn ~/dotfiles/vimrc ~/.config/nvim/init.vim
 

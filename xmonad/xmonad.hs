@@ -24,8 +24,8 @@ import Graphics.X11.Xlib.Extras
 
 main = do
   d      <- spawnPipe "dzen2 -h 30 -fn Ubuntu:size=11 -dock"
---  guake  <- spawnPipe "/usr/bin/guake"
---  emacs  <- spawnPipe "/usr/bin/emacs25 --daemon"
+  guake  <- spawnPipe "/usr/bin/guake"
+  emacs  <- spawnPipe "/usr/bin/emacs25 --daemon"
   -- spawn $ "conky -c ~/.xmonad/data/conky/dzen | " ++ "dzen2 -p -xs 2 ta -r -e 'onstart=lower'"
   xmonad $ desktopConfig
     { manageHook  = manageDocks <+> myManageHook

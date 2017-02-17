@@ -5,6 +5,7 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Util.Scratchpad 
 import XMonad.Config.Desktop
 import XMonad.Hooks.DynamicLog (dzen)
 import XMonad.Hooks.UrgencyHook
@@ -24,11 +25,12 @@ import Graphics.X11.Xlib.Extras
 
 main = do
   d      <- spawnPipe "dzen2 -h 30 -fn Ubuntu:size=11 -dock"
-  guake  <- spawnPipe "/usr/bin/guake"
+  guake  <- spawnPipe "/usr/bin/guake --hide"
   emacs  <- spawnPipe "/usr/bin/emacs25 --daemon"
+
   -- spawn $ "conky -c ~/.xmonad/data/conky/dzen | " ++ "dzen2 -p -xs 2 ta -r -e 'onstart=lower'"
   xmonad $ desktopConfig
-    { manageHook  = manageDocks <+> myManageHook
+    { manageHook  = myManageHook 
     , layoutHook  = myLayoutHook
     , logHook     = myLogHook d
     , startupHook = setWMName "LG3D"
@@ -42,9 +44,9 @@ myLogHook h = dynamicLogWithPP $ defaultPP
     -- default colors)
     { ppCurrent         = dzenColor "#303030" "#909090" . pad 
     -- display other workspaces which contain windows as a brighter grey
-    , ppHidden          = dzenColor "#909090" "" . pad 
+    , ppHidden          = dzenColor "#909090" "" . pad . noScratchPad
     -- display other workspaces with no windows as a normal grey
-    , ppHiddenNoWindows = dzenColor "#606060" "" . pad 
+    , ppHiddenNoWindows = dzenColor "#606060" "" . pad . noScratchPad
     -- display the current layout as a brighter grey
     , ppLayout          = dzenColor "#909090" "" . pad 
     -- if a window on a hidden workspace needs my attention, color it so
@@ -58,17 +60,26 @@ myLogHook h = dynamicLogWithPP $ defaultPP
     -- output to the handle we were given as an argument
     , ppOutput          = hPutStrLn h
     }
+    where
+      noScratchPad ws = if ws == "NSP" then "" else ws
 
 -- add avoidStruts to your layoutHook like so
 myLayoutHook = avoidStruts $ layoutHook defaultConfig
 -- add manageDocks to your managehook like so
-myManageHook = manageDocks <+> manageHook defaultConfig
+myManageHook = manageScratchPad <+> manageDocks <+> manageHook defaultConfig
+
+manageScratchPad :: ManageHook
+manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
+  where
+    h = 0.3     -- terminal height, 10%
+    w = 1       -- terminal width, 100%
+    t = 1 - h   -- distance from top edge, 90%
+    l = 1 - w   -- distance from left edge, 0%
 
 myKeys = [ ((mod4Mask,               xK_bracketleft     ), sendMessage Shrink) -- %! Shrink the master area
          , ((mod4Mask,               xK_bracketright    ), sendMessage Expand) -- %! Shrink the master area
-         -- quit, or restart
          , ((mod4Mask .|. shiftMask, xK_y     ), io (exitWith ExitSuccess)) -- %! Quit xmonad
-         -- %! Restart xmonad
          , ((mod4Mask              , xK_y     ), spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi") 
          , ((mod4Mask,               xK_p     ), spawn "rofi -show run")
+         , ((mod4Mask              , xK_0     ), scratchpadSpawnActionTerminal "urxvt")
          ]

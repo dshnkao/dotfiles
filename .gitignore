@@ -2,6 +2,8 @@ gnupg
 ssh
 .DS_STORE
 password-store
-xmonad.o
-xmonad.state
+*.o
+*.state
 xmonad-x86_64-linux
+*.errors
+*.hi

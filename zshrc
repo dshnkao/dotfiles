@@ -17,6 +17,7 @@ export PINENTRY_USER_DATA="USE_CURSES=1"
 # prompt
 autoload -U colors && colors
 PS1="%{$fg[green]%}%m %{$reset_color%}%2c%{$reset_color%}> % "
+RPROMPT=''
 
 # alias
 alias ..="cd .."

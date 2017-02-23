@@ -1,4 +1,4 @@
-Xft.dpi:                    97
+Xft.dpi:                    140
 Xft.antialias:              true
 Xft.rgba:                   rgb
 Xft.hinting:                true
@@ -7,8 +7,7 @@ Xft.hintstyle:              hintslight
 !-------------------------------------------------------------------------------
 ! rofi settings
 !-------------------------------------------------------------------------------
-
-!rofi.dpi: 197
+rofi.dpi: 140
 
 !-------------------------------------------------------------------------------
 ! URxvt settings
@@ -16,7 +15,6 @@ Xft.hintstyle:              hintslight
 ! More info at:
 ! http://pod.tst.eu/http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.1.pod
 !-------------------------------------------------------------------------------
-
 URxvt.depth:                32
 URxvt.geometry:             90x30
 URxvt.transparent:          false

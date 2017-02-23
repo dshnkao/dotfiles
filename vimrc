@@ -125,7 +125,9 @@ endif
 
 " neovim only
 if has("nvim")
-    let g:python3_host_prog = '/usr/bin/python3'
+    if hostname() != "carbon"
+        let g:python3_host_prog = '/usr/bin/env python3'
+    endif
     """ terminal buffer
     tnoremap <Esc> <C-\><C-n>
 

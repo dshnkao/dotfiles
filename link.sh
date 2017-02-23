@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
 ## ln all dotfiles in dotfiles dir
 

@@ -1,7 +1,7 @@
 FPATH="$HOME/.zsh/zfunc:$FPATH"
 
 export TERM=xterm-256color
-export EDITOR=/usr/bin/nvim
+export EDITOR=nvim
 
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx

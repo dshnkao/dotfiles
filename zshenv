@@ -1,5 +1,5 @@
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/scripts:$PATH"
+export PATH="$HOME/Sync/scripts:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.cabal/bin:$PATH"
 #

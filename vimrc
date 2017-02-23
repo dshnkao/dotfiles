@@ -126,9 +126,11 @@ endif
 " neovim only
 if has("nvim")
     if hostname() == "tldr"
-        let g:python3_host_prog = '/usr/bin/python3'
+        let g:python3_host_prog = '/usr/local/binpython3'
     elseif hostname() == "hertz"
         let g:python3_host_prog = '/usr/local/bin/python3'
+    elseif hostname() != "carbon" 
+        let g:python3_host_prog = '/usr/bin/python3'
     endif
     """ terminal buffer
     tnoremap <Esc> <C-\><C-n>

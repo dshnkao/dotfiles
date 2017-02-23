@@ -60,14 +60,15 @@ values."
                       version-control-global-margin t)
      haskell
      scala
+     osx
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-                                      all-the-icons
-                                      )
+     all-the-icons
+     )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -131,7 +132,7 @@ values."
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    ;; DejaVu Sans Mono
    dotspacemacs-default-font '("Fira Code"
-                               :size 16
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -303,7 +304,6 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   ;; (server-start)
   (add-to-list 'exec-path "~/sbt-extras")
-  ;; (mac-auto-operator-composition-mode)
   (setq ensime-startup-snapshot-notification nil)
   (setq-default indent-tabs-mode nil)
   (global-vi-tilde-fringe-mode -1)
@@ -311,8 +311,6 @@ you should place your code here."
     "cx" 'inferior-haskell-load-and-run)
   (setq-default flycheck-disabled-checkers '(haskell-stack-ghc))
   (setq-default flycheck-pos-tip-timeout '60)
-  (setq org-agenda-files '("~/Dropbox/org"))
-  (setq helm-dash-docset-newpath "~/.local/share/Zeal/Zeal/docsets")
   ;;(add-to-list 'projectile-globally-ignored-directories "target")
 
   (unless (display-graphic-p)
@@ -328,17 +326,23 @@ you should place your code here."
   ;;(set-face-background 'vertical-border (face-background ))
   (set-face-foreground 'vertical-border "#005f5f")
   (setq-default powerline-default-separator (if (display-graphic-p) 'arrow 'utf-8))
-  (custom-set-variables '(markdown-command "/usr/bin/pandoc"))
   (setq-default neo-theme (if (display-graphic-p) 'icons 'arrow))
 
   (require 'ensime)
   (add-to-list 'spacemacs-jump-handlers-scala-mode '(ensime-edit-definition :async t))
   (setq x-select-enable-clipboard-manager t)
   (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
-
   (add-to-list 'load-path "~/.spacemacs.d")
-  (load "firacode.el")
-  )
+
+  (when (eq system-type 'darwin)
+    (mac-auto-operator-composition-mode)
+    (custom-set-variables '(markdown-command "/usr/local/bin/pandoc"))
+    )
+  (when (eq system-type 'linux)
+    (load "firacode.el"))
+    (setq helm-dash-docset-newpath "~/.local/share/Zeal/Zeal/docsets")
+    (custom-set-variables '(markdown-command "/usr/bin/pandoc"))
+    )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -368,7 +372,7 @@ you should place your code here."
  '(org-agenda-files nil)
  '(package-selected-packages
    (quote
-    (web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data helm-pydoc zeal-at-point counsel-dash helm-dash wgrep smex ivy-hydra counsel-projectile counsel swiper ivy jinja2-mode ansible-doc ansible yaml-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode sql-indent web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode pcache helm dash mwim helm-company helm-c-yasnippet company-statistics auto-yasnippet ac-ispell auto-complete hydra hide-comnt projectile pkg-info epl flx powerline spinner parent-mode smartparens iedit anzu highlight f font-lock+ all-the-icons xterm-color shell-pop org-projectile org-present org-pomodoro alert log4e gntp org-download noflet multi-term mmm-mode markdown-toc markdown-mode htmlize gnuplot git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck eshell-z eshell-prompt-extras esh-help ensime company yasnippet sbt-mode scala-mode diff-hl auto-dictionary smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+    (yapfify restclient pyvenv pytest pyenv-mode py-isort pip-requirements pdf-tools tablist ob-http live-py-mode insert-shebang hy-mode fish-mode dash-at-point cython-mode company-shell company-auctex company-anaconda auctex-latexmk auctex anaconda-mode pythonic helm-pydoc zeal-at-point counsel-dash helm-dash wgrep smex ivy-hydra counsel-projectile counsel swiper ivy jinja2-mode ansible-doc ansible yaml-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode sql-indent web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode pcache helm dash mwim helm-company helm-c-yasnippet company-statistics auto-yasnippet ac-ispell auto-complete hydra hide-comnt projectile pkg-info epl flx powerline spinner parent-mode smartparens iedit anzu highlight f font-lock+ all-the-icons xterm-color shell-pop org-projectile org-present org-pomodoro alert log4e gntp org-download noflet multi-term mmm-mode markdown-toc markdown-mode htmlize gnuplot git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck eshell-z eshell-prompt-extras esh-help ensime company yasnippet sbt-mode scala-mode diff-hl auto-dictionary smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

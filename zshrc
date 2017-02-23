@@ -22,24 +22,33 @@ RPROMPT=''
 # alias
 alias ..="cd .."
 alias ...="cd ../.."
-alias grep="grep --color=auto"
 alias v=vi
 alias vi=vim
 alias vim="nvim"
-alias ls="ls -X --color"
-alias t="tmux"
-alias gsb="git status -sb"
+alias grep="grep --color=auto"
 alias gst="git status -sb"
-alias xclip="xclip -select c"
-alias ect="emacsclient -nw"
-alias ecg="emacsclient -nc"
+case $(uname) in
+  'Linux')   
+      alias ls="ls -X --color" 
+      alias ect="emacsclient -nw"
+      alias ecg="emacsclient -nc"
+      alias xclip="xclip -select c"
+      ;;
+  'Darwin')  
+      alias ls="gls -X --color" 
+      alias emacs="/usr/local/Cellar/emacs-mac/emacs-25.1-z-mac-6.1/bin/emacs"
+      alias egui="open -a /Applications/Emacs.app -n $1"
+      alias edm="/usr/local/Cellar/emacs-mac/emacs-25.1-z-mac-6.1/bin/emacs --daemon"
+      alias ecg="/usr/local/Cellar/emacs-mac/emacs-25.1-z-mac-6.1/bin/emacsclient -nc"
+      alias ect="/usr/local/Cellar/emacs-mac/emacs-25.1-z-mac-6.1/bin/emacsclient -nw"
+      ;;
+esac
 
 # The following lines were added by compinstall
 zstyle ':completion:*' completer _complete _ignored
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
-zstyle :compinstall filename '/Users/denniskao/.zshrc'
 
 autoload -Uz compinit
 compinit
@@ -51,31 +60,6 @@ SAVEHIST=1000
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
-
-## jump function
-export MARKPATH=$HOME/.marks
-function jmp {
-    cd -P "$MARKPATH/$1" 2>/dev/null || echo "No such mark: $1"
-}
-function marks {
-    \ls -l "$MARKPATH" | tail -n +2 | sed 's/  / /g' | cut -d' ' -f9- | awk -F ' -> ' '{printf "%-10s -> %s\n", $1, $2}'
-}
-function unmark {
-    rm -i "$MARKPATH/$1"
-}
-function mark {
-    mkdir -p "$MARKPATH"; ln -s "$(pwd)" "$MARKPATH/$1"
-}
-
-## tab completion
-function _completemarks() {
-    reply=($(ls $MARKPATH))
-}
-
-compctl -K _completemarks jmp
-compctl -K _completemarks unmark
-
-
 ## autocomplete on history
 source $HOME/.zsh/zsh-history-substring-search.zsh
 # bind UP and DOWN arrow keys
@@ -85,12 +69,14 @@ bindkey '^[[B' history-substring-search-down
 bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down
 
+# iterm2
+[ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 # fzf 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # password-store tab complete
 autoload -Uz _pass
-
-#  cammy
+# cammy
 [ -f ~/.cammyenv ] && source ~/.cammyenv
+# jmp function
+[ -f ~/.zsh/jmpfunc.zsh ] && source ~/.zsh/jmpfunc.zsh
 

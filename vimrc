@@ -14,6 +14,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'derekwyatt/vim-scala'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'flazz/vim-colorschemes'
 "Plug 'ensime/ensime-vim'
 "Plug 'fatih/vim-go'
 "Plug 'scrooloose/syntastic'
@@ -21,7 +23,7 @@ call plug#end()
 
 filetype plugin indent on
 set t_Co=256
-colo desert
+colo Tomorrow-Night
 syntax on
 
 " save when leave insert mode
@@ -93,10 +95,8 @@ set laststatus=2
 
 " airline
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ''
-let g:airline#extensions#tabline#left_alt_sep = ''
-let g:airline_left_sep=''
-let g:airline_right_sep=''
+let g:airline_theme='base16_tomorrow'
+let g:airline_powerline_fonts = 1
 
 "set cscope database
 cs add cscope.out

@@ -10,5 +10,6 @@ for src in $dotfiles; do
 done
 
 # neovim
+mkdir ~/.config/nvim
 ln -sfn ~/dotfiles/vimrc ~/.config/nvim/init.vim
 

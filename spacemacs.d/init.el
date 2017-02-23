@@ -324,11 +324,17 @@ you should place your code here."
                       :foreground "Grey"
                       :background "#005f5f"
                       :box nil)
+
   ;;(set-face-background 'vertical-border (face-background ))
   (set-face-foreground 'vertical-border "#005f5f")
   (setq-default powerline-default-separator (if (display-graphic-p) 'arrow 'utf-8))
   (custom-set-variables '(markdown-command "/usr/bin/pandoc"))
   (setq-default neo-theme (if (display-graphic-p) 'icons 'arrow))
+
+  (require 'ensime)
+  (add-to-list 'spacemacs-jump-handlers-scala-mode '(ensime-edit-definition :async t))
+  (setq x-select-enable-clipboard-manager t)
+  (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
 
   (add-to-list 'load-path "~/.spacemacs.d")
   (load "firacode.el")

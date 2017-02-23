@@ -32,11 +32,8 @@ alias gst="git status -sb"
 alias xclip="xclip -select c"
 alias ect="emacsclient -nw"
 alias ecg="emacsclient -nc"
-#alias emacs='open -a /Applications/Emacs.app $1'
-#alias ec='open -a /Applications/Emacs.app $1'
 
 # The following lines were added by compinstall
-
 zstyle ':completion:*' completer _complete _ignored
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
@@ -87,15 +84,12 @@ bindkey '^[[B' history-substring-search-down
 bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down
 
-# iterm2
-# test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
-
 # fzf 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # password-store tab complete
 autoload -Uz _pass
 
-# cammy
-# source ~/.cammyenv
+#  cammy
+[ -f ~/.cammyenv ] && source ~/.cammyenv
 

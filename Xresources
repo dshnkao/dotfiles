@@ -1,4 +1,4 @@
-Xft.dpi:                    140
+Xft.dpi:                    120
 Xft.antialias:              true
 Xft.rgba:                   rgb
 Xft.hinting:                true
@@ -7,7 +7,7 @@ Xft.hintstyle:              hintslight
 !-------------------------------------------------------------------------------
 ! rofi settings
 !-------------------------------------------------------------------------------
-rofi.dpi: 140
+rofi.dpi: 120
 
 !-------------------------------------------------------------------------------
 ! URxvt settings
@@ -28,8 +28,8 @@ URxvt.lineSpace:            0
 
 ! Fonts
 URxvt.allow_bold:           false
-URxvt*font:                 xft:Dejavu Sans Mono for Powerline:size=14
-URxvt*boldFont:             xft:Dejavu Sans Mono for Powerline:size=14
+URxvt*font:                 xft:Dejavu Sans Mono for Powerline:size=10
+URxvt*boldFont:             xft:Dejavu Sans Mono for Powerline:size=10
 
 ! Fix font space
 URxvt*letterSpace: -1

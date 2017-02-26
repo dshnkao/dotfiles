@@ -6,11 +6,11 @@ export PATH="$HOME/.cabal/bin:$PATH"
 export JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk-amd64"
 export JDK_HOME="/usr/lib/jvm/java-1.8.0-openjdk-amd64"
 
-typeset -A ZSH_HIGHLIGHT_STYLES
-ZSH_HIGHLIGHT_STYLES[globbing]='none'
-ZSH_HIGHLIGHT_STYLES[alias]='none'
-ZSH_HIGHLIGHT_STYLES[command]='none'
-ZSH_HIGHLIGHT_STYLES[builtin]='none'
-ZSH_HIGHLIGHT_STYLES[function]='none'
+#typeset -A ZSH_HIGHLIGHT_STYLES
+#ZSH_HIGHLIGHT_STYLES[globbing]='none'
+#ZSH_HIGHLIGHT_STYLES[alias]='none'
+#ZSH_HIGHLIGHT_STYLES[command]='none'
+#ZSH_HIGHLIGHT_STYLES[builtin]='none'
+#ZSH_HIGHLIGHT_STYLES[function]='none'
 [ -f /usr/bin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/bin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

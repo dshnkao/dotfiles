@@ -14,7 +14,7 @@ export JDK_HOME="/usr/lib/jvm/java-1.8.0-openjdk-amd64"
 #ZSH_HIGHLIGHT_STYLES[function]='none'
 
 # ubuntu apt-get
-[ -f /usr/bin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/bin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # mac brew
 [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 

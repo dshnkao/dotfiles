@@ -181,6 +181,10 @@ endif
 "crontab
 au FileType crontab setlocal bkc=yes
 
+" json
+autocmd BufNewFile,BufRead *.json set ft=javascript
+nmap =j :%!python -m json.tool<CR>
+
 " scala
 au FileType scala nnoremap <localleader>t :EnType<CR>
 au FileType scala nnoremap <localleader>tt :EnTypeCheck<CR>

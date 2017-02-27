@@ -13,12 +13,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'derekwyatt/vim-scala'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'flazz/vim-colorschemes'
-"Plug 'ensime/ensime-vim'
-"Plug 'fatih/vim-go'
-"Plug 'scrooloose/syntastic'
 call plug#end()
 
 filetype plugin indent on
@@ -137,44 +133,6 @@ if has("nvim")
 
     """ deoplete
     let g:deoplete#enable_at_startup = 1
-    "let g:deoplete#omni_patterns = {}
-   	"let g:deoplete#omni_patterns.scala = '[^. *\t]\.\w\{3,}'
-    ""let g:deoplete#omni#input_patterns = {}
-    ""let g:deoplete#omni#input_patterns.scala = '[^. *\t]\.\w*'
-    "let g:deoplete#sources = {}
-    "let g:deoplete#sources._=['omni', 'buffer', 'member', 'tag', 'ultisnips', 'file']
-
-    """" Neomake
-    function! s:getfile()
-        let fext = expand("%:t")
-        let f = "a.out"
-        if len(fext) > 2
-            let f = split(fext, '\.')[0]
-        endif
-        return f
-    endfunction
-
-    function! s:run()
-        execute "!./" . s:getfile()
-    endfunction
-
-
-    "autocmd! BufWritePost * Neomake
-    nnoremap <Esc>f :w<CR>:Neomake<CR>
-    nnoremap <Esc>e :Neomake!<CR>
-    nnoremap <Esc>r :call <SID>run()<CR>
-
-    let g:neomake_c_clang_maker = {
-    \ 'exe': 'clang',
-    \ 'args': ['-std=c99', '-Wall', '-ggdb', '-o', s:getfile()],
-    \ 'errorformat': '%f:%l:%c: %m',
-    \ }
-
-    let g:neomake_cpp_clang_maker = {
-    \ 'exe': 'clang++',
-    \ 'args': ['-std=c++11', '-Wall', '-ggdb', '-o', s:getfile()],
-    \ 'errorformat': '%f:%l:%c: %m',
-    \ }
 
 endif
 
@@ -184,34 +142,6 @@ au FileType crontab setlocal bkc=yes
 " json
 autocmd BufNewFile,BufRead *.json set ft=javascript
 nmap =j :%!python -m json.tool<CR>
-
-" scala
-au FileType scala nnoremap <localleader>t :EnType<CR>
-au FileType scala nnoremap <localleader>tt :EnTypeCheck<CR>
-au FileType scala nnoremap <localleader>ds :EnDeclaration<CR>
-au FileType scala nnoremap <localleader>dv :EnDeclaration v<CR>
-au FileType scala nnoremap <localleader>sd :EnDocBrowse<CR>
-
-" go
-au FileType go nnoremap <leader>r <Plug>(go-run)
-au FileType go nnoremap <leader>b <Plug>(go-build)
-au FileType go nnoremap <leader>t <Plug>(go-test)
-au FileType go nnoremap <leader>c <Plug>(go-coverage)
-au FileType go nnoremap <leader>rt <Plug>(go-run-tab)
-au FileType go nnoremap <Leader>rs <Plug>(go-run-split)
-au FileType go nnoremap <Leader>rv <Plug>(go-run-vertical)
-au FileType go nnoremap <Leader>ds <Plug>(go-def-split)
-au FileType go nnoremap <Leader>dv <Plug>(go-def-vertical)
-au FileType go nnoremap <Leader>dt <Plug>(go-def-tab)
-au FileType go nnoremap <Leader>gd <Plug>(go-doc)
-au FileType go nnoremap <Leader>gv <Plug>(go-doc-vertical)
-au FileType go nnoremap <Leader>s <Plug>(go-implements)
-au FileType go nnoremap <Leader>i <Plug>(go-info)
-
-"Synastic
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
-let g:syntastic_cpp_check_header = 1
 
 """""" HIGHLIGHTS 
 

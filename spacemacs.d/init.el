@@ -338,7 +338,7 @@ you should place your code here."
     (mac-auto-operator-composition-mode)
     (custom-set-variables '(markdown-command "/usr/local/bin/pandoc"))
     )
-  (when (eq system-type 'linux)
+  (when (eq system-type 'gnu/linux)
     (load "firacode.el"))
     (setq helm-dash-docset-newpath "~/.local/share/Zeal/Zeal/docsets")
     (custom-set-variables '(markdown-command "/usr/bin/pandoc"))

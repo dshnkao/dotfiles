@@ -27,6 +27,7 @@ alias vi=vim
 alias vim="nvim"
 alias grep="grep --color=auto"
 alias gst="git status -sb"
+alias gitdelmerged='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 case $(uname) in
   'Linux')   
       alias ls="ls -X --color" 

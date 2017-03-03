@@ -1,15 +1,30 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-## ln all dotfiles in dotfiles dir
+# check for 1 argument and its an directory
+if [ "$#" -ne 1 ] || ! [ -d "$1" ]; then
+  echo "Usage: $0 directory" >&2
+  exit 1
+fi
 
-dotfiles=~/dotfiles/*
-for src in $dotfiles; do
-    f=$(basename "$src")
-    target="$HOME/.$f"
-    ln -sfn $src $target
-done
+dotdir=`realpath "$1"`
 
-# neovim
-mkdir ~/.config/nvim
-ln -sfn ~/dotfiles/vimrc ~/.config/nvim/init.vim
+echo "This will replace your current dotfiles in your home directory"
+read -p "Continue [y/n] " 
+echo    
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    files=(zsh zshrc zshenv vimrc config global-gitignore spacemacs.d)
+    case $(uname) in 
+        'Linux') files+=(xmonad Xresources) ;;
+        'Darwin') ;;
+    esac
+    for f in ${files[@]} 
+    do
+        echo "linking $dotdir/$f to $HOME/.$f"
+        ln -sfn $dotdir/$f $HOME/.$f
+    done
+else
+    echo "aborted"
+fi
+
+
 

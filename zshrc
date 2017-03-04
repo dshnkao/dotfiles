@@ -34,6 +34,7 @@ case $(uname) in
       alias ect="emacsclient -nw"
       alias ecg="emacsclient -nc"
       alias xclip="xclip -select c"
+      alias ecga='emacsclient -t --eval "(org-agenda-list)" "(delete-other-windows)"'
       ;;
   'Darwin')  
       alias ls="gls -X --color" 

@@ -334,15 +334,19 @@ you should place your code here."
   (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
   (add-to-list 'load-path "~/.spacemacs.d")
 
+  (with-eval-after-load 'org
+    (setq org-agenda-files '("~/Sync/documents/org/")))
+
   (when (eq system-type 'darwin)
     (mac-auto-operator-composition-mode)
     (custom-set-variables '(markdown-command "/usr/local/bin/pandoc"))
     )
   (when (eq system-type 'gnu/linux)
-    (load "firacode.el"))
+    (load "firacode.el")
     (setq helm-dash-docset-newpath "~/.local/share/Zeal/Zeal/docsets")
     (custom-set-variables '(markdown-command "/usr/bin/pandoc"))
     )
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.

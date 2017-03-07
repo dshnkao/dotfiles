@@ -1,1 +1,1 @@
-/Users/denniscammy.com/Sync/dotfiles/vimrc
+/Users/denniscammy.com/.vimrc

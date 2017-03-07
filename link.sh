@@ -22,6 +22,8 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         echo "linking $dotdir/$f to $HOME/.$f"
         ln -sfn $dotdir/$f $HOME/.$f
     done
+    echo "linking ~/.config/nvim/init/vim to $HOME/.vimrc"
+    ln -sfn $HOME/.vimrc ~/.config/nvim/init.vim 
 else
     echo "aborted"
 fi

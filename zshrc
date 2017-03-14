@@ -38,7 +38,7 @@ case $(uname) in
       ;;
   'Darwin')  
       alias ls="gls -X --color" 
-      alias emacs="/usr/local/Cellar/emacs-mac/emacs-25.1-z-mac-6.1/bin/emacs"
+      alias emacs="/usr/local/bin/emacs"
       alias egui="open -a /Applications/Emacs.app -n $1"
       alias edm="/usr/local/Cellar/emacs-mac/emacs-25.1-z-mac-6.1/bin/emacs --daemon"
       alias ecg="/usr/local/Cellar/emacs-mac/emacs-25.1-z-mac-6.1/bin/emacsclient -nc"

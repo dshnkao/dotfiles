@@ -31,7 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     spell-checking
+     (spell-checking :variables spell-checking-enable-by-default nil)
      html
      dash
      ansible
@@ -290,7 +290,7 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (push '("melpa-stable" . "stable.melpa.org/packages/") configuration-layer--elpa-archives)
-  (push '(ensime . "melpa-stable") package-pinned-packages)
+  ;;(push '(ensime . "melpa-stable") package-pinned-packages)
   (setq-default dotspacemacs-themes '(sanityinc-tomorrow-night))
   (setq dotspacemacs-distinguish-gui-tab t)
   )
@@ -336,7 +336,7 @@ you should place your code here."
 
   (with-eval-after-load 'org
     (setq org-agenda-files '("~/Sync/documents/org/"))
-    (setq org-agenda-start-day "-1d")
+    (setq org-agenda-start-day "0d")
     (setq org-agenda-span 14)
     (setq org-agenda-start-on-weekday nil)
     (setq org-agenda-skip-scheduled-if-done t)

@@ -290,7 +290,7 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (push '("melpa-stable" . "stable.melpa.org/packages/") configuration-layer--elpa-archives)
-  ;;(push '(ensime . "melpa-stable") package-pinned-packages)
+  (push '(ensime . "melpa-stable") package-pinned-packages)
   (setq-default dotspacemacs-themes '(sanityinc-tomorrow-night))
   (setq dotspacemacs-distinguish-gui-tab t)
   )

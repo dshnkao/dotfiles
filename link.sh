@@ -12,7 +12,7 @@ echo "This will replace your current dotfiles in your home directory"
 read -p "Continue [y/n] " 
 echo    
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    files=(zsh zshrc zshenv vimrc config global-gitignore spacemacs.d)
+    files=(zsh zshrc zshenv vimrc config global-gitignore spacemacs.d password-store ssh gnupg)
     case $(uname) in 
         'Linux') files+=(xmonad Xresources) ;;
         'Darwin') ;;

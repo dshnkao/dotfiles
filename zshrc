@@ -22,8 +22,6 @@ RPROMPT=''
 # alias
 alias ..="cd .."
 alias ...="cd ../.."
-alias v=vi
-alias vi=vim
 alias vim="nvim"
 alias grep="grep --color=auto"
 alias gst="git status -sb"
@@ -31,6 +29,7 @@ alias gitdelmerged='git branch --merged | egrep -v "(^\*|master|dev)" | xargs gi
 case $(uname) in
   'Linux')   
       alias ls="ls -X --color" 
+      alias vi=/usr/bin/vim
       alias ect="emacsclient -nw"
       alias ecg="emacsclient -nc"
       alias xclip="xclip -select c"
@@ -38,6 +37,7 @@ case $(uname) in
       ;;
   'Darwin')  
       alias ls="gls -X --color" 
+      alias vi=/usr/local/bin/vim
       alias emacs="/usr/local/bin/emacs"
       alias egui="open -a /Applications/Emacs.app -n $1"
       alias edm="/usr/local/Cellar/emacs-mac/emacs-25.1-z-mac-6.1/bin/emacs --daemon"

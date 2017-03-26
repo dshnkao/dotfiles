@@ -1,1 +1,0 @@
-/Users/denniscammy.com/.vimrc

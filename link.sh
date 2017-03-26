@@ -12,10 +12,10 @@ echo "This will replace your current dotfiles in your home directory"
 read -p "Continue [y/n] " 
 echo    
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    files=(zsh zshrc zshenv vimrc config global-gitignore spacemacs.d password-store ssh gnupg)
+    files=(zsh zshrc zshenv vimrc config/ranger global-gitignore spacemacs.d password-store ssh gnupg)
     case $(uname) in 
         'Linux') files+=(xmonad Xresources) ;;
-        'Darwin') ;;
+        'Darwin') files+=(config/karabiner) ;;
     esac
     for f in ${files[@]} 
     do
@@ -23,6 +23,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         ln -sfn $dotdir/$f $HOME/.$f
     done
     echo "linking ~/.config/nvim/init/vim to $HOME/.vimrc"
+    mkdir ~/.config/nvim
     ln -sfn $HOME/.vimrc ~/.config/nvim/init.vim 
 else
     echo "aborted"

@@ -2,10 +2,16 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/Sync/scripts:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.cabal/bin:$PATH"
-#
-#export JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk-amd64"
-#export JDK_HOME="/usr/lib/jvm/java-1.8.0-openjdk-amd64"
-export JAVA_HOME=$(/usr/libexec/java_home)
+
+case $(uname) in
+    'Linux')
+        export JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk-amd64"
+        export JDK_HOME="/usr/lib/jvm/java-1.8.0-openjdk-amd64"
+        ;;
+    'Darwin')
+        export JAVA_HOME=$(/usr/libexec/java_home)
+        ;;
+esac
 
 #typeset -A ZSH_HIGHLIGHT_STYLES
 #ZSH_HIGHLIGHT_STYLES[globbing]='none'

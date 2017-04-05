@@ -2,6 +2,7 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/Sync/scripts:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.cabal/bin:$PATH"
+export PATH="$HOME/Sync/scripts:$PATH"
 
 case $(uname) in
     'Linux')

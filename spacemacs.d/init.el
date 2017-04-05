@@ -344,6 +344,7 @@ you should place your code here."
     (setq org-agenda-todo-ignore-deadlines t)
     (setq org-agenda-todo-ignore-with-date t)
     (setq org-agenda-todo-ignore-scheduled t)
+    (setq org-cycle-include-plain-lists 'integrate)
     )
 
   (when (eq system-type 'darwin)

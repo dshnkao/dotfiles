@@ -19,3 +19,9 @@ default = simple
 [status]
 showUntrackedFiles = all
 
+[diff]
+  tool = icdiff
+[difftool]
+  prompt = false
+[difftool "icdiff"]
+  cmd = icdiff --line-numbers $LOCAL $REMOTE

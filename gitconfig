@@ -1,0 +1,21 @@
+[user]
+email = dshnkao@gmail.com
+name = Dennis Kao
+
+[alias]
+stash-all = stash save --include-untracked
+glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+
+[merge]
+ff = only
+conflictstyle = diff3
+
+[commit]
+gpgSign = true
+
+[push]
+default = simple
+
+[status]
+showUntrackedFiles = all
+

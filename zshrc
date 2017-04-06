@@ -13,6 +13,7 @@ export LANG=en_US.UTF-8
 
 # disable gpg gui passphrase
 export PINENTRY_USER_DATA="USE_CURSES=1"
+export GPG_TTY=$(tty)
 
 # prompt
 autoload -U colors && colors

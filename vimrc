@@ -167,6 +167,7 @@ hi PmenuSel     cterm=none ctermfg=Black     ctermbg=37
 
 " cursor shape on insert/normal mode
 :let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+:set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
 " parentheses
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 

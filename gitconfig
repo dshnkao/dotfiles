@@ -1,38 +1,41 @@
 [user]
-email = dshnkao@gmail.com
-name = Dennis Kao
+    email = dshnkao@gmail.com
+    name = Dennis Kao
 
 [alias]
-stash-all = stash save --include-untracked
-glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
-hist = log --pretty=format:\"%C(yellow)%h%C(reset) %C(green)%ad%C(reset) %C(red)|%C(reset) %s %C(bold blue)[%an]%C(reset)%C(yellow)%d%C(reset)\" --graph --date=short
-lg2 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen%cn%Creset %Cblue(%cr)%Creset' --abbrev-commit --date=relative
+    stash-all = stash save --include-untracked
+    glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+    hist = log --pretty=format:\"%C(yellow)%h%C(reset) %C(green)%ad%C(reset) %C(red)|%C(reset) %s %C(bold blue)[%an]%C(reset)%C(yellow)%d%C(reset)\" --graph --date=short
+    lg2 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen%cn%Creset %Cblue(%cr)%Creset' --abbrev-commit --date=relative
+
+    amend = commit --amend
+    force = push --force-with-lease
 
 [log]
-decorate = full
+    decorate = full
 
 [merge]
-ff = only
-conflictstyle = diff3
+    ff = only
+    conflictstyle = diff3
 
 [pull]
-ff = only
+    ff = only
 
 [push]
-default = simple
+    default = simple
 
 [commit]
-gpgSign = true
+    gpgSign = true
 
 [status]
-showUntrackedFiles = all
+    showUntrackedFiles = all
 
 [core]
-excludesfile = ~/.global-gitignore
+    excludesfile = ~/.global-gitignore
 
 [diff]
-  tool = icdiff
+    tool = icdiff
 [difftool]
-  prompt = false
+    prompt = false
 [difftool "icdiff"]
-  cmd = icdiff --line-numbers $LOCAL $REMOTE
+    cmd = icdiff --line-numbers $LOCAL $REMOTE

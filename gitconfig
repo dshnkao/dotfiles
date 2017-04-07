@@ -8,8 +8,6 @@ glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgre
 hist = log --pretty=format:\"%C(yellow)%h%C(reset) %C(green)%ad%C(reset) %C(red)|%C(reset) %s %C(bold blue)[%an]%C(reset)%C(yellow)%d%C(reset)\" --graph --date=short
 lg2 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen%cn%Creset %Cblue(%cr)%Creset' --abbrev-commit --date=relative
 
-
-
 [log]
 decorate = full
 
@@ -28,6 +26,9 @@ gpgSign = true
 
 [status]
 showUntrackedFiles = all
+
+[core]
+excludesfile = ~/.global-gitignore
 
 [diff]
   tool = icdiff

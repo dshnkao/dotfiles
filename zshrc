@@ -101,3 +101,6 @@ POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='059'
 #POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='143'
 #POWERLEVEL9K_SHORTEN_STRATEGY=truncate_from_
 [ -f ~/powerlevel9k/powerlevel9k.zsh-theme ] && source ~/powerlevel9k/powerlevel9k.zsh-theme
+
+# autojump
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh

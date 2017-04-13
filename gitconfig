@@ -38,4 +38,4 @@
 [difftool]
     prompt = false
 [difftool "icdiff"]
-    cmd = icdiff --line-numbers $LOCAL $REMOTE
+    cmd = icdiff --line-numbers $LOCAL $REMOTE | less -R

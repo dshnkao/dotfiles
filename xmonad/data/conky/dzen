@@ -8,4 +8,4 @@ mpd_host 192.168.0.5
 mpd_port 6600
 
 TEXT
-Cpu: ^fg(\#909090)${cpu}%^fg() Mem: ^fg(\#909090)${memperc}%^fg() Net: ^fg(\#909090)${downspeedf eth0} / ${upspeedf eth0}^fg() ${time %a %b %d %H:%M} 
+Cpu: ^fg(\#909090)${cpu}%^fg() Mem: ^fg(\#909090)${memperc}%^fg() Net: ^fg(\#909090)${downspeedf enp0s3} / ${upspeedf enp0s3}^fg() ${time %a %b %d %H:%M} 

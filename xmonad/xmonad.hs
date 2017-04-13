@@ -24,13 +24,14 @@ import Graphics.X11.Xlib
 import Graphics.X11.Xlib.Extras
 
 main = do
-  d      <- spawnPipe "dzen2 -h 30 -fn Ubuntu:size=11 -dock"
-  emacs  <- spawnPipe "/usr/bin/emacs25 --daemon"
-  _      <- spawn "/usr/bin/autocutsel -fork"
-  _      <- spawn "/usr/bin/autocutsel -selection PRIMARY -fork"
+  d <- spawnPipe "dzen2 -ta l -h 30 -w 1000 -fn Ubuntu:size=11"
+  spawn $ "conky -c ~/.xmonad/data/conky/dzen | " ++ "dzen2 -ta r -x 1000 -h 30 -fn Ubuntu:size=11"
+  spawn "/usr/bin/emacs25 --daemon"
+  spawn "/usr/bin/autocutsel -fork"
+  spawn "/usr/bin/autocutsel -selection PRIMARY -fork"
 
-  -- spawn $ "conky -c ~/.xmonad/data/conky/dzen | " ++ "dzen2 -p -xs 2 ta -r -e 'onstart=lower'"
-  xmonad $ desktopConfig
+  --xmonad $ desktopConfig
+  xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
     { manageHook  = myManageHook 
     , layoutHook  = myLayoutHook
     , logHook     = myLogHook d
@@ -46,6 +47,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP
     { ppCurrent         = dzenColor "#303030" "#909090" . pad 
     -- display other workspaces which contain windows as a brighter grey
     , ppHidden          = dzenColor "#909090" "" . pad . noScratchPad
+    --, ppHidden          = dzenColor "#ffffff" "" . pad . noScratchPad
     -- display other workspaces with no windows as a normal grey
     , ppHiddenNoWindows = dzenColor "#606060" "" . pad . noScratchPad
     -- display the current layout as a brighter grey

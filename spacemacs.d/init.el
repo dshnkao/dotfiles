@@ -58,7 +58,8 @@ values."
             shell-default-position 'bottom)
      (version-control :variables
                       version-control-global-margin t)
-     haskell
+     (haskell :variables
+              haskell-process-type 'ghci)
      scala
      osx
      )
@@ -289,6 +290,8 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (load "server")
+  (unless (server-running-p) (server-start))
   (push '("melpa-stable" . "stable.melpa.org/packages/") configuration-layer--elpa-archives)
   (push '(ensime . "melpa-stable") package-pinned-packages)
   (setq-default dotspacemacs-themes '(sanityinc-tomorrow-night))

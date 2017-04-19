@@ -15,6 +15,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'flazz/vim-colorschemes'
+Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
 
 filetype plugin indent on

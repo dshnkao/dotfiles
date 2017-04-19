@@ -1,4 +1,5 @@
 import XMonad
+import XMonad.Actions.SpawnOn
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops 
@@ -26,8 +27,7 @@ import Graphics.X11.Xlib.Extras
 main = do
   d <- spawnPipe "dzen2 -ta l -h 30 -w 1000 -fn Ubuntu:size=11 -dock"
   spawn $ "conky -c ~/.xmonad/data/conky/dzen | " ++ "dzen2 -ta r -x 1000 -h 30 -fn Ubuntu:size=11"
-  spawn "/usr/bin/emacs25 --daemon"
-  spawn "/usr/bin/autocutsel -fork"
+  spawn "/usr/bin/autocutsel -fork" -- need both, don't delete
   spawn "/usr/bin/autocutsel -selection PRIMARY -fork"
 
   --xmonad $ desktopConfig
@@ -69,7 +69,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 -- add avoidStruts to your layoutHook like so
 myLayoutHook = avoidStruts $ layoutHook defaultConfig
 -- add manageDocks to your managehook like so
-myManageHook = manageScratchPad <+> manageDocks <+> manageHook defaultConfig
+myManageHook = manageSpawn <+> manageScratchPad <+> manageDocks <+> manageHook defaultConfig
 
 manageScratchPad :: ManageHook
 manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)

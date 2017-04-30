@@ -59,7 +59,7 @@ values."
      (version-control :variables
                       version-control-global-margin t)
      (haskell :variables
-              haskell-process-type 'ghci)
+              haskell-process-type 'cabal-repl)
      scala
      osx
      )

@@ -3,13 +3,15 @@
     name = Dennis Kao
 
 [alias]
-    stash-all = stash save --include-untracked
-    glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
     hist = log --pretty=format:\"%C(yellow)%h%C(reset) %C(green)%ad%C(reset) %C(red)|%C(reset) %s %C(bold blue)[%an]%C(reset)%C(yellow)%d%C(reset)\" --graph --date=short
-    lg2 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen%cn%Creset %Cblue(%cr)%Creset' --abbrev-commit --date=relative
 
-    amend = commit --amend
+    stash-all = stash save --include-untracked
     force = push --force-with-lease
+    co = checkout
+    amend = commit --amend
+    ca = commit -a
+    c = commit
+    diffc = diff --cached
 
 [log]
     decorate = full

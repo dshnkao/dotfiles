@@ -12,7 +12,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # disable gpg gui passphrase
-export PINENTRY_USER_DATA="USE_CURSES=1"
+#export PINENTRY_USER_DATA="USE_CURSES=1"
 export GPG_TTY=$(tty)
 
 # prompt
@@ -41,9 +41,9 @@ case $(uname) in
       alias vi=/usr/local/bin/vim
       alias emacs="/usr/local/bin/emacs"
       alias egui="open -a /Applications/Emacs.app -n $1"
-      alias edm="/usr/local/Cellar/emacs-mac/emacs-25.1-z-mac-6.1/bin/emacs --daemon"
-      alias ecg="/usr/local/Cellar/emacs-mac/emacs-25.1-z-mac-6.1/bin/emacsclient -nc"
-      alias ect="/usr/local/Cellar/emacs-mac/emacs-25.1-z-mac-6.1/bin/emacsclient -nw"
+      alias edm="/usr/local/opt/emacs-mac/bin/emacs --daemon"
+      alias ecg="/usr/local/opt/emacs-mac/bin/emacsclient -nc"
+      alias ect="/usr/local/opt/emacs-mac/bin/emacsclient -nw"
       ;;
 esac
 

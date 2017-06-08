@@ -4,6 +4,9 @@ export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.cabal/bin:$PATH"
 export PATH="$HOME/Sync/scripts:$PATH"
 
+export FPATH="$HOME/.zsh/zfunc:$FPATH"
+
+
 case $(uname) in
     'Linux')
         export JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk-amd64"

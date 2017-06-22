@@ -31,38 +31,37 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     go
-     (spell-checking :variables spell-checking-enable-by-default nil)
-     html
-     dash
      ansible
-     yaml
-     sql
-     javascript
-     pdf-tools
-     restclient
-     python
-     javascript
-     latex
-     shell-scripts
-     ivy
      auto-completion
      better-defaults
+     c-c++
+     dash
      emacs-lisp
      git
+     go
+     (haskell :variables haskell-process-type 'cabal-repl)
+     html
+     ivy
+     javascript
+     latex
      markdown
      org
-     syntax-checking
+     osx
+     ranger
+     pdf-tools
+     python
+     restclient
+     scala
      (shell :variables
             shell-default-shell 'ansi-term
             shell-default-height 30
             shell-default-position 'bottom)
-     (version-control :variables
-                      version-control-global-margin t)
-     (haskell :variables
-              haskell-process-type 'cabal-repl)
-     scala
-     osx
+     shell-scripts
+     (spell-checking :variables spell-checking-enable-by-default nil)
+     sql
+     syntax-checking
+     (version-control :variables version-control-global-margin t)
+     yaml
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these

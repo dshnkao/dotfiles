@@ -34,37 +34,36 @@ values."
      ansible
      auto-completion
      better-defaults
-     c-c++
      dash
      emacs-lisp
      git
      go
-     (haskell :variables
-              haskell-process-type 'stack-ghci
-              haskell-completion-backend 'intero)
      html
      ivy
+     javascript
      javascript
      latex
      markdown
      org
      osx
-     ranger
      pdf-tools
      python
+     ranger
      restclient
      scala
+     shell-scripts
+     sql
+     syntax-checking
+     yaml
      (shell :variables
             shell-default-shell 'ansi-term
             shell-default-height 30
-     
-       shell-default-position 'bottom)
-     shell-scripts
+            shell-default-position 'bottom)
+     (version-control :variables
+                      version-control-global-margin t)
+     (haskell :variables
+              haskell-process-type 'cabal-repl)
      (spell-checking :variables spell-checking-enable-by-default nil)
-     sql
-     syntax-checking
-     (version-control :variables version-control-global-margin t)
-     yaml
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -82,7 +81,6 @@ values."
    ;; `used-only' installs only explicitly used packages and uninstall any
    ;; unused packages as well as their unused dependencies.
    ;; `used-but-keep-unused' installs only the used packages but won't uninstall
-
    ;; them if they become unused. `all' installs *all* packages supported by
    ;; Spacemacs and never uninstall them. (default is `used-only')
    dotspacemacs-install-packages 'used-only))
@@ -316,7 +314,7 @@ you should place your code here."
   (global-vi-tilde-fringe-mode -1)
   (spacemacs/set-leader-keys-for-major-mode 'haskell-mode
     "cx" 'inferior-haskell-load-and-run)
-  ;;(setq-default flycheck-disabled-checkers '(haskell-stack-ghc))
+  (setq-default flycheck-disabled-checkers '(haskell-stack-ghc))
   (setq-default flycheck-pos-tip-timeout '60)
   ;;(add-to-list 'projectile-globally-ignored-directories "target")
 
@@ -384,7 +382,7 @@ you should place your code here."
  '(org-agenda-files nil)
  '(package-selected-packages
    (quote
-    (ranger disaster company-c-headers cmake-mode clang-format flyspell-correct-ivy go-guru go-eldoc company-go go-mode winum unfill restclient-helm ob-restclient fuzzy company-restclient know-your-http-well company-ansible auctex-latexmk helm-pydoc zeal-at-point counsel-dash helm-dash wgrep smex ivy-hydra counsel-projectile counsel swiper ivy jinja2-mode ansible-doc ansible yaml-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode sql-indent web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode pcache helm dash mwim helm-company helm-c-yasnippet company-statistics auto-yasnippet ac-ispell auto-complete hydra hide-comnt projectile pkg-info epl flx powerline spinner parent-mode smartparens iedit anzu highlight f font-lock+ all-the-icons xterm-color shell-pop org-projectile org-present org-pomodoro alert log4e gntp org-download noflet multi-term mmm-mode markdown-toc markdown-mode htmlize gnuplot git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck eshell-z eshell-prompt-extras esh-help ensime company yasnippet sbt-mode scala-mode diff-hl auto-dictionary smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+    (flyspell-correct-ivy go-guru go-eldoc company-go go-mode winum unfill restclient-helm ob-restclient fuzzy company-restclient know-your-http-well company-ansible auctex-latexmk helm-pydoc zeal-at-point counsel-dash helm-dash wgrep smex ivy-hydra counsel-projectile counsel swiper ivy jinja2-mode ansible-doc ansible yaml-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode sql-indent web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode pcache helm dash mwim helm-company helm-c-yasnippet company-statistics auto-yasnippet ac-ispell auto-complete hydra hide-comnt projectile pkg-info epl flx powerline spinner parent-mode smartparens iedit anzu highlight f font-lock+ all-the-icons xterm-color shell-pop org-projectile org-present org-pomodoro alert log4e gntp org-download noflet multi-term mmm-mode markdown-toc markdown-mode htmlize gnuplot git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck eshell-z eshell-prompt-extras esh-help ensime company yasnippet sbt-mode scala-mode diff-hl auto-dictionary smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -6,6 +6,12 @@
     },
     "profiles": [
         {
+            "complex_modifications": {
+                "parameters": {
+                    "basic.to_if_alone_timeout_milliseconds": 1000
+                },
+                "rules": []
+            },
             "devices": [
                 {
                     "disable_built_in_keyboard_if_exists": false,
@@ -36,6 +42,16 @@
                         "vendor_id": 1133
                     },
                     "ignore": true
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 60,
+                        "vendor_id": 9494
+                    },
+                    "ignore": false
                 }
             ],
             "fn_function_keys": {
@@ -55,6 +71,7 @@
             "name": "Default profile",
             "selected": true,
             "simple_modifications": {
+                "caps_lock": "left_control",
                 "left_command": "left_option",
                 "left_option": "left_command",
                 "right_command": "right_option",

@@ -15,8 +15,10 @@ export GPG_TTY=$(tty)
 
 # prompt
 autoload -U colors && colors
-PS1="%{$fg[green]%}%m %{$reset_color%}%2c%{$reset_color%}> % "
-RPROMPT=''
+##PS1="%{$fg[blue]%}%m %{$reset_color%}%2c%{$reset_color%}> % "
+#PROMPT='[%F{blue}%n%f@%F{blue}%m%f] '
+PROMPT='[%F{blue}%n%f@%F{blue}%m%f %F{yellow}%1~%f] '
+#RPROMPT=''
 
 # alias
 alias ..="cd .."
@@ -82,23 +84,23 @@ autoload -Uz _pass
 [ -f ~/.zsh/jmpfunc.zsh ] && source ~/.zsh/jmpfunc.zsh
 
 # power line
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir rbenv vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs history time)
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
-POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="> "
-POWERLEVEL9K_DIR_HOME_FOREGROUND='007'
-POWERLEVEL9K_DIR_HOME_BACKGROUND='066'
-POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='007'
-POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='059'
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='007'
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='059'
+#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir rbenv vcs)
+#POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs history time)
+#POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+#POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+#POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+#POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
+#POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="> "
+#POWERLEVEL9K_DIR_HOME_FOREGROUND='007'
+#POWERLEVEL9K_DIR_HOME_BACKGROUND='066'
+#POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='007'
+#POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='059'
+#POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='007'
+#POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='059'
 #POWERLEVEL9K_VCS_CLEAN_BACKGROUND='143'
 #POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='143'
 #POWERLEVEL9K_SHORTEN_STRATEGY=truncate_from_
-[ -f ~/powerlevel9k/powerlevel9k.zsh-theme ] && source ~/powerlevel9k/powerlevel9k.zsh-theme
+#[ -f ~/powerlevel9k/powerlevel9k.zsh-theme ] && source ~/powerlevel9k/powerlevel9k.zsh-theme
 
 # autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh

@@ -6,32 +6,29 @@ if [ "$#" -ne 1 ] || ! [ -d "$1" ]; then
   exit 1
 fi
 
-dotdir=`realpath "$1"`
+dotdir=$(realpath "$1")
 
 echo "This will replace your current dotfiles in your home directory"
-read -p "Continue [y/n] " 
-echo    
+read -r -p "Continue [y/n] "
+echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     files=(zsh zshrc zshenv vimrc config/ranger global-gitignore spacemacs.d password-store ssh gnupg gitconfig)
-    case $(uname) in 
+    case $(uname) in
         'Linux') files+=(xmonad Xresources) ;;
         'Darwin') files+=(config/karabiner) ;;
     esac
-    for f in ${files[@]} 
+    for f in "${files[@]}"
     do
         echo "linking $dotdir/$f to $HOME/.$f"
-        ln -sfn $dotdir/$f $HOME/.$f
+        ln -sfn "$dotdir/$f" "$HOME/.$f"
     done
 
     echo "linking $HOME/.vimrc to ~/.config/nvim/init/vim"
     mkdir ~/.config/nvim
-    ln -sfn $HOME/.vimrc ~/.config/nvim/init.vim 
+    ln -sfn "$HOME/.vimrc" ~/.config/nvim/init.vim
 
     echo "linking ~/$dotdir/ghci.conf to $HOME/.ghc/gchi.conf"
-    ln -sfn $dotdir/ghci.conf $HOME/.ghc/ghci.conf 
+    ln -sfn "$dotdir/ghci.conf" "$HOME/.ghc/ghci.conf"
 else
     echo "aborted"
 fi
-
-
-

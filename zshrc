@@ -18,7 +18,7 @@ autoload -U colors && colors
 ##PS1="%{$fg[blue]%}%m %{$reset_color%}%2c%{$reset_color%}> % "
 #PROMPT='[%F{blue}%n%f@%F{blue}%m%f] '
 PROMPT='[%F{blue}%n%f@%F{blue}%m%f %F{yellow}%1~%f] '
-#RPROMPT=''
+RPROMPT=''
 
 # alias
 alias ..="cd .."

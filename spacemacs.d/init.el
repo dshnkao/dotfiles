@@ -39,9 +39,10 @@ values."
      emacs-lisp
      git
      go
-     (haskell :variables
-              haskell-process-type 'stack-ghci
-              haskell-completion-backend 'intero)
+     haskell
+     ;;(haskell :variables
+     ;;         haskell-process-type 'stack-ghci
+     ;;         haskell-completion-backend 'intero)
      html
      ivy
      javascript
@@ -57,8 +58,7 @@ values."
      (shell :variables
             shell-default-shell 'ansi-term
             shell-default-height 30
-     
-       shell-default-position 'bottom)
+            shell-default-position 'bottom)
      shell-scripts
      (spell-checking :variables spell-checking-enable-by-default nil)
      sql

@@ -13,12 +13,16 @@ export LANG=en_US.UTF-8
 #export PINENTRY_USER_DATA="USE_CURSES=1"
 export GPG_TTY=$(tty)
 
+[ -f ~/Drive/code/projects/zsh-git-prompt/zshrc.sh ] && . ~/Drive/code/projects/zsh-git-prompt/zshrc.sh
+GIT_PROMPT_EXECUTABLE="haskell"
+
 # prompt
 autoload -U colors && colors
 ##PS1="%{$fg[blue]%}%m %{$reset_color%}%2c%{$reset_color%}> % "
 #PROMPT='[%F{blue}%n%f@%F{blue}%m%f] '
 PROMPT='[%F{blue}%n%f@%F{blue}%m%f %F{yellow}%1~%f] '
-RPROMPT=''
+#RPROMPT=''
+RPROMPT='$(git_super_status)'
 
 # alias
 alias ..="cd .."
@@ -28,16 +32,16 @@ alias grep="grep --color=auto"
 alias gst="git status -sb"
 alias gitdelmerged='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 case $(uname) in
-  'Linux')   
-      alias ls="ls -X --color" 
+  'Linux')
+      alias ls="ls -X --color"
       alias vi=/usr/bin/vim
       alias ect="emacsclient -nw"
       alias ecg="emacsclient -nc"
       alias xclip="xclip -select c"
       alias ecga='emacsclient -t --eval "(org-agenda-list)" "(delete-other-windows)"'
       ;;
-  'Darwin')  
-      alias ls="gls -X --color" 
+  'Darwin')
+      alias ls="gls -X --color"
       alias vi=/usr/local/bin/vim
       alias emacs="/usr/local/bin/emacs"
       alias egui="open -a /Applications/Emacs.app -n $1"
@@ -68,13 +72,13 @@ bindkey -e
 ## bind UP and DOWN arrow keys
 ##zmodload zsh/terminfo
 #bindkey '^[[A' history-substring-search-up
-#bindkey '^[[B' history-substring-search-down    
+#bindkey '^[[B' history-substring-search-down
 #bindkey "$terminfo[kcuu1]" history-substring-search-up
 #bindkey "$terminfo[kcud1]" history-substring-search-down
 
 # iterm2
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
-# fzf 
+# fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # password-store tab complete
 autoload -Uz _pass

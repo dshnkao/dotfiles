@@ -29,3 +29,8 @@ esac
 # mac brew
 [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# mac
+[ -f ~/Drive/code/projects/zsh-git-prompt/zshrc.sh ] && . ~/Drive/code/projects/zsh-git-prompt/zshrc.sh
+# linux
+[ -f ~/repos/my/zsh-git-prompt/zshrc.sh ] && . ~/repos/my/zsh-git-prompt/zshrc.sh
+

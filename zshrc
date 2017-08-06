@@ -13,15 +13,13 @@ export LANG=en_US.UTF-8
 #export PINENTRY_USER_DATA="USE_CURSES=1"
 export GPG_TTY=$(tty)
 
-[ -f ~/Drive/code/projects/zsh-git-prompt/zshrc.sh ] && . ~/Drive/code/projects/zsh-git-prompt/zshrc.sh
-GIT_PROMPT_EXECUTABLE="haskell"
 
 # prompt
 autoload -U colors && colors
+GIT_PROMPT_EXECUTABLE="haskell"
 ##PS1="%{$fg[blue]%}%m %{$reset_color%}%2c%{$reset_color%}> % "
 #PROMPT='[%F{blue}%n%f@%F{blue}%m%f] '
 PROMPT='[%F{blue}%n%f@%F{blue}%m%f %F{yellow}%1~%f] '
-#RPROMPT=''
 RPROMPT='$(git_super_status)'
 
 # alias

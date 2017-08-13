@@ -12,8 +12,9 @@ export LANG=en_US.UTF-8
 # disable gpg gui passphrase
 #export PINENTRY_USER_DATA="USE_CURSES=1"
 export GPG_TTY=$(tty)
+gpgconf --create-socketdir
 
-
+source ~/repos/my/zsh-git-prompt/zshrc.sh
 # prompt
 autoload -U colors && colors
 GIT_PROMPT_EXECUTABLE="haskell"
@@ -65,15 +66,6 @@ SAVEHIST=1000
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
-## autocomplete on history
-#source $HOME/.zsh/zsh-history-substring-search.zsh
-## bind UP and DOWN arrow keys
-##zmodload zsh/terminfo
-#bindkey '^[[A' history-substring-search-up
-#bindkey '^[[B' history-substring-search-down
-#bindkey "$terminfo[kcuu1]" history-substring-search-up
-#bindkey "$terminfo[kcud1]" history-substring-search-down
-
 # iterm2
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
 # fzf
@@ -84,25 +76,5 @@ autoload -Uz _pass
 [ -f ~/.cammyenv ] && source ~/.cammyenv
 # jmp function
 [ -f ~/.zsh/jmpfunc.zsh ] && source ~/.zsh/jmpfunc.zsh
-
-# power line
-#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir rbenv vcs)
-#POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs history time)
-#POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-#POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-#POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-#POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
-#POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="> "
-#POWERLEVEL9K_DIR_HOME_FOREGROUND='007'
-#POWERLEVEL9K_DIR_HOME_BACKGROUND='066'
-#POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='007'
-#POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='059'
-#POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='007'
-#POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='059'
-#POWERLEVEL9K_VCS_CLEAN_BACKGROUND='143'
-#POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='143'
-#POWERLEVEL9K_SHORTEN_STRATEGY=truncate_from_
-#[ -f ~/powerlevel9k/powerlevel9k.zsh-theme ] && source ~/powerlevel9k/powerlevel9k.zsh-theme
-
 # autojump
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+[ -f /usr/local/etc/profile.d/autojump.sh ] && source /usr/local/etc/profile.d/autojump.sh

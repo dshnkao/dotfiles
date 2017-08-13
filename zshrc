@@ -12,9 +12,10 @@ export LANG=en_US.UTF-8
 # disable gpg gui passphrase
 #export PINENTRY_USER_DATA="USE_CURSES=1"
 export GPG_TTY=$(tty)
-gpgconf --create-socketdir
+# systemd deletes /run/users/:id/gnpug on logout
+gpgconf --create-socketdir > /dev/null 2>&1
 
-source ~/repos/my/zsh-git-prompt/zshrc.sh
+[ -f ~/repos/my/zsh-git-prompt/zshrc.sh ] && source ~/repos/my/zsh-git-prompt/zshrc.sh
 # prompt
 autoload -U colors && colors
 GIT_PROMPT_EXECUTABLE="haskell"

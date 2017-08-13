@@ -126,6 +126,8 @@ if has("nvim")
         let g:python3_host_prog = '/usr/local/bin/python3'
     elseif hostname() == "hertz"
         let g:python3_host_prog = '/usr/local/bin/python3'
+    elseif hostname() == "vaio"
+        let g:python3_host_prog = '/run/current-system/sw/bin/nvim-python3'
     elseif hostname() != "carbon" 
         let g:python3_host_prog = '/usr/bin/python3'
     endif
@@ -167,7 +169,6 @@ hi PmenuSel     cterm=none ctermfg=Black     ctermbg=37
 "hi PmenuThumb   cterm=none ctermfg=DarkGreen ctermbg=DarkGreen
 
 " cursor shape on insert/normal mode
-:let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 :set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
 " parentheses
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta

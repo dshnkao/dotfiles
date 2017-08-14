@@ -5,9 +5,11 @@ tnoremap <C-\><C-\> <C-\><C-n>
 " search highlight
 set hlsearch
 nnoremap <silent> <leader>q :nohlsearch<CR>
-highlight Search ctermfg=Black ctermbg=yellow cterm=NONE
+highlight Search ctermfg=White ctermbg=Grey cterm=None
+set smartcase
 
 "remove status line
 set laststatus=0
+
 
 

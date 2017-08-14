@@ -161,6 +161,7 @@ highlight CursorLine cterm=None
 set hlsearch
 nnoremap <silent> <leader>q :nohlsearch<CR>
 highlight Search ctermfg=Black ctermbg=DarkCyan cterm=NONE
+set smartcase
 
 "completion color
 ":highlight Pmenu ctermbg=233 ctermfg=111 gui=bol

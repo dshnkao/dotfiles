@@ -10,6 +10,7 @@ import XMonad.Util.Scratchpad
 import XMonad.Config.Desktop
 import XMonad.Hooks.DynamicLog (dzen)
 import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.InsertPosition
 import Data.List
 import System.IO
 
@@ -69,7 +70,11 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 -- add avoidStruts to your layoutHook like so
 myLayoutHook = avoidStruts $ layoutHook defaultConfig
 -- add manageDocks to your managehook like so
-myManageHook = manageSpawn <+> manageScratchPad <+> manageDocks <+> manageHook defaultConfig
+myManageHook = manageSpawn 
+    <+> manageScratchPad 
+    <+> manageDocks 
+    <+> insertPosition Below Newer 
+    <+> manageHook defaultConfig
 
 manageScratchPad :: ManageHook
 manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)

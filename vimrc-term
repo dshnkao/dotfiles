@@ -1,0 +1,13 @@
+
+" exit terminal mode
+tnoremap <C-\><C-\> <C-\><C-n>
+
+" search highlight
+set hlsearch
+nnoremap <silent> <leader>q :nohlsearch<CR>
+highlight Search ctermfg=Black ctermbg=yellow cterm=NONE
+
+"remove status line
+set laststatus=0
+
+

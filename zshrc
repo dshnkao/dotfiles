@@ -31,13 +31,14 @@ alias vim="nvim"
 alias grep="grep --color=auto"
 alias gst="git status -sb"
 alias gitdelmerged='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
+alias vt="nvim -c terminal -u ~/.vimrc-term"
 case $(uname) in
   'Linux')
       alias ls="ls -X --color"
       alias vi=/usr/bin/vim
       alias ect="emacsclient -nw"
       alias ecg="emacsclient -nc"
-      alias xclip="xclip -select c"
+      alias xc="xclip -select c"
       alias ecga='emacsclient -t --eval "(org-agenda-list)" "(delete-other-windows)"'
       ;;
   'Darwin')

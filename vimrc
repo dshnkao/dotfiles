@@ -132,7 +132,8 @@ if has("nvim")
         let g:python3_host_prog = '/usr/bin/python3'
     endif
     """ terminal buffer
-    tnoremap <Esc> <C-\><C-n>
+    tnoremap <C-\><C-\> <C-\><C-n>
+    "tnoremap <Esc> <C-\><C-n>
 
     """ deoplete
     let g:deoplete#enable_at_startup = 1
@@ -159,7 +160,7 @@ highlight CursorLine cterm=None
 " \ q for rm highlight
 set hlsearch
 nnoremap <silent> <leader>q :nohlsearch<CR>
-highlight Search ctermfg=Black ctermbg=yellow cterm=NONE
+highlight Search ctermfg=Black ctermbg=DarkCyan cterm=NONE
 
 "completion color
 ":highlight Pmenu ctermbg=233 ctermfg=111 gui=bol

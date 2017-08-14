@@ -27,7 +27,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     mkdir ~/.config/nvim
     ln -sfn "$HOME/.vimrc" ~/.config/nvim/init.vim
 
-    echo "linking ~/$dotdir/ghci.conf to $HOME/.ghc/gchi.conf"
+    echo "linking $dotdir/ghci.conf to $HOME/.ghc/gchi.conf"
     ln -sfn "$dotdir/ghci.conf" "$HOME/.ghc/ghci.conf"
 else
     echo "aborted"

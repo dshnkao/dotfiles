@@ -29,9 +29,10 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias vim="nvim"
 alias grep="grep --color=auto"
-alias gst="git status -sb"
+alias gst='git status -sb'
 alias gitdelmerged='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
-alias vt="nvim -c terminal -u ~/.vimrc-term"
+alias vt='nvim -c terminal -u ~/.vimrc-term'
+alias passf='pass $(passfzf.sh)'
 case $(uname) in
   'Linux')
       alias ls="ls -X --color"

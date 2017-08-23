@@ -26,8 +26,8 @@ import Graphics.X11.Xlib
 import Graphics.X11.Xlib.Extras
 
 main = do
-  d <- spawnPipe "dzen2 -ta l -h 30 -w 1000 -fn Ubuntu:size=11 -dock"
-  spawn $ "conky -c ~/.xmonad/data/conky/dzen | " ++ "dzen2 -ta r -x 1000 -h 30 -fn Ubuntu:size=11"
+  leftBar <- spawnPipe "dzen2 -ta l -h 30 -w 1000 -fn Ubuntu:size=11 -dock"
+  spawn $ "conky -c ~/.xmonad/data/conky/dzen | " ++ "dzen2 -ta r -x 100 -h 30 -fn Ubuntu:size=11"
   spawn "/usr/bin/autocutsel -fork" -- need both, don't delete
   spawn "/usr/bin/autocutsel -selection PRIMARY -fork"
 
@@ -35,7 +35,7 @@ main = do
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
     { manageHook  = myManageHook 
     , layoutHook  = myLayoutHook
-    , logHook     = myLogHook d
+    , logHook     = myLogHook leftBar
     , startupHook = setWMName "LG3D"
     , modMask     = mod4Mask
     , terminal    = "urxvt"

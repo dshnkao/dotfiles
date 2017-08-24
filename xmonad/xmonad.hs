@@ -1,33 +1,38 @@
-import XMonad
-import XMonad.Actions.SpawnOn
-import XMonad.Hooks.SetWMName
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops 
-import XMonad.Hooks.ManageDocks
-import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.EZConfig(additionalKeys)
-import XMonad.Util.Scratchpad 
-import XMonad.Config.Desktop
-import XMonad.Hooks.DynamicLog (dzen)
-import XMonad.Hooks.UrgencyHook
-import XMonad.Hooks.InsertPosition
-import Data.List
-import System.IO
-
-import XMonad.Layout
-import XMonad.Operations
-import XMonad.ManageHook
-import qualified XMonad.StackSet as W
 import Data.Bits ((.|.))
+import Data.List
 import Data.Monoid
-import qualified Data.Map as M
-import System.Exit
 import Graphics.X11.Xlib
 import Graphics.X11.Xlib.Extras
+import System.Exit
+import System.IO
+import XMonad
+import XMonad.Actions.CycleWS
+import XMonad.Actions.SpawnOn
+import XMonad.Actions.SwapWorkspaces
+import XMonad.Config.Desktop
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.DynamicLog (dzen)
+import XMonad.Hooks.EwmhDesktops 
+import XMonad.Hooks.InsertPosition
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.SetWMName
+import XMonad.Hooks.UrgencyHook
+import XMonad.Layout
+import XMonad.ManageHook
+import XMonad.Operations
+import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.Scratchpad 
+import qualified Data.Map as M
+import qualified XMonad.StackSet as W
+
+myWorkspaces :: [WorkspaceId]
+myWorkspaces = map show [1..9 :: Int]
 
 main = do
-  leftBar <- spawnPipe "dzen2 -ta l -h 30 -w 1000 -fn Ubuntu:size=11 -dock"
-  spawn $ "conky -c ~/.xmonad/data/conky/dzen | " ++ "dzen2 -ta r -x 100 -h 30 -fn Ubuntu:size=11"
+  leftBar <- spawnPipe "dzen2 -ta l -h 30 -w 960 -fn Ubuntu:size=11 -dock"
+  spawn $ "conky -c ~/.xmonad/data/conky/dzen | " ++ "dzen2 -ta r -x 960 -h 30 -fn Ubuntu:size=11"
+  spawn "xsetroot -cursor_name left_ptr"
   spawn "/usr/bin/autocutsel -fork" -- need both, don't delete
   spawn "/usr/bin/autocutsel -selection PRIMARY -fork"
 
@@ -37,6 +42,7 @@ main = do
     , layoutHook  = myLayoutHook
     , logHook     = myLogHook leftBar
     , startupHook = setWMName "LG3D"
+    , workspaces  = myWorkspaces
     , modMask     = mod4Mask
     , terminal    = "urxvt"
     , handleEventHook = docksEventHook <+> handleEventHook defaultConfig 
@@ -79,15 +85,29 @@ myManageHook = manageSpawn
 manageScratchPad :: ManageHook
 manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
   where
-    h = 0.3     -- terminal height, 10%
-    w = 1       -- terminal width, 100%
-    t = 1 - h   -- distance from top edge, 90%
-    l = 1 - w   -- distance from left edge, 0%
+    h = 0.3     -- terminal height
+    w = 1       -- terminal width
+    t = 1 - h   -- distance from top edge
+    l = 1 - w   -- distance from left edge
 
-myKeys = [ ((mod4Mask,               xK_bracketleft     ), sendMessage Shrink) -- %! Shrink the master area
-         , ((mod4Mask,               xK_bracketright    ), sendMessage Expand) -- %! Shrink the master area
-         , ((mod4Mask .|. shiftMask, xK_y     ), io (exitWith ExitSuccess)) -- %! Quit xmonad
-         , ((mod4Mask              , xK_y     ), spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi") 
-         , ((mod4Mask,               xK_p     ), spawn "rofi -show run")
-         , ((mod4Mask              , xK_0     ), scratchpadSpawnActionTerminal "urxvt")
+myKeys = [ ((mod4Mask,                 xK_bracketleft  ), sendMessage Shrink) -- %! Shrink the master area
+         , ((mod4Mask,                 xK_bracketright ), sendMessage Expand) -- %! Shrink the master area
+         , ((mod4Mask .|. shiftMask,   xK_bracketleft  ), prevWS)
+         , ((mod4Mask .|. shiftMask,   xK_bracketright ), nextWS)
+         , ((mod4Mask .|. shiftMask,   xK_y            ), io (exitWith ExitSuccess))
+         , ((mod4Mask,                 xK_y            ), spawn "killall conky dzen2 && xmonad --recompile && xmonad --restart") 
+         , ((mod4Mask .|. shiftMask,   xK_q            ), io (exitWith ExitSuccess))
+         , ((mod4Mask,                 xK_q            ), spawn "killall conky dzen2 && xmonad --recompile && xmonad --restart")
+         , ((mod4Mask,                 xK_p            ), spawn "rofi -show run")
+         , ((mod4Mask,                 xK_0            ), scratchpadSpawnActionTerminal "urxvt")
+         -- meida keys
+         , ((0, 0x1008ff12                             ), spawn "amixer -q sset Master toggle") --f1
+         , ((0, 0x1008ff11                             ), spawn "amixer -q sset Master 5%-") --f2
+         , ((0, 0x1008ff13                             ), spawn "amixer -q sset Master 5%+") --f3
+         , ((0, 0x1008ff03                             ), spawn "xbacklight -5") --f5
+         , ((0, 0x1008ff02                             ), spawn "xbacklight +5") --f6
          ]
+         ++
+         [((mod4Mask .|. controlMask,  k               ), windows $ swapWithCurrent i) | (i, k) <- zip myWorkspaces [xK_1 ..]]
+
+

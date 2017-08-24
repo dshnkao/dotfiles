@@ -33,6 +33,8 @@ alias gst='git status -sb'
 alias gitdelmerged='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 alias vt='nvim -c terminal -u ~/.vimrc-term'
 alias passf='pass $(passfzf.sh)'
+alias confnix='sudoedit /etc/nixos/configuration.nix'
+alias nrs='sudo nixos-rebuild switch'
 case $(uname) in
   'Linux')
       alias ls="ls -X --color"

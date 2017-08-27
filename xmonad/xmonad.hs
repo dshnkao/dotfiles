@@ -5,6 +5,7 @@ import Graphics.X11.Xlib
 import Graphics.X11.Xlib.Extras
 import System.Exit
 import System.IO
+import System.Taffybar.Hooks.PagerHints (pagerHints)
 import XMonad
 import XMonad.Actions.CycleWS
 import XMonad.Actions.SpawnOn
@@ -30,17 +31,18 @@ myWorkspaces :: [WorkspaceId]
 myWorkspaces = map show [1..9 :: Int]
 
 main = do
-  leftBar <- spawnPipe "dzen2 -ta l -h 30 -w 960 -fn Ubuntu:size=11 -dock"
-  spawn $ "conky -c ~/.xmonad/data/conky/dzen | " ++ "dzen2 -ta r -x 960 -h 30 -fn Ubuntu:size=11"
+  -- leftBar <- spawnPipe "dzen2 -ta l -h 30 -w 960 -fn Ubuntu:size=11 -dock"
+  -- spawn $ "conky -c ~/.xmonad/data/conky/dzen | " ++ "dzen2 -ta r -x 960 -h 30 -fn Ubuntu:size=11"
+  taffy <- spawnPipe "taffybar"
   spawn "xsetroot -cursor_name left_ptr"
   spawn "/usr/bin/autocutsel -fork" -- need both, don't delete
   spawn "/usr/bin/autocutsel -selection PRIMARY -fork"
 
   --xmonad $ desktopConfig
-  xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
-    { manageHook  = myManageHook 
+  xmonad $ ewmh $ pagerHints $ withUrgencyHook NoUrgencyHook $ defaultConfig
+    { manageHook  = myManageHook
     , layoutHook  = myLayoutHook
-    , logHook     = myLogHook leftBar
+    --, logHook     = myLogHook leftBar
     , startupHook = setWMName "LG3D"
     , workspaces  = myWorkspaces
     , modMask     = mod4Mask
@@ -85,7 +87,7 @@ myManageHook = manageSpawn
 manageScratchPad :: ManageHook
 manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
   where
-    h = 0.3     -- terminal height
+    h = 0.4     -- terminal height
     w = 1       -- terminal width
     t = 1 - h   -- distance from top edge
     l = 1 - w   -- distance from left edge
@@ -95,9 +97,9 @@ myKeys = [ ((mod4Mask,                 xK_bracketleft  ), sendMessage Shrink) --
          , ((mod4Mask .|. shiftMask,   xK_bracketleft  ), prevWS)
          , ((mod4Mask .|. shiftMask,   xK_bracketright ), nextWS)
          , ((mod4Mask .|. shiftMask,   xK_y            ), io (exitWith ExitSuccess))
-         , ((mod4Mask,                 xK_y            ), spawn "killall conky dzen2 && xmonad --recompile && xmonad --restart") 
+         , ((mod4Mask,                 xK_y            ), spawn "pkill taffybar; xmonad --recompile && xmonad --restart") 
          , ((mod4Mask .|. shiftMask,   xK_q            ), io (exitWith ExitSuccess))
-         , ((mod4Mask,                 xK_q            ), spawn "killall conky dzen2 && xmonad --recompile && xmonad --restart")
+         , ((mod4Mask,                 xK_q            ), spawn "pkill taffybar; xmonad --recompile && xmonad --restart")
          , ((mod4Mask,                 xK_p            ), spawn "rofi -show run")
          , ((mod4Mask,                 xK_0            ), scratchpadSpawnActionTerminal "urxvt")
          -- meida keys

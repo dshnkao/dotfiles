@@ -1,4 +1,4 @@
-export TERM=xterm-256color
+# export TERM=xterm-256color
 export EDITOR=nvim
 
 export CLICOLOR=1
@@ -31,6 +31,7 @@ alias vim="nvim"
 alias grep="grep --color=auto"
 alias gst='git status -sb'
 alias gitdelmerged='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
+alias ssh='TERM=xterm-256color ssh'
 alias vt='nvim -c terminal -u ~/.vimrc-term'
 alias passf='pass $(passfzf.sh)'
 alias confnix='sudoedit /etc/nixos/configuration.nix'

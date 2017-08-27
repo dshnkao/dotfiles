@@ -3,8 +3,8 @@ search Google
 search dev
 search 
 search g
-open_with 
 search battlenet
 open_with
 rename Cache
 delete
+open_with 

@@ -37,10 +37,3 @@
 
 [core]
     excludesfile = ~/.global-gitignore
-
-[diff]
-    tool = icdiff
-[difftool]
-    prompt = false
-[difftool "icdiff"]
-    cmd = icdiff --line-numbers $LOCAL $REMOTE | less -R

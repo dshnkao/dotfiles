@@ -40,7 +40,8 @@ values."
      emacs-lisp
      git
      go
-     haskell
+     ;;haskell
+     (haskell :variables haskell-process-type 'cabal-ghci)
      ;;(haskell :variables
      ;;         haskell-process-type 'stack-ghci
      ;;         haskell-completion-backend 'intero)

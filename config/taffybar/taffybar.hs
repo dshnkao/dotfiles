@@ -1,3 +1,6 @@
+{-# LANGUAGE MultiWayIf #-}
+import Data.Monoid ((<>))
+import Graphics.UI.Gtk
 import Graphics.UI.Gtk.Abstract.Widget
 import System.Information.CPU
 import System.Information.Memory
@@ -15,14 +18,16 @@ import System.Taffybar.Widgets.PollingBar
 import System.Taffybar.Widgets.PollingGraph
 import System.Taffybar.Widgets.PollingLabel
 import System.Taffybar.Widgets.VerticalBar
+import System.Information.Battery
 import System.Process (readProcess)
 import Text.Printf (printf)
+import Control.Monad.Trans.Maybe
 
 main :: IO ()
 main = do
   defaultTaffybar defaultTaffybarConfig
     { startWidgets = [ pager ]
-    , endWidgets   = [ clock, textBattery, mem, cpu, network, wifi ]
+    , endWidgets   = [ clock, battery, mem, cpu, network, wifi ]
     }
 
 pager :: IO Widget
@@ -53,10 +58,10 @@ wifi =
             then Nothing
             else pure $ "\61931 " ++ connection
           _ -> Nothing
-  in do
-    label <- pollingLabelNew "\61931 No Connection" 1 f
-    widgetShowAll label
-    return label
+  in
+    pollingLabelNew "\61931 No Connection" 1 f >>= \x ->
+    widgetShowAll x >>
+    pure x
 
 network :: IO Widget
 network = netMonitorNewWith 1 "wlp4s0" 2 "▼ $inKB$kb/s ▲ $outKB$kb/s"
@@ -79,8 +84,8 @@ mem = pollingGraphNew defaultGraphConfig
   where
     callback = (:[]) . memoryUsedRatio <$> parseMeminfo
 
-battery :: IO Widget
-battery = batteryBarNew BarConfig
+batteryBar :: IO Widget
+batteryBar = batteryBarNew BarConfig
   { barBorderColor = (0.5, 0.5, 0.5)
   , barBackgroundColor = const (0, 0, 0)
   , barColor = const (1, 1, 1)
@@ -89,8 +94,35 @@ battery = batteryBarNew BarConfig
   , barDirection = VERTICAL
   } 1
 
-textBattery :: IO Widget
-textBattery = textBatteryNew "\62016 $percentage$%" 1
+volume :: IO Widget
+volume = do
+  l <- labelNew (pure "\61480")
+  labelSetMarkup l "\61480"
+  widgetShowAll $ toWidget l
+  -- on l realize $ pure ()
+  pure $ toWidget l
+
+battery :: IO Widget
+battery =
+  let f = fmap (maybe "\62010 --%" id) $ runMaybeT $ do
+        ctx <- MaybeT batteryContextNew
+        inf <- MaybeT $ getBatteryInfo ctx
+        let icon = case batteryState inf of
+              BatteryStateCharging     -> "\62016"
+              BatteryStateFullyCharged -> "\62016"
+              _ -> if | batteryPercentage inf > 75 -> "\62017"
+                      | batteryPercentage inf > 50 -> "\62018"
+                      | batteryPercentage inf > 25 -> "\62019"
+                      | otherwise -> "\62020"
+        let txt = show (truncate $ batteryPercentage inf) <> "%"
+        pure $ icon <> " " <> txt
+  in
+    pollingLabelNew "\62010 --%" 1 f >>= \x ->
+    widgetShowAll x >>
+    pure x
+
+batteryText :: IO Widget
+batteryText = textBatteryNew "\62016 $percentage$%" 1
 
 clock :: IO Widget
 clock = textClockNew Nothing "%Y-%m-%d %H:%M " 1

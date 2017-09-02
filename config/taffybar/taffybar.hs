@@ -27,7 +27,8 @@ main :: IO ()
 main = do
   defaultTaffybar defaultTaffybarConfig
     { startWidgets = [ pager ]
-    , endWidgets   = [ clock, battery, mem, cpu, network, wifi ]
+    --, endWidgets   = [ clock, battery, mem, cpu, network, wifi ]
+    , endWidgets   = [ clock, battery, mem, cpu, network, wifi]
     }
 
 pager :: IO Widget
@@ -59,7 +60,7 @@ wifi =
             else pure $ "\61931 " ++ connection
           _ -> Nothing
   in
-    pollingLabelNew "\61931 No Connection" 1 f >>= \x ->
+    pollingLabelNew "\61931 No Connection" 10 f >>= \x ->
     widgetShowAll x >>
     pure x
 
@@ -117,7 +118,7 @@ battery =
         let txt = show (truncate $ batteryPercentage inf) <> "%"
         pure $ icon <> " " <> txt
   in
-    pollingLabelNew "\62010 --%" 1 f >>= \x ->
+    pollingLabelNew "\62010 --%" 30 f >>= \x ->
     widgetShowAll x >>
     pure x
 

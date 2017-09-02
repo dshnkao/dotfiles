@@ -35,8 +35,8 @@ main = do
   -- spawn $ "conky -c ~/.xmonad/data/conky/dzen | " ++ "dzen2 -ta r -x 960 -h 30 -fn Ubuntu:size=11"
   taffy <- spawnPipe "taffybar"
   spawn "xsetroot -cursor_name left_ptr"
-  spawn "/usr/bin/autocutsel -fork" -- need both, don't delete
-  spawn "/usr/bin/autocutsel -selection PRIMARY -fork"
+  spawn "autocutsel -fork" -- need both, don't delete
+  spawn "autocutsel -selection PRIMARY -fork"
 
   --xmonad $ desktopConfig
   xmonad $ ewmh $ pagerHints $ withUrgencyHook NoUrgencyHook $ defaultConfig

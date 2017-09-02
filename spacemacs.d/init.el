@@ -41,7 +41,10 @@ values."
      git
      go
      ;;haskell
-     (haskell :variables haskell-process-type 'cabal-ghci)
+     ;;(haskell :variables
+     ;;         haskell-process-type 'ghci
+     ;;         haskell-completion-backend 'company-ghci)
+     haskell
      ;;(haskell :variables
      ;;         haskell-process-type 'stack-ghci
      ;;         haskell-completion-backend 'intero)

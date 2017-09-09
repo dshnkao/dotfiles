@@ -292,9 +292,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (load "server")
   (unless (server-running-p) (server-start))
   (push '("melpa-stable" . "stable.melpa.org/packages/") configuration-layer--elpa-archives)
-  ;;(push '(ensime . "melpa-stable") package-pinned-packages)
   (setq-default dotspacemacs-themes '(sanityinc-tomorrow-night))
   (setq dotspacemacs-distinguish-gui-tab t)
+  (setq pdf-info-epdfinfo-program "/run/current-system/sw/share/emacs/site-lisp/elpa/pdf-tools-20170820.1117/build/server/epdfinfo")
   )
 
 (defun dotspacemacs/user-config ()
@@ -323,7 +323,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
   (add-to-list 'load-path "~/.spacemacs.d")
 
-  (setq TeX-engine 'xetex)
+  ;;(setq TeX-engine 'xetex)
+  (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
   (with-eval-after-load 'org
     (setq org-agenda-files '("~/repos/my/org/"))

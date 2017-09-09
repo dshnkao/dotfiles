@@ -27,8 +27,8 @@ main :: IO ()
 main = do
   defaultTaffybar defaultTaffybarConfig
     { startWidgets = [ pager ]
-    --, endWidgets   = [ clock, battery, mem, cpu, network, wifi ]
-    , endWidgets   = [ clock, battery, mem, cpu, network, wifi]
+    , endWidgets   = [ clock, battery, mem, cpu, network, wifi ]
+    --, endWidgets   = [ clock, batteryText, mem, cpu, network, wifi]
     }
 
 pager :: IO Widget
@@ -105,8 +105,8 @@ volume = do
 
 battery :: IO Widget
 battery =
-  let f = fmap (maybe "\62010 --%" id) $ runMaybeT $ do
-        ctx <- MaybeT batteryContextNew
+  let f ctxm = fmap (maybe "\62010 --%" id) $ runMaybeT $ do
+        ctx <- MaybeT $ pure ctxm
         inf <- MaybeT $ getBatteryInfo ctx
         let icon = case batteryState inf of
               BatteryStateCharging     -> "\62016"
@@ -118,7 +118,8 @@ battery =
         let txt = show (truncate $ batteryPercentage inf) <> "%"
         pure $ icon <> " " <> txt
   in
-    pollingLabelNew "\62010 --%" 30 f >>= \x ->
+    batteryContextNew >>= \ctx ->
+    pollingLabelNew "\62010 --%" 10 (f ctx) >>= \x ->
     widgetShowAll x >>
     pure x
 

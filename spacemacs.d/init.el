@@ -40,14 +40,8 @@ values."
      emacs-lisp
      git
      go
-     ;;haskell
-     ;;(haskell :variables
-     ;;         haskell-process-type 'ghci
-     ;;         haskell-completion-backend 'company-ghci)
-     haskell
-     ;;(haskell :variables
-     ;;         haskell-process-type 'stack-ghci
-     ;;         haskell-completion-backend 'intero)
+     (haskell :variables
+              flycheck-disabled-checkers '(haskell-stack-ghc))
      html
      ivy
      javascript
@@ -289,8 +283,8 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  (load "server")
-  (unless (server-running-p) (server-start))
+  ;; (load "server")
+  ;; (unless (server-running-p) (server-start))
   (push '("melpa-stable" . "stable.melpa.org/packages/") configuration-layer--elpa-archives)
   (setq-default dotspacemacs-themes '(sanityinc-tomorrow-night))
   (setq dotspacemacs-distinguish-gui-tab t)
@@ -298,7 +292,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   )
 
 (defun dotspacemacs/user-config ()
-  (setq-default flycheck-disabled-checkers '(haskell-stack-ghc))
   (require 'ensime)
   (add-to-list 'exec-path "~/sbt-extras")
   (setq ensime-startup-snapshot-notification nil)

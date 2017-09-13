@@ -96,6 +96,8 @@ myKeys = [ ((mod4Mask,                 xK_bracketleft  ), sendMessage Shrink) --
          , ((mod4Mask,                 xK_bracketright ), sendMessage Expand) -- %! Shrink the master area
          , ((mod4Mask .|. shiftMask,   xK_bracketleft  ), prevWS)
          , ((mod4Mask .|. shiftMask,   xK_bracketright ), nextWS)
+         , ((mod4Mask .|. shiftMask,   xK_i            ), spawn "~/repos/my/scripts/internal.sh")
+         , ((mod4Mask .|. shiftMask,   xK_e            ), spawn "~/repos/my/scripts/external.sh")
          , ((mod4Mask .|. shiftMask,   xK_y            ), io (exitWith ExitSuccess))
          , ((mod4Mask,                 xK_y            ), spawn "pkill taffybar; xmonad --recompile && xmonad --restart") 
          , ((mod4Mask .|. shiftMask,   xK_q            ), io (exitWith ExitSuccess))

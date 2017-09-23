@@ -36,6 +36,7 @@ alias vt='nvim -c terminal -u ~/.vimrc-term'
 alias passf='pass $(passfzf.sh)'
 alias confnix='sudoedit /etc/nixos/configuration.nix'
 alias nrs='sudo nixos-rebuild switch'
+alias hibernate='systemctl hibernate'
 case $(uname) in
   'Linux')
       alias ls="ls -X --color"

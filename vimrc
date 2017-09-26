@@ -16,6 +16,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'flazz/vim-colorschemes'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'LnL7/vim-nix'
 call plug#end()
 
 filetype plugin indent on

@@ -37,6 +37,8 @@ alias passf='pass $(passfzf.sh)'
 alias confnix='sudoedit /etc/nixos/configuration.nix'
 alias nrs='sudo nixos-rebuild switch'
 alias hibernate='systemctl hibernate'
+alias se='sudoedit'
+alias open='xdg-open'
 case $(uname) in
   'Linux')
       alias ls="ls -X --color"
@@ -85,3 +87,5 @@ autoload -Uz _pass
 [ -f ~/.zsh/jmpfunc.zsh ] && source ~/.zsh/jmpfunc.zsh
 # autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && source /usr/local/etc/profile.d/autojump.sh
+
+[ -f /run/current-system/sw/share/autojump/autojump.zsh ] && source  /run/current-system/sw/share/autojump/autojump.zsh

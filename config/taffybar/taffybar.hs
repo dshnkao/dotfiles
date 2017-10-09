@@ -1,4 +1,5 @@
 {-# LANGUAGE MultiWayIf #-}
+import Data.List (intercalate)
 import Data.Monoid ((<>))
 import Graphics.UI.Gtk
 import Graphics.UI.Gtk.Abstract.Widget
@@ -28,7 +29,6 @@ main = do
   defaultTaffybar defaultTaffybarConfig
     { startWidgets = [ pager ]
     , endWidgets   = [ clock, battery, mem, cpu, network, wifi ]
-    --, endWidgets   = [ clock, batteryText, mem, cpu, network, wifi]
     }
 
 pager :: IO Widget
@@ -55,9 +55,9 @@ wifi =
       case filter (("wlp4s0" ==) . head) $ words <$> drop 1 (lines s) of
         []   -> Nothing
         x:xs -> case x of
-          device:typ:state:connection:[] -> if state /= "connected"
+          device:typ:state:connection -> if state /= "connected"
             then Nothing
-            else pure $ "\61931 " ++ connection
+            else pure $ "\61931 " ++ (intercalate " " connection)
           _ -> Nothing
   in
     pollingLabelNew "\61931 No Connection" 10 f >>= \x ->

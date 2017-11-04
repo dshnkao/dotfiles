@@ -25,20 +25,21 @@ PROMPT='[%F{blue}%n%f@%F{blue}%m%f %F{yellow}%1~%f] '
 RPROMPT='$(git_super_status)'
 
 # alias
-alias ..="cd .."
 alias ...="cd ../.."
-alias vim="nvim"
+alias ..="cd .."
+alias confnix='sudoedit /etc/nixos/configuration.nix'
+alias gitdelmerged='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 alias grep="grep --color=auto"
 alias gst='git status -sb'
-alias gitdelmerged='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
-alias ssh='TERM=xterm-256color ssh'
-alias vt='nvim -c terminal -u ~/.vimrc-term'
-alias passf='pass $(passfzf.sh)'
-alias confnix='sudoedit /etc/nixos/configuration.nix'
-alias nrs='sudo nixos-rebuild switch'
 alias hibernate='systemctl hibernate'
+alias nrs='sudo nixos-rebuild switch'
+alias open='rifle'
+alias passf='pass $(passfzf.sh)'
+alias r='ranger'
 alias se='sudoedit'
-alias open='xdg-open'
+alias ssh='TERM=xterm-256color ssh'
+alias vim="nvim"
+alias vt='nvim -c terminal -u ~/.vimrc-term'
 case $(uname) in
   'Linux')
       alias ls="ls -X --color"

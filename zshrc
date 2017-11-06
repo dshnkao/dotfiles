@@ -38,6 +38,7 @@ alias passf='pass $(passfzf.sh)'
 alias r='ranger'
 alias se='sudoedit'
 alias ssh='TERM=xterm-256color ssh'
+alias t='tmux'
 alias vim="nvim"
 alias vt='nvim -c terminal -u ~/.vimrc-term'
 case $(uname) in

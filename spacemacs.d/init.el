@@ -41,7 +41,8 @@ values."
      git
      go
      (haskell :variables
-              flycheck-disabled-checkers '(haskell-stack-ghc))
+              flycheck-disabled-checkers '(haskell-stack-ghc)
+              haskell-process-type 'cabal-repl)
      html
      ivy
      javascript
@@ -330,7 +331,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 (defun dotspacemacs/user-config ()
   (require 'ensime)
   ;;(add-to-list 'exec-path "~/sbt-extras")
-  (setq ensime-startup-snapshot-notification nil)
+  (setq ensime-startup-notification nil)
   (add-to-list 'spacemacs-jump-handlers-scala-mode '(ensime-edit-definition :async t))
 
   (setq-default indent-tabs-mode nil)

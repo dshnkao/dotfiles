@@ -33,7 +33,6 @@ alias grep="grep --color=auto"
 alias gst='git status -sb'
 alias hibernate='systemctl hibernate'
 alias nrs='sudo nixos-rebuild switch'
-alias open='rifle'
 alias passf='pass $(passfzf.sh)'
 alias r='ranger'
 alias se='sudoedit'
@@ -41,9 +40,12 @@ alias ssh='TERM=xterm-256color ssh'
 alias t='tmux'
 alias vim="nvim"
 alias vt='nvim -c terminal -u ~/.vimrc-term'
+alias lx='exa --group-directories-first --git --sort=extension'
+alias l='lx -al'
+alias ll='lx -l'
 case $(uname) in
   'Linux')
-      alias ls="ls -X --color"
+      #alias ls="ls -X --color"
       alias vi=/usr/bin/vim
       alias ect="emacsclient -nw"
       alias ecg="emacsclient -nc"

@@ -9,3 +9,4 @@ xmonad-x86_64-linux
 *.hi
 config/ranger/bookmarks
 config/ranger/tagged
+config/ranger/history

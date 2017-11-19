@@ -1,3 +1,5 @@
+import Control.Monad
+import Data.Maybe
 import Data.Bits ((.|.))
 import Data.List
 import Data.Monoid
@@ -16,9 +18,12 @@ import XMonad.Hooks.DynamicLog (dzen)
 import XMonad.Hooks.EwmhDesktops 
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout
+import XMonad.Layout.Fullscreen hiding (fullscreenEventHook)
+import XMonad.Layout.NoBorders
 import XMonad.ManageHook
 import XMonad.Operations
 import XMonad.Util.EZConfig(additionalKeys)
@@ -31,58 +36,56 @@ myWorkspaces :: [WorkspaceId]
 myWorkspaces = map show [1..9 :: Int]
 
 main = do
-  -- leftBar <- spawnPipe "dzen2 -ta l -h 30 -w 960 -fn Ubuntu:size=11 -dock"
-  -- spawn $ "conky -c ~/.xmonad/data/conky/dzen | " ++ "dzen2 -ta r -x 960 -h 30 -fn Ubuntu:size=11"
   taffy <- spawnPipe "taffybar"
   spawn "xsetroot -cursor_name left_ptr"
   spawn "autocutsel -fork" -- need both, don't delete
   spawn "autocutsel -selection PRIMARY -fork"
 
   --xmonad $ desktopConfig
-  xmonad $ ewmh $ pagerHints $ withUrgencyHook NoUrgencyHook $ defaultConfig
+  xmonad $ ewmh $ pagerHints $ withUrgencyHook NoUrgencyHook $ fullscreenSupport $ defaultConfig
     { manageHook  = myManageHook
     , layoutHook  = myLayoutHook
-    --, logHook     = myLogHook leftBar
-    , startupHook = setWMName "LG3D"
+    , startupHook = setWMName "LG3D" >> addEWMHFullscreen
     , workspaces  = myWorkspaces
     , modMask     = mod4Mask
     , terminal    = "urxvt"
-    , handleEventHook = docksEventHook <+> handleEventHook defaultConfig 
+    , handleEventHook = docksEventHook <+> handleEventHook defaultConfig <+> fullscreenEventHook
     } `additionalKeys` myKeys
 
-myLogHook h = dynamicLogWithPP $ defaultPP
-    -- display current workspace as darkgrey on light grey (opposite of 
-    -- default colors)
-    { ppCurrent         = dzenColor "#303030" "#909090" . pad 
-    -- display other workspaces which contain windows as a brighter grey
-    , ppHidden          = dzenColor "#909090" "" . pad . noScratchPad
-    --, ppHidden          = dzenColor "#ffffff" "" . pad . noScratchPad
-    -- display other workspaces with no windows as a normal grey
-    , ppHiddenNoWindows = dzenColor "#606060" "" . pad . noScratchPad
-    -- display the current layout as a brighter grey
-    , ppLayout          = dzenColor "#909090" "" . pad 
-    -- if a window on a hidden workspace needs my attention, color it so
-    , ppUrgent          = dzenColor "#ff0000" "" . pad . dzenStrip
-    -- shorten if it goes over 100 characters
-    , ppTitle           = shorten 100
-    -- no separator between workspaces
-    , ppWsSep           = ""
-    -- put a few spaces between each object
-    , ppSep             = "  "
-    -- output to the handle we were given as an argument
-    , ppOutput          = hPutStrLn h
-    }
-    where
-      noScratchPad ws = if ws == "NSP" then "" else ws
+-- GLFW 
+-- https://github.com/xmonad/xmonad-contrib/pull/109
+-- https://github.com/xmonad/xmonad-contrib/issues/183
+addNETSupported :: Atom -> X ()
+addNETSupported x   = withDisplay $ \dpy -> do
+    r               <- asks theRoot
+    a_NET_SUPPORTED <- getAtom "_NET_SUPPORTED"
+    a               <- getAtom "ATOM"
+    liftIO $ do
+        sup <- (join . maybeToList) <$> getWindowProperty32 dpy a_NET_SUPPORTED r
+        when (fromIntegral x `notElem` sup) $
+          changeProperty32 dpy r a_NET_SUPPORTED a propModeAppend [fromIntegral x]
+
+addEWMHFullscreen :: X ()
+addEWMHFullscreen   = do
+  wms <- getAtom "_NET_WM_STATE"
+  wfs <- getAtom "_NET_WM_STATE_FULLSCREEN"
+  mapM_ addNETSupported [wms, wfs]
 
 -- add avoidStruts to your layoutHook like so
-myLayoutHook = avoidStruts $ layoutHook defaultConfig
+myLayoutHook = 
+  fullscreenFull
+  $ lessBorders OnlyFloat
+  $ avoidStruts
+  $ layoutHook defaultConfig
+
 -- add manageDocks to your managehook like so
-myManageHook = manageSpawn 
-    <+> manageScratchPad 
-    <+> manageDocks 
-    <+> insertPosition Below Newer 
-    <+> manageHook defaultConfig
+myManageHook = composeAll
+  [ isFullscreen --> doFullFloat ]
+  <+> manageSpawn 
+  <+> manageScratchPad 
+  <+> manageDocks 
+  <+> fullscreenManageHook
+  <+> insertPosition Below Newer 
 
 manageScratchPad :: ManageHook
 manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)

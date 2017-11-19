@@ -1,4 +1,4 @@
-# export TERM=xterm-256color
+export TERM=screen-256color
 export EDITOR=nvim
 
 export CLICOLOR=1
@@ -27,6 +27,7 @@ RPROMPT='$(git_super_status)'
 # alias
 alias ...="cd ../.."
 alias ..="cd .."
+alias bctl='bluetoothctl'
 alias confnix='sudoedit /etc/nixos/configuration.nix'
 alias gitdelmerged='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 alias grep="grep --color=auto"
@@ -41,8 +42,8 @@ alias t='tmux'
 alias vim="nvim"
 alias vt='nvim -c terminal -u ~/.vimrc-term'
 alias lx='exa --group-directories-first --git --sort=extension'
-alias l='lx -al'
-alias ll='lx -l'
+alias l='lx -l'
+alias ll='lx -al'
 case $(uname) in
   'Linux')
       #alias ls="ls -X --color"

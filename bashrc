@@ -1,4 +1,3 @@
-#export TERM=screen-256color
 export EDITOR=nvim
 
 export CLICOLOR=1
@@ -12,20 +11,10 @@ export LANG=en_US.UTF-8
 # disable gpg gui passphrase
 #export PINENTRY_USER_DATA="USE_CURSES=1"
 export GPG_TTY=$(tty)
-# systemd deletes /run/users/:id/gnpug on logout
-gpgconf --create-socketdir > /dev/null 2>&1
 
-#[ -f ~/repos/my/zsh-git-prompt/zshrc.sh ] && source ~/repos/my/zsh-git-prompt/zshrc.sh
 # prompt
-autoload -U colors && colors
-#GIT_PROMPT_EXECUTABLE="haskell"
-##PS1="%{$fg[blue]%}%m %{$reset_color%}%2c%{$reset_color%}> % "
-#PROMPT='[%F{blue}%n%f@%F{blue}%m%f] '
-PROMPT='[%F{blue}%n%f@%F{blue}%m%f %F{yellow}%1~%f] '
-#RPROMPT='$(git_super_status)'
-RPROMPT=''
-
-setopt prompt_sp
+#PROMPT='[%F{blue}%n%f@%F{blue}%m%f %F{yellow}%1~%f] '
+#RPROMPT=''
 
 # alias
 alias ...="cd ../.."
@@ -66,34 +55,3 @@ case $(uname) in
       alias ect="/usr/local/opt/emacs-mac/bin/emacsclient -nw"
       ;;
 esac
-
-# The following lines were added by compinstall
-zstyle ':completion:*' completer _complete _ignored
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
-
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-bindkey -e
-# End of lines configured by zsh-newuser-install
-
-# iterm2
-[ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# password-store tab complete
-autoload -Uz _pass
-# cammy
-[ -f ~/.cammyenv ] && source ~/.cammyenv
-# jmp function
-[ -f ~/.zsh/jmpfunc.zsh ] && source ~/.zsh/jmpfunc.zsh
-# autojump
-[ -f /usr/local/etc/profile.d/autojump.sh ] && source /usr/local/etc/profile.d/autojump.sh
-
-[ -f /run/current-system/sw/share/autojump/autojump.zsh ] && source  /run/current-system/sw/share/autojump/autojump.zsh

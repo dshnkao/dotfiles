@@ -30,7 +30,7 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(elm
      ansible
      auto-completion
      better-defaults
@@ -39,19 +39,20 @@ values."
      dash
      emacs-lisp
      git
-     go
      (haskell :variables
               flycheck-disabled-checkers '(haskell-stack-ghc)
+              flycheck-checkers '(haskell-hlint)
+              haskell-completion-backend 'company-ghci
               haskell-process-type 'cabal-repl)
      html
      ivy
+     ;;helm
      javascript
      latex
      markdown
      nixos
      org
-     osx
-     pandoc
+     ;;pandoc
      pdf-tools
      purescript
      python
@@ -66,6 +67,7 @@ values."
      (spell-checking :variables spell-checking-enable-by-default nil)
      sql
      syntax-checking
+     themes-megapack
      (version-control :variables version-control-global-margin t)
      vimscript
      yaml
@@ -80,7 +82,7 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(exec-path-from-shell)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -160,6 +162,7 @@ values."
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
+
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -325,7 +328,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   ;; (load "server")
   ;; (unless (server-running-p) (server-start))
-  (push '("melpa-stable" . "stable.melpa.org/packages/") configuration-layer--elpa-archives)
+  ;; (push '("melpa-stable" . "stable.melpa.org/packages/") configuration-layer-elpa-archives)
+  ;; (push '(use-package . "melpa-stable") package-pinned-packages)
   (setq-default dotspacemacs-themes '(sanityinc-tomorrow-night))
   (setq dotspacemacs-distinguish-gui-tab t)
   (setq pdf-info-epdfinfo-program "/run/current-system/sw/share/emacs/site-lisp/elpa/pdf-tools-20170820.1117/build/server/epdfinfo")
@@ -379,7 +383,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (setq gpg-agent-info-file (concat (getenv "HOME") "/.gnupg/S.gpg-agent"))
     )
   (when (eq system-type 'gnu/linux)
-    (load "firacode.el")
+    ;;(load "firacode.el")
     ;;(setq helm-dash-docset-newpath "~/.local/share/Zeal/Zeal/docsets")
     (custom-set-variables '(markdown-command "pandoc"))
     )
@@ -394,7 +398,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
  '(markdown-command "pandoc")
  '(package-selected-packages
    (quote
-    (pandoc-mode ox-pandoc ht csv-mode psci purescript-mode psc-ide package-build nix-mode company-nixos-options nixos-options yapfify web-mode tagedit slim-mode scss-mode sass-mode pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements pdf-tools tablist org-category-capture ob-http live-py-mode less-css-mode insert-shebang hy-mode haml-mode fish-mode evil goto-chg undo-tree emmet-mode diminish cython-mode helm-core company-web web-completion-data company-shell restclient company-auctex company-anaconda bind-map bind-key packed auctex async anaconda-mode pythonic s memoize avy popup vimrc-mode dactyl-mode ranger disaster company-c-headers cmake-mode clang-format flyspell-correct-ivy go-guru go-eldoc company-go go-mode winum unfill restclient-helm ob-restclient fuzzy company-restclient know-your-http-well company-ansible auctex-latexmk helm-pydoc zeal-at-point counsel-dash helm-dash wgrep smex ivy-hydra counsel-projectile counsel swiper ivy jinja2-mode ansible-doc ansible yaml-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode sql-indent web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode pcache helm dash mwim helm-company helm-c-yasnippet company-statistics auto-yasnippet ac-ispell auto-complete hydra hide-comnt projectile pkg-info epl flx powerline spinner parent-mode smartparens iedit anzu highlight f font-lock+ all-the-icons xterm-color shell-pop org-projectile org-present org-pomodoro alert log4e gntp org-download noflet multi-term mmm-mode markdown-toc markdown-mode htmlize gnuplot git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck eshell-z eshell-prompt-extras esh-help ensime company yasnippet sbt-mode scala-mode diff-hl auto-dictionary smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+    (helm-nixos-options helm-css-scss pandoc-mode ox-pandoc ht csv-mode psci purescript-mode psc-ide package-build nix-mode company-nixos-options nixos-options yapfify web-mode tagedit slim-mode scss-mode sass-mode pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements pdf-tools tablist org-category-capture ob-http live-py-mode less-css-mode insert-shebang hy-mode haml-mode fish-mode evil goto-chg undo-tree emmet-mode diminish cython-mode helm-core company-web web-completion-data company-shell restclient company-auctex company-anaconda bind-map bind-key packed auctex async anaconda-mode pythonic s memoize avy popup vimrc-mode dactyl-mode ranger disaster company-c-headers cmake-mode clang-format flyspell-correct-ivy go-guru go-eldoc company-go go-mode winum unfill restclient-helm ob-restclient fuzzy company-restclient know-your-http-well company-ansible auctex-latexmk helm-pydoc zeal-at-point counsel-dash helm-dash wgrep smex ivy-hydra counsel-projectile counsel swiper ivy jinja2-mode ansible-doc ansible yaml-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode sql-indent web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode pcache helm dash mwim helm-company helm-c-yasnippet company-statistics auto-yasnippet ac-ispell auto-complete hydra hide-comnt projectile pkg-info epl flx powerline spinner parent-mode smartparens iedit anzu highlight f font-lock+ all-the-icons xterm-color shell-pop org-projectile org-present org-pomodoro alert log4e gntp org-download noflet multi-term mmm-mode markdown-toc markdown-mode htmlize gnuplot git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck eshell-z eshell-prompt-extras esh-help ensime company yasnippet sbt-mode scala-mode diff-hl auto-dictionary smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
  '(psc-ide-add-import-on-completion t t)
  '(psc-ide-rebuild-on-save nil t))
 (custom-set-faces
@@ -403,3 +407,27 @@ before packages are loaded. If you are unsure, you should try in setting them in
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol nil)
+ '(markdown-command "pandoc")
+ '(package-selected-packages
+   (quote
+    (org-brain darktooth-theme dante ghub let-alist helm-nixos-options helm-css-scss pandoc-mode ox-pandoc ht csv-mode psci purescript-mode psc-ide package-build nix-mode company-nixos-options nixos-options yapfify web-mode tagedit slim-mode scss-mode sass-mode pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements pdf-tools tablist org-category-capture ob-http live-py-mode less-css-mode insert-shebang hy-mode haml-mode fish-mode evil goto-chg undo-tree emmet-mode diminish cython-mode helm-core company-web web-completion-data company-shell restclient company-auctex company-anaconda bind-map bind-key packed auctex async anaconda-mode pythonic s memoize avy popup vimrc-mode dactyl-mode ranger disaster company-c-headers cmake-mode clang-format flyspell-correct-ivy go-guru go-eldoc company-go go-mode winum unfill restclient-helm ob-restclient fuzzy company-restclient know-your-http-well company-ansible auctex-latexmk helm-pydoc zeal-at-point counsel-dash helm-dash wgrep smex ivy-hydra counsel-projectile counsel swiper ivy jinja2-mode ansible-doc ansible yaml-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode sql-indent web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode pcache helm dash mwim helm-company helm-c-yasnippet company-statistics auto-yasnippet ac-ispell auto-complete hydra hide-comnt projectile pkg-info epl flx powerline spinner parent-mode smartparens iedit anzu highlight f font-lock+ all-the-icons xterm-color shell-pop org-projectile org-present org-pomodoro alert log4e gntp org-download noflet multi-term mmm-mode markdown-toc markdown-mode htmlize gnuplot git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck eshell-z eshell-prompt-extras esh-help ensime company yasnippet sbt-mode scala-mode diff-hl auto-dictionary smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+ '(psc-ide-add-import-on-completion t t)
+ '(psc-ide-rebuild-on-save nil t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:background nil)))))
+)

@@ -38,8 +38,8 @@ myWorkspaces = map show [1..9 :: Int]
 main = do
   taffy <- spawnPipe "taffybar"
   spawn "xsetroot -cursor_name left_ptr"
-  spawn "autocutsel -fork" -- need both, don't delete
-  spawn "autocutsel -selection PRIMARY -fork"
+  -- spawn "autocutsel -fork" -- need both, don't delete
+  -- spawn "autocutsel -selection PRIMARY -fork"
 
   --xmonad $ desktopConfig
   xmonad $ ewmh $ pagerHints $ withUrgencyHook NoUrgencyHook $ fullscreenSupport $ defaultConfig

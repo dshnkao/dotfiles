@@ -105,9 +105,10 @@ myKeys = [ ((mod4Mask,                 xK_bracketleft  ), sendMessage Shrink) --
          , ((mod4Mask,                 xK_y            ), spawn "pkill taffybar; xmonad --recompile && xmonad --restart") 
          , ((mod4Mask .|. shiftMask,   xK_q            ), io (exitWith ExitSuccess))
          , ((mod4Mask,                 xK_q            ), spawn "pkill taffybar; xmonad --recompile && xmonad --restart")
-         , ((mod4Mask,                 xK_p            ), spawn "rofi -show run")
-         , ((mod4Mask,                 xK_w            ), spawn "rofi -show window")
-         , ((mod4Mask,                 xK_r            ), spawn "rofi -show drun")
+         , ((mod4Mask,                 xK_p            ), spawn "rofi -show run -matching fuzzy")
+         , ((mod4Mask,                 xK_w            ), spawn "rofi -show window -matching fuzzy")
+         , ((mod4Mask,                 xK_r            ), spawn "rofi -show drun -matching fuzzy")
+         , ((mod4Mask,                 xK_o            ), spawn "~/repos/my/scripts/pmenu")
          , ((mod4Mask,                 xK_0            ), scratchpadSpawnActionTerminal "urxvt")
          -- media keys
          , ((0, 0x1008ff12                             ), spawn "amixer -q sset Master toggle") --f1

@@ -47,6 +47,7 @@ alias vt='nvim -c terminal -u ~/.vimrc-term'
 alias lx='exa --group-directories-first --git --sort=extension'
 alias l='lx -l'
 alias ll='lx -al'
+alias haskellshell='nix-shell -p "haskell.packages.ghc821.ghcWithPackages (pkgs: with pkgs; [ cabal-install ])"'
 case $(uname) in
   'Linux')
       #alias ls="ls -X --color"

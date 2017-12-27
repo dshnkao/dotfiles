@@ -13,7 +13,6 @@ import XMonad.Actions.CycleWS
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.SwapWorkspaces
 import XMonad.Config.Desktop
-import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.DynamicLog (dzen)
 import XMonad.Hooks.EwmhDesktops 
 import XMonad.Hooks.InsertPosition
@@ -26,9 +25,9 @@ import XMonad.Layout.Fullscreen hiding (fullscreenEventHook)
 import XMonad.Layout.NoBorders
 import XMonad.ManageHook
 import XMonad.Operations
-import XMonad.Util.EZConfig(additionalKeys)
-import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.Scratchpad 
+import XMonad.Util.EZConfig (additionalKeys)
+import XMonad.Util.Run (spawnPipe)
+import XMonad.Util.Scratchpad
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
@@ -53,7 +52,57 @@ myWorkspaces = map show [1..9 :: Int]
 myTerminal :: String
 myTerminal = "konsole"
 
--- GLFW 
+myLayoutHook =
+  fullscreenFull
+  $ lessBorders OnlyFloat
+  $ avoidStruts
+  $ layoutHook defaultConfig
+
+myManageHook = composeAll
+  [ (not <$> isDialog) --> insertPosition Below Newer
+  , isFullscreen       --> doFullFloat
+  , manageSpawn
+  , manageScratchPad
+  , manageDocks
+  , fullscreenManageHook
+  ]
+
+manageScratchPad :: ManageHook
+manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
+  where
+    h = 0.4     -- terminal height
+    w = 1       -- terminal width
+    t = 1 - h   -- distance from top edge
+    l = 1 - w   -- distance from left edge
+
+myKeys =
+  [ ((mod4Mask,               xK_bracketleft  ), sendMessage Shrink) -- %! Shrink the master area
+  , ((mod4Mask,               xK_bracketright ), sendMessage Expand) -- %! Shrink the master area
+  , ((mod4Mask .|. shiftMask, xK_bracketleft  ), prevWS)
+  , ((mod4Mask .|. shiftMask, xK_bracketright ), nextWS)
+  , ((mod4Mask .|. shiftMask, xK_i            ), spawn "~/repos/my/scripts/internal.sh")
+  , ((mod4Mask .|. shiftMask, xK_e            ), spawn "~/repos/my/scripts/external.sh")
+  , ((mod4Mask .|. shiftMask, xK_y            ), io exitSuccess)
+  , ((mod4Mask,               xK_y            ), spawn "pkill taffybar; xmonad --recompile && xmonad --restart")
+  , ((mod4Mask .|. shiftMask, xK_q            ), io exitSuccess)
+  , ((mod4Mask,               xK_q            ), spawn "pkill taffybar; xmonad --recompile && xmonad --restart")
+  , ((mod4Mask,               xK_p            ), spawn "rofi -show run -matching fuzzy")
+  , ((mod4Mask,               xK_w            ), spawn "rofi -show window -matching fuzzy")
+  , ((mod4Mask,               xK_r            ), spawn "rofi -show drun -matching fuzzy")
+  , ((mod4Mask,               xK_o            ), spawn "~/repos/my/scripts/pmenu")
+  , ((mod4Mask,               xK_0            ), scratchpadSpawnActionTerminal myTerminal)
+    -- media keys
+  , ((0, 0x1008ff12                           ), spawn "amixer -q sset Master toggle") --f1
+  , ((0, 0x1008ff11                           ), spawn "amixer -q sset Master 5%-") --f2
+  , ((0, 0x1008ff13                           ), spawn "amixer -q sset Master 5%+") --f3
+  , ((0, 0x1008ff03                           ), spawn "xbacklight -5") --f5
+  , ((0, 0x1008ff02                           ), spawn "xbacklight +5") --f6
+  , ((0, 0xff61                               ), spawn "scrot") --prtsc
+  ]
+  ++
+  [((mod4Mask .|. controlMask,  k               ), windows $ swapWithCurrent i) | (i, k) <- zip myWorkspaces [xK_1 ..]]
+
+-- GLFW
 -- https://github.com/xmonad/xmonad-contrib/pull/109
 -- https://github.com/xmonad/xmonad-contrib/issues/183
 addNETSupported :: Atom -> X ()
@@ -71,53 +120,3 @@ addEWMHFullscreen   = do
   wms <- getAtom "_NET_WM_STATE"
   wfs <- getAtom "_NET_WM_STATE_FULLSCREEN"
   mapM_ addNETSupported [wms, wfs]
-
-myLayoutHook = 
-  fullscreenFull
-  $ lessBorders OnlyFloat
-  $ avoidStruts
-  $ layoutHook defaultConfig
-
-myManageHook = composeAll
-  [ isFullscreen --> doFullFloat ]
-  <+> manageSpawn 
-  <+> manageScratchPad 
-  <+> manageDocks 
-  <+> fullscreenManageHook
-  <+> insertPosition Below Newer 
-
-manageScratchPad :: ManageHook
-manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
-  where
-    h = 0.4     -- terminal height
-    w = 1       -- terminal width
-    t = 1 - h   -- distance from top edge
-    l = 1 - w   -- distance from left edge
-
-myKeys = [ ((mod4Mask,                 xK_bracketleft  ), sendMessage Shrink) -- %! Shrink the master area
-         , ((mod4Mask,                 xK_bracketright ), sendMessage Expand) -- %! Shrink the master area
-         , ((mod4Mask .|. shiftMask,   xK_bracketleft  ), prevWS)
-         , ((mod4Mask .|. shiftMask,   xK_bracketright ), nextWS)
-         , ((mod4Mask .|. shiftMask,   xK_i            ), spawn "~/repos/my/scripts/internal.sh")
-         , ((mod4Mask .|. shiftMask,   xK_e            ), spawn "~/repos/my/scripts/external.sh")
-         , ((mod4Mask .|. shiftMask,   xK_y            ), io (exitWith ExitSuccess))
-         , ((mod4Mask,                 xK_y            ), spawn "pkill taffybar; xmonad --recompile && xmonad --restart") 
-         , ((mod4Mask .|. shiftMask,   xK_q            ), io (exitWith ExitSuccess))
-         , ((mod4Mask,                 xK_q            ), spawn "pkill taffybar; xmonad --recompile && xmonad --restart")
-         , ((mod4Mask,                 xK_p            ), spawn "rofi -show run -matching fuzzy")
-         , ((mod4Mask,                 xK_w            ), spawn "rofi -show window -matching fuzzy")
-         , ((mod4Mask,                 xK_r            ), spawn "rofi -show drun -matching fuzzy")
-         , ((mod4Mask,                 xK_o            ), spawn "~/repos/my/scripts/pmenu")
-         , ((mod4Mask,                 xK_0            ), scratchpadSpawnActionTerminal myTerminal)
-         -- media keys
-         , ((0, 0x1008ff12                             ), spawn "amixer -q sset Master toggle") --f1
-         , ((0, 0x1008ff11                             ), spawn "amixer -q sset Master 5%-") --f2
-         , ((0, 0x1008ff13                             ), spawn "amixer -q sset Master 5%+") --f3
-         , ((0, 0x1008ff03                             ), spawn "xbacklight -5") --f5
-         , ((0, 0x1008ff02                             ), spawn "xbacklight +5") --f6
-         , ((0, 0xff61                                 ), spawn "scrot") --prtsc
-         ]
-         ++
-         [((mod4Mask .|. controlMask,  k               ), windows $ swapWithCurrent i) | (i, k) <- zip myWorkspaces [xK_1 ..]]
-
-

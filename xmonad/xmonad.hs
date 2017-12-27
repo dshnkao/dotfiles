@@ -1,7 +1,7 @@
 import Control.Monad
 import Data.Maybe
 import Data.Bits ((.|.))
-import Data.List
+import qualified Data.List as List
 import Data.Monoid
 import Graphics.X11.Xlib
 import Graphics.X11.Xlib.Extras
@@ -14,7 +14,7 @@ import XMonad.Actions.SpawnOn
 import XMonad.Actions.SwapWorkspaces
 import XMonad.Config.Desktop
 import XMonad.Hooks.DynamicLog (dzen)
-import XMonad.Hooks.EwmhDesktops 
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -60,20 +60,19 @@ myLayoutHook =
 
 myManageHook = composeAll
   [ (not <$> isDialog) --> insertPosition Below Newer
+  , isFFDialog         --> doRectFloat (W.RationalRect 0.25 0.25 0.5 0.5)
   , isFullscreen       --> doFullFloat
   , manageSpawn
-  , manageScratchPad
+  , scratchpadManageHook (W.RationalRect 0 0.6 1 0.4)
   , manageDocks
   , fullscreenManageHook
   ]
-
-manageScratchPad :: ManageHook
-manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
   where
-    h = 0.4     -- terminal height
-    w = 1       -- terminal width
-    t = 1 - h   -- distance from top edge
-    l = 1 - w   -- distance from left edge
+    isFFDialog = do
+      d <- isDialog
+      c <- className
+      let isApp xs = or (flip List.isInfixOf c <$> xs)
+      pure $ d && isApp ["Firefox", "Chromium"]
 
 myKeys =
   [ ((mod4Mask,               xK_bracketleft  ), sendMessage Shrink) -- %! Shrink the master area
@@ -100,7 +99,7 @@ myKeys =
   , ((0, 0xff61                               ), spawn "scrot") --prtsc
   ]
   ++
-  [((mod4Mask .|. controlMask,  k               ), windows $ swapWithCurrent i) | (i, k) <- zip myWorkspaces [xK_1 ..]]
+  [((mod4Mask .|. controlMask, k              ), windows $ swapWithCurrent i) | (i, k) <- zip myWorkspaces [xK_1 ..]]
 
 -- GLFW
 -- https://github.com/xmonad/xmonad-contrib/pull/109

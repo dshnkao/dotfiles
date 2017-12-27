@@ -32,38 +32,39 @@ import XMonad.Util.Scratchpad
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
-myWorkspaces :: [WorkspaceId]
-myWorkspaces = map show [1..9 :: Int]
-
 main = do
   taffy <- spawnPipe "taffybar"
   spawn "xsetroot -cursor_name left_ptr"
   -- spawn "autocutsel -fork" -- need both, don't delete
   -- spawn "autocutsel -selection PRIMARY -fork"
-
-  --xmonad $ desktopConfig
   xmonad $ ewmh $ pagerHints $ withUrgencyHook NoUrgencyHook $ fullscreenSupport $ defaultConfig
     { manageHook  = myManageHook
     , layoutHook  = myLayoutHook
     , startupHook = setWMName "LG3D" >> addEWMHFullscreen
     , workspaces  = myWorkspaces
     , modMask     = mod4Mask
-    , terminal    = "urxvt"
+    , terminal    = myTerminal
     , handleEventHook = docksEventHook <+> handleEventHook defaultConfig <+> fullscreenEventHook
     } `additionalKeys` myKeys
+
+myWorkspaces :: [WorkspaceId]
+myWorkspaces = map show [1..9 :: Int]
+
+myTerminal :: String
+myTerminal = "konsole"
 
 -- GLFW 
 -- https://github.com/xmonad/xmonad-contrib/pull/109
 -- https://github.com/xmonad/xmonad-contrib/issues/183
 addNETSupported :: Atom -> X ()
 addNETSupported x   = withDisplay $ \dpy -> do
-    r               <- asks theRoot
-    a_NET_SUPPORTED <- getAtom "_NET_SUPPORTED"
-    a               <- getAtom "ATOM"
-    liftIO $ do
-        sup <- (join . maybeToList) <$> getWindowProperty32 dpy a_NET_SUPPORTED r
-        when (fromIntegral x `notElem` sup) $
-          changeProperty32 dpy r a_NET_SUPPORTED a propModeAppend [fromIntegral x]
+  r               <- asks theRoot
+  a_NET_SUPPORTED <- getAtom "_NET_SUPPORTED"
+  a               <- getAtom "ATOM"
+  liftIO $ do
+    sup <- (join . maybeToList) <$> getWindowProperty32 dpy a_NET_SUPPORTED r
+    when (fromIntegral x `notElem` sup) $
+      changeProperty32 dpy r a_NET_SUPPORTED a propModeAppend [fromIntegral x]
 
 addEWMHFullscreen :: X ()
 addEWMHFullscreen   = do
@@ -71,14 +72,12 @@ addEWMHFullscreen   = do
   wfs <- getAtom "_NET_WM_STATE_FULLSCREEN"
   mapM_ addNETSupported [wms, wfs]
 
--- add avoidStruts to your layoutHook like so
 myLayoutHook = 
   fullscreenFull
   $ lessBorders OnlyFloat
   $ avoidStruts
   $ layoutHook defaultConfig
 
--- add manageDocks to your managehook like so
 myManageHook = composeAll
   [ isFullscreen --> doFullFloat ]
   <+> manageSpawn 
@@ -109,7 +108,7 @@ myKeys = [ ((mod4Mask,                 xK_bracketleft  ), sendMessage Shrink) --
          , ((mod4Mask,                 xK_w            ), spawn "rofi -show window -matching fuzzy")
          , ((mod4Mask,                 xK_r            ), spawn "rofi -show drun -matching fuzzy")
          , ((mod4Mask,                 xK_o            ), spawn "~/repos/my/scripts/pmenu")
-         , ((mod4Mask,                 xK_0            ), scratchpadSpawnActionTerminal "urxvt")
+         , ((mod4Mask,                 xK_0            ), scratchpadSpawnActionTerminal myTerminal)
          -- media keys
          , ((0, 0x1008ff12                             ), spawn "amixer -q sset Master toggle") --f1
          , ((0, 0x1008ff11                             ), spawn "amixer -q sset Master 5%-") --f2

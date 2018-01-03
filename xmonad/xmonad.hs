@@ -34,6 +34,7 @@ import qualified XMonad.StackSet as W
 main = do
   taffy <- spawnPipe "taffybar"
   spawn "xsetroot -cursor_name left_ptr"
+  spawn "xsetroot -solid '#101010'"
   -- spawn "autocutsel -fork" -- need both, don't delete
   -- spawn "autocutsel -selection PRIMARY -fork"
   xmonad $ ewmh $ pagerHints $ withUrgencyHook NoUrgencyHook $ fullscreenSupport $ defaultConfig

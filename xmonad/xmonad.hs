@@ -60,9 +60,10 @@ myLayoutHook =
   $ layoutHook defaultConfig
 
 myManageHook = composeAll
-  [ (not <$> isDialog) --> insertPosition Below Newer
-  , isFFDialog         --> doRectFloat (W.RationalRect 0.25 0.25 0.5 0.5)
-  , isFullscreen       --> doFullFloat
+  [ (not <$> isDialog)       --> insertPosition Below Newer
+  , isFFDialog               --> doRectFloat (W.RationalRect 0.25 0.25 0.5 0.5)
+  , appName =? "pavucontrol" --> doRectFloat (W.RationalRect 0.25 0.25 0.5 0.5)
+  , isFullscreen             --> doFullFloat
   , manageSpawn
   , scratchpadManageHook (W.RationalRect 0 0.6 1 0.4)
   , manageDocks
@@ -90,6 +91,7 @@ myKeys =
   , ((mod4Mask,               xK_w            ), spawn "rofi -show window -matching fuzzy")
   , ((mod4Mask,               xK_r            ), spawn "rofi -show drun -matching fuzzy")
   , ((mod4Mask,               xK_o            ), spawn "~/repos/my/scripts/pmenu")
+  , ((mod4Mask,               xK_s            ), spawn "pavucontrol")
   , ((mod4Mask,               xK_0            ), scratchpadSpawnActionTerminal myTerminal)
     -- media keys
   , ((0, 0x1008ff12                           ), spawn "amixer -q sset Master toggle") --f1

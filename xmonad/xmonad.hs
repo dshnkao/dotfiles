@@ -97,7 +97,7 @@ myKeys =
   , ((0, 0x1008ff13                           ), spawn "amixer -q sset Master 5%+") --f3
   , ((0, 0x1008ff03                           ), spawn "xbacklight -5") --f5
   , ((0, 0x1008ff02                           ), spawn "xbacklight +5") --f6
-  , ((0, 0xff61                               ), spawn "scrot") --prtsc
+  , ((mod4Mask, 0xff61                        ), spawn "scrot") --prtsc
   ]
   ++
   [((mod4Mask .|. controlMask, k              ), windows $ swapWithCurrent i) | (i, k) <- zip myWorkspaces [xK_1 ..]]

@@ -1,3 +1,5 @@
+{-# LANGUAGE LambdaCase #-}
+import Control.Exception (catch, SomeException)
 import Control.Monad
 import Data.Maybe
 import Data.Bits ((.|.))
@@ -26,7 +28,7 @@ import XMonad.Layout.NoBorders
 import XMonad.ManageHook
 import XMonad.Operations
 import XMonad.Util.EZConfig (additionalKeys)
-import XMonad.Util.Run (spawnPipe)
+import XMonad.Util.Run (spawnPipe, runProcessWithInput)
 import XMonad.Util.Scratchpad
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
@@ -91,7 +93,7 @@ myKeys =
   , ((mod4Mask,               xK_w            ), spawn "rofi -show window -matching fuzzy")
   , ((mod4Mask,               xK_r            ), spawn "rofi -show drun -matching fuzzy")
   , ((mod4Mask,               xK_o            ), spawn "~/repos/my/scripts/pmenu")
-  , ((mod4Mask,               xK_s            ), spawn "pavucontrol")
+  , ((mod4Mask,               xK_s            ), toggleApp "pavucontrol")
   , ((mod4Mask,               xK_0            ), scratchpadSpawnActionTerminal myTerminal)
     -- media keys
   , ((0, 0x1008ff12                           ), spawn "amixer -q sset Master toggle") --f1
@@ -103,6 +105,12 @@ myKeys =
   ]
   ++
   [((mod4Mask .|. controlMask, k              ), windows $ swapWithCurrent i) | (i, k) <- zip myWorkspaces [xK_1 ..]]
+
+toggleApp :: MonadIO m => String -> m ()
+toggleApp app =
+  runProcessWithInput "pkill" ["-e", app] "" >>= \case
+  "" -> spawn app
+  _  -> pure ()
 
 -- GLFW
 -- https://github.com/xmonad/xmonad-contrib/pull/109

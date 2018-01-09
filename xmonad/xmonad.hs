@@ -1,36 +1,28 @@
 {-# LANGUAGE LambdaCase #-}
 import Control.Exception (catch, SomeException)
-import Control.Monad
-import Data.Maybe
+import Control.Monad (join, when)
+import Data.Maybe (maybeToList)
 import Data.Bits ((.|.))
 import qualified Data.List as List
-import Data.Monoid
-import Graphics.X11.Xlib
-import Graphics.X11.Xlib.Extras
-import System.Exit
-import System.IO
+import Data.Monoid ((<>))
+import System.Exit (exitSuccess)
 import System.Taffybar.Hooks.PagerHints (pagerHints)
 import XMonad
-import XMonad.Actions.CycleWS
-import XMonad.Actions.SpawnOn
-import XMonad.Actions.SwapWorkspaces
-import XMonad.Config.Desktop
+import XMonad.Actions.CycleWS (prevWS, nextWS)
+import XMonad.Actions.SpawnOn (manageSpawn)
+import XMonad.Actions.SwapWorkspaces (swapWithCurrent)
 import XMonad.Hooks.DynamicLog (dzen)
-import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.InsertPosition
-import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.SetWMName
-import XMonad.Hooks.UrgencyHook
-import XMonad.Layout
+import XMonad.Hooks.EwmhDesktops (fullscreenEventHook, ewmh)
+import XMonad.Hooks.InsertPosition (Position(..), Focus(..), insertPosition)
+import XMonad.Hooks.ManageDocks (docksEventHook, avoidStruts, manageDocks)
+import XMonad.Hooks.ManageHelpers (isDialog, doRectFloat, isFullscreen, doFullFloat)
+import XMonad.Hooks.SetWMName (setWMName)
+import XMonad.Hooks.UrgencyHook (withUrgencyHook, NoUrgencyHook(..))
 import XMonad.Layout.Fullscreen hiding (fullscreenEventHook)
-import XMonad.Layout.NoBorders
-import XMonad.ManageHook
-import XMonad.Operations
+import XMonad.Layout.NoBorders (lessBorders, Ambiguity(..))
 import XMonad.Util.EZConfig (additionalKeys)
 import XMonad.Util.Run (spawnPipe, runProcessWithInput)
-import XMonad.Util.Scratchpad
-import qualified Data.Map as M
+import XMonad.Util.Scratchpad (scratchpadManageHook, scratchpadSpawnActionTerminal)
 import qualified XMonad.StackSet as W
 
 main = do

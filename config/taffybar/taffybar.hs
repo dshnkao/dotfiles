@@ -52,7 +52,7 @@ wifi =
   let
     f = flip fmap (readProcess "nmcli" ["device"] "") $ \s ->
       maybe (colorize "#aaaaaa" "" "\61931 No Connection") id $
-      case filter (("wlp4s0" ==) . head) $ words <$> drop 1 (lines s) of
+      case filter (("wlan0" ==) . head) $ words <$> drop 1 (lines s) of
         []   -> Nothing
         x:xs -> case x of
           device:typ:state:connection -> if state /= "connected"

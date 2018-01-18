@@ -10,3 +10,8 @@ xmonad-x86_64-linux
 config/ranger/bookmarks
 config/ranger/tagged
 config/ranger/history
+.emacs.d/elpa
+.emacs.d/recentf
+.emacs.d/auto-save-list
+.emacs.d/projectile-bookmarks.eld
+.emacs.d/url

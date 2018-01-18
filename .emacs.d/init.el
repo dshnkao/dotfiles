@@ -25,14 +25,42 @@
 
 ;; packages
 
+;; appearance
+
 (use-package linum-relative
   :ensure t
   :config
   (linum-relative-global-mode)
   (setq linum-relative-current-symbol ""))
 
+(use-package smart-mode-line
+  :ensure t
+  :init
+  (setq sml/theme 'respectful)
+  (setq sml/shorten-directory t)
+  (setq sml/shorten-modes t)
+  (setq sml/no-confirm-load-theme t)
+  :config
+  (sml/setup)
+  )
+
+(use-package color-theme-sanityinc-tomorrow
+  :ensure t
+  :config
+  (load-theme 'sanityinc-tomorrow-night t))
+
 (use-package all-the-icons
   :ensure t)
+
+;; tools
+
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-search-module 'evil-search)
+  (setq evil-want-C-u-scroll t)
+  :config
+  (evil-mode))
 
 (use-package neotree
   :ensure t
@@ -41,22 +69,10 @@
   :init
   (setq neo-theme 'icons)
   :config
-  (evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
-  (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
-  (evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
-  (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide))
+  (evil-make-overriding-map neotree-mode-map 'normal))
 
-(use-package powerline
-  :ensure t
-  :config
-  (powerline-default-theme))
-
-(use-package color-theme-sanityinc-tomorrow
-  :ensure t
-  :config
-  (load-theme 'sanityinc-tomorrow-night t))
-
-(use-package ace-window :ensure t)
+(use-package ace-window
+  :ensure t)
 
 (use-package avy
   :ensure t
@@ -84,6 +100,8 @@
   :config
   (projectile-mode))
 
+;; dev
+
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode))
@@ -98,29 +116,21 @@
   (add-hook 'haskell-mode-hook 'dante-mode)
   (add-hook 'haskell-mode-hook 'flycheck-mode))
 
-;;
-
-(use-package evil
-  :ensure t
-  :init
-  (setq evil-search-module 'evil-search)
-  (setq evil-want-C-u-scroll t)
-  :config
-  (evil-mode))
-
 (use-package general
   :ensure t
   :config
   (general-define-key
-    :states '(normal insert emacs)
+    :states '(normal insert visual emacs)
     :prefix "SPC"
     :non-normal-prefix "C-SPC"
     ;; Applications
-    "a"   '(:ignore t :which-key "Applications")
+    "a"   '(:ignore t :which-key "applications")
     "ar"  'ranger
     "ad"  'dired
     ;; buffers
-    "b"	  'ivy-switch-buffer
+    "b"   '(:ignore t :which-key "buffers")
+    "bb"  'ivy-switch-buffer
+    "bd"  'kill-this-buffer
     ;; files
     "f"   '(:ignore t :which-key "files")
     "ff"  'counsel-find-file
@@ -150,19 +160,32 @@
     "SPC" (general-simulate-keys "M-x")
     "TAB" '(switch-to-other-buffer :which-key "prev buffer")
     "/"   'counsel-rg
-    ))
+    )
+  ;; Haskell
+  (general-define-key
+   :states 'normal
+   :prefix ","
+   :keymaps 'dante-mode-map
+   "ht"   'dante-type-at
+   "hi"   'dante-info
+   "gg"   'xref-find-definitions
+   "gr"   'xref-find-references
+   ))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    (default)))
  '(package-selected-packages (quote (evil pdf-tools use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(mode-line ((t (:background "firebrick4" :foreground "#c5c8c6" :inverse-video nil :box (:line-width 1 :color "#373b41") :weight normal)))))
 (provide 'init)
 ;;; init.el ends here

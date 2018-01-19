@@ -17,3 +17,4 @@ config/ranger/history
 .emacs.d/url
 .emacs.d/.cache
 .emacs.d/network-security.data
+.emacs.d/backup

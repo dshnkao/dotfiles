@@ -23,15 +23,35 @@
 (setq-default indent-tabs-mode nil)
 (setq-default show-trailing-whitespace t)
 
+(setq version-control t     ;; Use version numbers for backups.
+      kept-new-versions 10  ;; Number of newest versions to keep.
+      kept-old-versions 0   ;; Number of oldest versions to keep.
+      delete-old-versions t ;; Don't ask to delete excess backup versions.
+      backup-by-copying t)  ;; Copy all files, don't rename them.
+
+(setq backup-directory-alist '(("" . "~/.emacs.d/backup/per-save")))
+
 ;; packages
 
 ;; appearance
 
-(use-package linum-relative
+(use-package diff-hl
   :ensure t
   :config
-  (linum-relative-global-mode)
-  (setq linum-relative-current-symbol ""))
+  (diff-hl-mode)
+  )
+
+(use-package linum-relative
+  :ensure t
+  :init
+  (add-hook 'prog-mode-hook 'linum-relative-mode)
+  (setq linum-relative-current-symbol "")
+  :config
+  ;;(linum-relative-global-mode)
+  ;;(setq linum-relative-current-symbol "")
+  ;;(add-hook 'term-mode-hook (lambda () (linum-mode -1)))
+  ;;(add-hook 'term-mode-hook (lambda () (linum-mode -1)))
+  )
 
 (use-package smart-mode-line
   :ensure t
@@ -46,8 +66,14 @@
 
 (use-package color-theme-sanityinc-tomorrow
   :ensure t
+  :init
   :config
-  (load-theme 'sanityinc-tomorrow-night t))
+  (load-theme 'sanityinc-tomorrow-night t)
+  (set-face-attribute 'fringe nil :background "#1d1f21")
+  (add-to-list 'default-frame-alist '(left-fringe . 5))
+  (add-to-list 'default-frame-alist '(right-fringe . 5))
+  (set-face-attribute 'linum nil :background "#1d1f21")
+  )
 
 (use-package all-the-icons
   :ensure t)
@@ -70,6 +96,15 @@
 (use-package evil-magit
   :ensure t
   :after '(magit evil))
+
+(use-package company
+  :ensure t
+  :init
+  (add-hook 'after-init-hook 'global-company-mode)
+  :config
+  (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
+  (define-key company-active-map [tab] 'company-complete-common-or-cycle)
+  (company-mode))
 
 (use-package neotree
   :ensure t
@@ -109,21 +144,38 @@
   :config
   (projectile-mode))
 
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
 ;; dev
 
 (use-package flycheck
   :ensure t
-  :init (global-flycheck-mode))
+  :config (global-flycheck-mode))
 
-;; haskell
-(use-package haskell-mode :ensure t)
+(use-package haskell-mode
+  :ensure t)
 (use-package dante
   :ensure t
   :after haskell-mode
   :commands 'dante-mode
   :init
   (add-hook 'haskell-mode-hook 'dante-mode)
-  (add-hook 'haskell-mode-hook 'flycheck-mode))
+  (add-hook 'haskell-mode-hook 'flycheck-mode)
+  (add-hook 'dante-mode-hook
+            '(lambda () (flycheck-add-next-checker 'haskell-dante
+                                                   '(warning . haskell-hlint)))))
+
+(use-package cider
+  :ensure t)
+
+(use-package nix-mode
+  :ensure t)
 
 (use-package general
   :ensure t
@@ -140,6 +192,8 @@
     "b"   '(:ignore t :which-key "buffers")
     "bb"  'ivy-switch-buffer
     "bd"  'kill-this-buffer
+    ;; e
+    "ev"  'set-variable
     ;; files
     "f"   '(:ignore t :which-key "files")
     "ff"  'counsel-find-file
@@ -158,6 +212,9 @@
     "sc"  'evil-ex-nohighlight
     "sp"  'counsel-projectile-rg
     "sb"  'counsel-projectile-switch-to-buffer
+    ;; toggle
+    "t"   '(:ignore t : which-key "toggle")
+    "td"  'diff-hl-mode
     ;; windows
     "w"   '(:ignore t :which-key "windows")
     "wd"  'delete-window
@@ -170,6 +227,8 @@
     ;; git
     "g"   '(:ignore t :which-key "git")
     "gs"  'magit-status
+    ;; quit
+    "q" 'delete-other-windows
     ;; others
     "SPC" (general-simulate-keys "M-x")
     "TAB" '(switch-to-other-buffer :which-key "prev buffer")
@@ -191,9 +250,42 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote (default)))
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline bold bold-italic bold])
+ '(ansi-color-names-vector
+   (vector "#373b41" "#cc6666" "#b5bd68" "#f0c674" "#81a2be" "#b294bb" "#8abeb7" "#c5c8c6"))
+ '(beacon-color "#cc6666")
+ '(custom-safe-themes
+   (quote
+    ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
  '(dante-target "level07")
- '(package-selected-packages (quote (evil-magit magit evil pdf-tools use-package))))
+ '(fci-rule-color "#373b41")
+ '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
+ '(package-selected-packages
+   (quote
+    (git-gutter-fringe linum-off nix-mode cider evil-magit magit evil pdf-tools use-package)))
+ '(vc-annotate-background nil)
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#cc6666")
+     (40 . "#de935f")
+     (60 . "#f0c674")
+     (80 . "#b5bd68")
+     (100 . "#8abeb7")
+     (120 . "#81a2be")
+     (140 . "#b294bb")
+     (160 . "#cc6666")
+     (180 . "#de935f")
+     (200 . "#f0c674")
+     (220 . "#b5bd68")
+     (240 . "#8abeb7")
+     (260 . "#81a2be")
+     (280 . "#b294bb")
+     (300 . "#cc6666")
+     (320 . "#de935f")
+     (340 . "#f0c674")
+     (360 . "#b5bd68"))))
+ '(vc-annotate-very-old-color nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

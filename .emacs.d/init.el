@@ -37,21 +37,17 @@
 
 (use-package diff-hl
   :ensure t
+  :after magit
+  :init
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
   :config
-  (diff-hl-mode)
-  )
+  (diff-hl-mode))
 
 (use-package linum-relative
   :ensure t
   :init
   (add-hook 'prog-mode-hook 'linum-relative-mode)
-  (setq linum-relative-current-symbol "")
-  :config
-  ;;(linum-relative-global-mode)
-  ;;(setq linum-relative-current-symbol "")
-  ;;(add-hook 'term-mode-hook (lambda () (linum-mode -1)))
-  ;;(add-hook 'term-mode-hook (lambda () (linum-mode -1)))
-  )
+  (setq linum-relative-current-symbol ""))
 
 (use-package smart-mode-line
   :ensure t
@@ -263,7 +259,7 @@
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
  '(package-selected-packages
    (quote
-    (git-gutter-fringe linum-off nix-mode cider evil-magit magit evil pdf-tools use-package)))
+    (nix-mode cider evil-magit magit evil pdf-tools use-package)))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote

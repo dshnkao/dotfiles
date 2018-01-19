@@ -1,5 +1,7 @@
 {-# LANGUAGE MultiWayIf #-}
+import Control.Monad (join)
 import Data.List (intercalate)
+import Data.Maybe (fromMaybe)
 import Data.Monoid ((<>))
 import Graphics.UI.Gtk
 import Graphics.UI.Gtk.Abstract.Widget
@@ -22,13 +24,13 @@ import System.Taffybar.Widgets.VerticalBar
 import System.Information.Battery
 import System.Process (readProcess)
 import Text.Printf (printf)
-import Control.Monad.Trans.Maybe
+import Control.Monad.Trans.Maybe (MaybeT(..))
 
 main :: IO ()
 main = do
   defaultTaffybar defaultTaffybarConfig
     { startWidgets = [ pager ]
-    , endWidgets   = [ clock, battery, mem, cpu, network, wifi ]
+    , endWidgets   = [ clock, battery, mem, cpu, network2, network1, wifi ]
     }
 
 pager :: IO Widget
@@ -51,21 +53,25 @@ wifi :: IO Widget
 wifi =
   let
     f = flip fmap (readProcess "nmcli" ["device"] "") $ \s ->
-      maybe (colorize "#aaaaaa" "" "\61931 No Connection") id $
-      case filter (("wlan0" ==) . head) $ words <$> drop 1 (lines s) of
-        []   -> Nothing
-        x:xs -> case x of
-          device:typ:state:connection -> if state /= "connected"
-            then Nothing
-            else pure $ "\61931 " ++ (intercalate " " connection)
-          _ -> Nothing
+      case join . join $ conn <$> (words <$> (lines s)) of
+        [] -> colorize "#aaaaaa" "" "\61931 No Connection"
+        x  -> "\61931 " ++ (intercalate " " x)
+
+    conn x = case x of
+      device:typ:"connected":connection -> [connection]
+      _ -> []
   in
     pollingLabelNew "\61931 No Connection" 10 f >>= \x ->
     widgetShowAll x >>
     pure x
 
-network :: IO Widget
-network = netMonitorNewWith 1 "wlan0" 2 "▼ $inKB$kb/s ▲ $outKB$kb/s"
+-- no idea why the f the name changes...
+network1 :: IO Widget
+network1 = netMonitorNewWith 1 "wlp4s0" 2 "▼ $inKB$kb/s ▲ $outKB$kb/s"
+
+network2 :: IO Widget
+network2 = netMonitorNewWith 1 "wlan0" 2 "▼ $inKB$kb/s ▲ $outKB$kb/s"
+
 
 cpu :: IO Widget
 cpu = pollingGraphNew defaultGraphConfig

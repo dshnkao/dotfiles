@@ -62,6 +62,15 @@
   :config
   (evil-mode))
 
+(use-package magit
+  :ensure t
+  :config
+  (evil-make-overriding-map magit-mode-map 'normal))
+
+(use-package evil-magit
+  :ensure t
+  :after '(magit evil))
+
 (use-package neotree
   :ensure t
   :commands 'neotree-toggle
@@ -147,6 +156,8 @@
     ;; search
     "s"   '(:ignore t :which-key "search")
     "sc"  'evil-ex-nohighlight
+    "sp"  'counsel-projectile-rg
+    "sb"  'counsel-projectile-switch-to-buffer
     ;; windows
     "w"   '(:ignore t :which-key "windows")
     "wd"  'delete-window
@@ -156,6 +167,9 @@
     "wj"  'windmove-down
     "wk"  'windmove-up
     "wl"  'windmove-right
+    ;; git
+    "g"   '(:ignore t :which-key "git")
+    "gs"  'magit-status
     ;; others
     "SPC" (general-simulate-keys "M-x")
     "TAB" '(switch-to-other-buffer :which-key "prev buffer")
@@ -177,10 +191,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    (default)))
- '(package-selected-packages (quote (evil pdf-tools use-package))))
+ '(custom-safe-themes (quote (default)))
+ '(dante-target "level07")
+ '(package-selected-packages (quote (evil-magit magit evil pdf-tools use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

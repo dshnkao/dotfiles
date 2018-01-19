@@ -65,7 +65,7 @@ wifi =
     pure x
 
 network :: IO Widget
-network = netMonitorNewWith 1 "wlp4s0" 2 "▼ $inKB$kb/s ▲ $outKB$kb/s"
+network = netMonitorNewWith 1 "wlan0" 2 "▼ $inKB$kb/s ▲ $outKB$kb/s"
 
 cpu :: IO Widget
 cpu = pollingGraphNew defaultGraphConfig

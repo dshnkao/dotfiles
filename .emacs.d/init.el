@@ -166,15 +166,17 @@
   :ensure t)
 
 (use-package dante
-  :ensure t
+  :load-path "foss/dante/"
+  :pin manual
+  ;;:ensure t
   :after haskell-mode
   :commands 'dante-mode
   :init
   (setq company-backend 'dante-company)
+  ;;(add-to-list dante-load-flags "-Wwarn=missing-home-modules")
   (add-hook 'haskell-mode-hook 'dante-mode)
   ;; load dir-local dante-target before dante-mode
-  (add-hook 'haskell-mode-hook 'hack-dir-local-variables-non-file-buffer)
-  (add-hook 'haskell-mode-hook 'flycheck-mode)
+  ;; (add-hook 'haskell-mode-hook 'hack-dir-local-variables-non-file-buffer)
   (add-hook 'dante-mode-hook
             '(lambda () (flycheck-add-next-checker 'haskell-dante
                                                    '(warning . haskell-hlint)))))
@@ -203,6 +205,7 @@
     "bd"  'kill-this-buffer
     "bu"  'revert-buffer
     "be"  'eval-buffer
+    "bn"  (lambda () (interactive) (let (($buf (generate-new-buffer "untitled"))) (switch-to-buffer $buf)))
     ;; e
     "ev"  'set-variable
     ;; files
@@ -275,6 +278,10 @@
  '(custom-safe-themes
    (quote
     ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
+ '(dante-debug (quote (inputs outputs responses command-line)))
+ '(dante-load-flags
+   (quote
+    ("+c" "-fdefer-typed-holes" "-fno-diagnostics-show-caret")))
  '(fci-rule-color "#373b41")
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
  '(package-selected-packages

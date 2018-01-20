@@ -83,16 +83,17 @@
   (setq evil-search-module 'evil-search)
   (setq evil-want-C-u-scroll t)
   :config
-  (evil-mode))
+  (evil-mode 1))
 
 (use-package magit
-  :ensure t
-  :config
-  (evil-make-overriding-map magit-mode-map 'normal))
+  :ensure t)
 
 (use-package evil-magit
   :ensure t
-  :after '(magit evil))
+  :after magit
+  :init
+  (setq evil-magit-want-horizontal-movement nil))
+  ;;:hook magit)
 
 (use-package company
   :ensure t

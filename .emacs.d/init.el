@@ -38,7 +38,6 @@
 
 (use-package diff-hl
   :ensure t
-  :after magit
   :init
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
   :config
@@ -86,14 +85,14 @@
   (evil-mode 1))
 
 (use-package magit
-  :ensure t)
+  :ensure t
+  :commands 'magit-status)
 
 (use-package evil-magit
   :ensure t
   :after magit
   :init
   (setq evil-magit-want-horizontal-movement nil))
-  ;;:hook magit)
 
 (use-package company
   :ensure t
@@ -159,12 +158,13 @@
 
 (use-package flycheck-haskell
   :ensure t
-  :after flycheck
+  :commands flycheck-haskell-configure
   :config
   (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
 
 (use-package haskell-mode
   :ensure t)
+
 (use-package dante
   :ensure t
   :after haskell-mode
@@ -251,6 +251,8 @@
    :states 'normal
    :prefix ","
    :keymaps 'dante-mode-map
+   "d"    '(:ignore t :which-key "debug")
+   "dd"   'dante-diagnose
    "h"    '(:ignore t :which-key "documentation")
    "ht"   'dante-type-at
    "hi"   'dante-info
@@ -277,8 +279,11 @@
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
  '(package-selected-packages
    (quote
-    (flycheck-haskell nix-mode cider evil-magit magit evil pdf-tools use-package)))
- '(safe-local-variable-values (quote ((dante-target . "lib:bmm"))))
+    (haskell-process haskell-interactive-mode flycheck-haskell nix-mode cider evil-magit magit evil pdf-tools use-package)))
+ '(safe-local-variable-values
+   (quote
+    ((dante-target . "level07")
+     (dante-target . "lib:bmm"))))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote

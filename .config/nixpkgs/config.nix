@@ -41,8 +41,8 @@
         pandoc
         pmount
         scrot
-        skypeforlinux
-        smartmontools
+        skypeforlinux smartmontools
+        spotify
         sqlite
         steam
         steam-run
@@ -53,6 +53,7 @@
         unrar
         unzip
         vlc
+        weechat
         youtube-dl
         zip
       ];

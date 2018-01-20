@@ -172,6 +172,8 @@
   :init
   (setq company-backend 'dante-company)
   (add-hook 'haskell-mode-hook 'dante-mode)
+  ;; load dir-local dante-target before dante-mode
+  (add-hook 'haskell-mode-hook 'hack-dir-local-variables-non-file-buffer)
   (add-hook 'haskell-mode-hook 'flycheck-mode)
   (add-hook 'dante-mode-hook
             '(lambda () (flycheck-add-next-checker 'haskell-dante

@@ -75,6 +75,8 @@ myKeys =
   , ((mod4Mask,               xK_bracketright ), sendMessage Expand) -- %! Shrink the master area
   , ((mod4Mask .|. shiftMask, xK_bracketleft  ), prevWS)
   , ((mod4Mask .|. shiftMask, xK_bracketright ), nextWS)
+  , ((mod4Mask,               xK_minus        ), prevWS)
+  , ((mod4Mask,               xK_equal        ), nextWS)
   , ((mod4Mask .|. shiftMask, xK_i            ), spawn "~/repos/my/scripts/internal.sh")
   , ((mod4Mask .|. shiftMask, xK_e            ), spawn "~/repos/my/scripts/external.sh")
   , ((mod4Mask .|. shiftMask, xK_y            ), io exitSuccess)

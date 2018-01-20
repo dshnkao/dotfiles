@@ -42,7 +42,9 @@
   :init
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
   :config
-  (diff-hl-mode))
+  (global-diff-hl-mode)
+  (diff-hl-dired-mode)
+  (diff-hl-flydiff-mode))
 
 (use-package linum-relative
   :ensure t

@@ -18,8 +18,9 @@
 ;; general settings
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
-(tool-bar-mode -1)
-(column-number-mode t)
+(tool-bar-mode -1)     ;; appearance settings, see Xresources also
+(column-number-mode t) ;; display column num in mode line
+(winner-mode t)        ;; more window functions
 (setq-default indent-tabs-mode nil)
 (setq-default show-trailing-whitespace t)
 
@@ -57,8 +58,7 @@
   (setq sml/shorten-modes t)
   (setq sml/no-confirm-load-theme t)
   :config
-  (sml/setup)
-  )
+  (sml/setup))
 
 (use-package color-theme-sanityinc-tomorrow
   :ensure t
@@ -68,8 +68,7 @@
   (set-face-attribute 'fringe nil :background "#1d1f21")
   (add-to-list 'default-frame-alist '(left-fringe . 5))
   (add-to-list 'default-frame-alist '(right-fringe . 5))
-  (set-face-attribute 'linum nil :background "#1d1f21")
-  )
+  (set-face-attribute 'linum nil :background "#1d1f21"))
 
 (use-package all-the-icons
   :ensure t)
@@ -152,7 +151,14 @@
 
 (use-package flycheck
   :ensure t
-  :config (global-flycheck-mode))
+  :config
+  (global-flycheck-mode))
+
+(use-package flycheck-haskell
+  :ensure t
+  :after flycheck
+  :config
+  (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
 
 (use-package haskell-mode
   :ensure t)
@@ -161,6 +167,7 @@
   :after haskell-mode
   :commands 'dante-mode
   :init
+  (setq company-backend 'dante-company)
   (add-hook 'haskell-mode-hook 'dante-mode)
   (add-hook 'haskell-mode-hook 'flycheck-mode)
   (add-hook 'dante-mode-hook
@@ -176,6 +183,7 @@
 (use-package general
   :ensure t
   :config
+  (general-evil-setup)
   (general-define-key
     :states '(normal insert visual emacs)
     :prefix "SPC"
@@ -188,6 +196,8 @@
     "b"   '(:ignore t :which-key "buffers")
     "bb"  'ivy-switch-buffer
     "bd"  'kill-this-buffer
+    "bu"  'revert-buffer
+    "be"  'eval-buffer
     ;; e
     "ev"  'set-variable
     ;; files
@@ -220,6 +230,8 @@
     "wj"  'windmove-down
     "wk"  'windmove-up
     "wl"  'windmove-right
+    "wu"  'winner-undo
+    "wr"  'winner-redo
     ;; git
     "g"   '(:ignore t :which-key "git")
     "gs"  'magit-status
@@ -228,18 +240,20 @@
     ;; others
     "SPC" (general-simulate-keys "M-x")
     "TAB" '(switch-to-other-buffer :which-key "prev buffer")
-    "/"   'counsel-rg
-    )
+    "/"   'counsel-rg)
   ;; Haskell
   (general-define-key
    :states 'normal
    :prefix ","
    :keymaps 'dante-mode-map
+   "h"    '(:ignore t :which-key "documentation")
    "ht"   'dante-type-at
    "hi"   'dante-info
+   "g"    '(:ignore t :which-key "goto")
    "gg"   'xref-find-definitions
    "gr"   'xref-find-references
-   ))
+   "eb"   'dante-eval-block
+   "r"    'dante-restart))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -254,12 +268,12 @@
  '(custom-safe-themes
    (quote
     ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
- '(dante-target "level07")
  '(fci-rule-color "#373b41")
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
  '(package-selected-packages
    (quote
-    (nix-mode cider evil-magit magit evil pdf-tools use-package)))
+    (flycheck-haskell nix-mode cider evil-magit magit evil pdf-tools use-package)))
+ '(safe-local-variable-values (quote ((dante-target . "lib:bmm"))))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote

@@ -1,6 +1,7 @@
 ;;; Package --- ...
 ;;; Commentary:
 ;;; Code:
+(setq gc-cons-threshold 100000000) ;;100MB
 (setq package-enable-at-startup nil)
 (setq package-archives '(("org"       . "http://orgmode.org/elpa/")
                          ("gnu"       . "http://elpa.gnu.org/packages/")
@@ -49,6 +50,7 @@
   :ensure t
   :init
   (add-hook 'prog-mode-hook 'linum-relative-mode)
+  (add-hook 'org-mode-hook 'linum-relative-mode)
   (setq linum-relative-current-symbol ""))
 
 (use-package smart-mode-line
@@ -72,7 +74,8 @@
   (set-face-attribute 'linum nil :background "#1d1f21"))
 
 (use-package all-the-icons
-  :ensure t)
+  :ensure t
+  :after neotree)
 
 ;; tools
 
@@ -113,11 +116,8 @@
   (evil-make-overriding-map neotree-mode-map 'normal))
 
 (use-package ace-window
-  :ensure t)
-
-(use-package avy
   :ensure t
-  :commands (avy-goto-word-1))
+  :commands (winner-undo winner-redo))
 
 (use-package ivy
   :ensure t
@@ -153,6 +153,7 @@
 
 (use-package flycheck
   :ensure t
+  :commands flycheck-mode
   :config
   (global-flycheck-mode))
 
@@ -163,7 +164,8 @@
   (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
 
 (use-package haskell-mode
-  :ensure t)
+  :ensure t
+  :commands haskell-mode)
 
 (use-package dante
   :load-path "foss/dante/"
@@ -173,19 +175,20 @@
   :commands 'dante-mode
   :init
   (setq company-backend 'dante-company)
-  ;;(add-to-list dante-load-flags "-Wwarn=missing-home-modules")
   (add-hook 'haskell-mode-hook 'dante-mode)
   ;; load dir-local dante-target before dante-mode
-  ;; (add-hook 'haskell-mode-hook 'hack-dir-local-variables-non-file-buffer)
+  (add-hook 'haskell-mode-hook 'hack-dir-local-variables-non-file-buffer)
   (add-hook 'dante-mode-hook
             '(lambda () (flycheck-add-next-checker 'haskell-dante
                                                    '(warning . haskell-hlint)))))
 
 (use-package cider
-  :ensure t)
+  :ensure t
+  :commands cider-mode)
 
 (use-package nix-mode
-  :ensure t)
+  :ensure t
+  :commands nix-mode)
 
 (use-package general
   :ensure t

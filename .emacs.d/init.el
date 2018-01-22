@@ -1,4 +1,4 @@
-;;; Package --- ...
+;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
 (setq gc-cons-threshold 100000000) ;;100MB
@@ -22,6 +22,9 @@
 (tool-bar-mode -1)     ;; appearance settings, see Xresources also
 (column-number-mode t) ;; display column num in mode line
 (winner-mode t)        ;; more window functions
+(show-paren-mode t)
+(setq help-window-select t)
+(setq require-final-newline t)
 (setq-default indent-tabs-mode nil)
 (setq-default show-trailing-whitespace t)
 
@@ -89,13 +92,21 @@
 
 (use-package magit
   :ensure t
-  :commands 'magit-status)
+  :commands magit-status)
 
 (use-package evil-magit
   :ensure t
   :after magit
   :init
   (setq evil-magit-want-horizontal-movement nil))
+
+(use-package git-timemachine
+  :ensure t
+  :commands git-timemachine
+  :config
+  (evil-make-overriding-map git-timemachine-mode-map 'normal)
+  ;; force update evil keymaps after git-timemachine-mode loaded
+  (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps))
 
 (use-package company
   :ensure t
@@ -108,7 +119,7 @@
 
 (use-package neotree
   :ensure t
-  :commands 'neotree-toggle
+  :commands neotree-toggle
   :after evil
   :init
   (setq neo-theme 'icons)
@@ -148,6 +159,31 @@
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
+
+(use-package zoom
+  :ensure t
+  :commands zoom-mode)
+
+(use-package buffer-move
+  :ensure t
+  :commands (buf-move-up buf-move-down buf-move-left buf-move-right))
+
+(use-package minimap
+  :ensure t
+  :commands minimap-mode)
+
+(use-package rainbow-mode
+  :ensure t
+  :commands rainbow-mode)
+
+(use-package google-this
+  :ensure t
+  :commands google-this)
+
+(use-package smartparens
+  :ensure t
+  :config
+  (smartparens-mode))
 
 ;; dev
 
@@ -207,7 +243,8 @@
     "bb"  'ivy-switch-buffer
     "bd"  'kill-this-buffer
     "bu"  'revert-buffer
-    "be"  'eval-buffer
+    "be
+"  'eval-buffer
     "bn"  (lambda () (interactive) (let (($buf (generate-new-buffer "untitled"))) (switch-to-buffer $buf)))
     ;; e
     "ev"  'set-variable
@@ -229,11 +266,20 @@
     "sc"  'evil-ex-nohighlight
     "sp"  'counsel-projectile-rg
     "sb"  'counsel-projectile-switch-to-buffer
+    "sg"  'google-this
     ;; toggle
     "t"   '(:ignore t : which-key "toggle")
     "td"  'diff-hl-mode
+    "tg"  'zoom-mode
+    "tm"  'minimap-mode
+    "tw"  'whitespace-mode
+    "tr"  'rainbow-mode
+    "ts"  'flyspell-mode
+    "tp"  'smartparens-mode
     ;; windows
     "w"   '(:ignore t :which-key "windows")
+    "wm"  'maximize-window
+    ;;"wm"  'default-win
     "wd"  'delete-window
     "w/"  'split-window-right
     "w-"  'split-window-below
@@ -243,15 +289,32 @@
     "wl"  'windmove-right
     "wu"  'winner-undo
     "wr"  'winner-redo
+    "wH"  'buf-move-left
+    "wJ"  'buf-move-down
+    "wK"  'buf-move-up
+    "wL"  'buf-move-right
     ;; git
     "g"   '(:ignore t :which-key "git")
+    "gb"  'magit-blame
     "gs"  'magit-status
+    "gl"  'magit-log
+    "gt"  'git-timemachine
     ;; quit
     "q" 'delete-other-windows
     ;; others
     "SPC" (general-simulate-keys "M-x")
     "TAB" '(switch-to-other-buffer :which-key "prev buffer")
     "/"   'counsel-rg)
+  ;; Emacs Lisp
+  (general-define-key
+   :states 'normal
+   :prefix ","
+   :keymaps 'emacs-lisp-mode-map
+   "hk"   'describe-key
+   "ht"   'describe-function
+   "hv"   'describe-variable
+   "gg"   'xref-find-definitions
+   )
   ;; Haskell
   (general-define-key
    :states 'normal
@@ -287,9 +350,10 @@
     ("+c" "-fdefer-typed-holes" "-fno-diagnostics-show-caret")))
  '(fci-rule-color "#373b41")
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
+ '(minimap-highlight-line nil)
  '(package-selected-packages
    (quote
-    (haskell-process haskell-interactive-mode flycheck-haskell nix-mode cider evil-magit magit evil pdf-tools use-package)))
+    (smartparens git-timemachine google-this rainbow-mode minimap buffer-move haskell-process haskell-interactive-mode flycheck-haskell nix-mode cider evil-magit magit evil pdf-tools use-package)))
  '(safe-local-variable-values
    (quote
     ((dante-target . "level07")
@@ -321,6 +385,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(minimap-active-region-background ((t (:background "gray0"))))
  '(mode-line ((t (:background "firebrick4" :foreground "#c5c8c6" :inverse-video nil :box (:line-width 1 :color "#373b41") :weight normal)))))
-(provide 'init)
 ;;; init.el ends here

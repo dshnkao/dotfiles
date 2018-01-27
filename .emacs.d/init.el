@@ -80,6 +80,17 @@
   :ensure t
   :after neotree)
 
+(use-package fira
+  :load-path "lisp"
+  :pin manual
+  :init
+  ;; without emacs daemon
+  (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol")
+  ;; emacs daemon
+  (add-hook 'after-make-frame-functions (lambda (frame) (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol")))
+  :config
+  (add-hook 'prog-mode-hook 'my-set-fira-ligatures))
+
 ;; tools
 
 (use-package evil
@@ -123,6 +134,7 @@
   :after evil
   :init
   (setq neo-theme 'icons)
+  (setq neo-smart-open t)
   :config
   (evil-make-overriding-map neotree-mode-map 'normal))
 
@@ -183,7 +195,14 @@
 (use-package smartparens
   :ensure t
   :config
-  (smartparens-mode))
+  (smartparens-global-mode))
+
+(use-package auctex-latexmk
+  :ensure t
+  :init
+  (setq TeX-PDF-mode t)
+  (setq auctex-latexmk-inherit-TeX-PDF-mode t)
+  :commands auctex-latex-mk-setup)
 
 ;; dev
 
@@ -315,6 +334,14 @@
    "hv"   'describe-variable
    "gg"   'xref-find-definitions
    )
+  ;; LaTeX
+  (general-define-key
+   :states 'normal
+   :prefix ","
+   :keymaps 'LaTeX-mode-map
+   "v"      'TeX-view
+   "r"      'TeX-command-run-all
+   )
   ;; Haskell
   (general-define-key
    :states 'normal
@@ -344,19 +371,21 @@
  '(custom-safe-themes
    (quote
     ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
- '(dante-debug (quote (inputs outputs responses command-line)))
+ '(dante-debug nil)
  '(dante-load-flags
    (quote
     ("+c" "-fdefer-typed-holes" "-fno-diagnostics-show-caret")))
  '(fci-rule-color "#373b41")
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
+ '(inhibit-startup-screen t)
  '(minimap-highlight-line nil)
  '(package-selected-packages
    (quote
     (smartparens git-timemachine google-this rainbow-mode minimap buffer-move haskell-process haskell-interactive-mode flycheck-haskell nix-mode cider evil-magit magit evil pdf-tools use-package)))
  '(safe-local-variable-values
    (quote
-    ((dante-target . "level07")
+    ((dante-target . "lib:bowling")
+     (dante-target . "level07")
      (dante-target . "lib:bmm"))))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
@@ -379,7 +408,8 @@
      (320 . "#de935f")
      (340 . "#f0c674")
      (360 . "#b5bd68"))))
- '(vc-annotate-very-old-color nil))
+ '(vc-annotate-very-old-color nil)
+ '(zoom-size (quote (0.618 . 0.618))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

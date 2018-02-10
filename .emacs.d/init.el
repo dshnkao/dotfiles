@@ -83,6 +83,7 @@
 (use-package fira
   :load-path "lisp"
   :pin manual
+  :defer t
   :init
   ;; without emacs daemon
   (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol")
@@ -204,6 +205,12 @@
   (setq auctex-latexmk-inherit-TeX-PDF-mode t)
   :commands auctex-latex-mk-setup)
 
+(use-package org
+  :ensure t
+  :commands org-mode
+  :init
+  (setq org-directory "~/repos/my/org"))
+
 ;; dev
 
 (use-package flycheck
@@ -223,9 +230,9 @@
   :commands haskell-mode)
 
 (use-package dante
-  :load-path "foss/dante/"
-  :pin manual
-  ;;:ensure t
+  ;; :load-path "foss/dante/"
+  ;; :pin manual
+  :ensure t
   :after haskell-mode
   :commands 'dante-mode
   :init
@@ -371,7 +378,6 @@
  '(custom-safe-themes
    (quote
     ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
- '(dante-debug nil)
  '(dante-load-flags
    (quote
     ("+c" "-fdefer-typed-holes" "-fno-diagnostics-show-caret")))

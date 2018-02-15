@@ -17,7 +17,7 @@
 (require 'use-package)
 
 ;; general settings
-(menu-bar-mode -1)
+;; (menu-bar-mode -1)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)     ;; appearance settings, see Xresources also
 (column-number-mode t) ;; display column num in mode line
@@ -27,6 +27,10 @@
 (setq require-final-newline t)
 (setq-default indent-tabs-mode nil)
 (setq-default show-trailing-whitespace t)
+
+(when (eq system-type 'darwin)
+  (setq mac-option-modifier 'meta
+        mac-command-modifier 'super))
 
 (setq version-control t     ;; Use version numbers for backups.
       kept-new-versions 10  ;; Number of newest versions to keep.
@@ -135,9 +139,7 @@
   :after evil
   :init
   (setq neo-theme 'icons)
-  (setq neo-smart-open t)
-  :config
-  (evil-make-overriding-map neotree-mode-map 'normal))
+  (setq neo-smart-open t))
 
 (use-package ace-window
   :ensure t
@@ -213,11 +215,19 @@
 
 ;; dev
 
+(use-package yaml-mode
+  :ensure t
+  :commands yaml-mode)
+
 (use-package flycheck
   :ensure t
   :commands flycheck-mode
   :config
   (global-flycheck-mode))
+
+(use-package ensime
+  :ensure t
+  :commands ensime-mode)
 
 (use-package flycheck-haskell
   :ensure t
@@ -257,80 +267,99 @@
   :config
   (general-evil-setup)
   (general-define-key
-    :states '(normal insert visual emacs)
-    :prefix "SPC"
-    :non-normal-prefix "C-SPC"
-    ;; Applications
-    "a"   '(:ignore t :which-key "applications")
-    "ar"  'ranger
-    "ad"  'dired
-    ;; buffers
-    "b"   '(:ignore t :which-key "buffers")
-    "bb"  'ivy-switch-buffer
-    "bd"  'kill-this-buffer
-    "bu"  'revert-buffer
-    "be
-"  'eval-buffer
-    "bn"  (lambda () (interactive) (let (($buf (generate-new-buffer "untitled"))) (switch-to-buffer $buf)))
-    ;; e
-    "ev"  'set-variable
-    ;; files
-    "f"   '(:ignore t :which-key "files")
-    "ff"  'counsel-find-file
-    "fj"  'dired-jump
-    "fr"  'counsel-recentf
-    "ft"  'neotree-toggle
-    "fed" '((lambda () (interactive) (find-file "~/.emacs.d/init.el")) :wk "init.el")
-    ;; project
-    "p"   '(:ignore t :which-key "project")
-    "pp"  'counsel-projectile-switch-project
-    "pf"  'counsel-projectile-find-file
-    "pb"  'counsel-projectile-switch-to-buffer
-    "pg"  'counsel-projectile-rg
-    ;; search
-    "s"   '(:ignore t :which-key "search")
-    "sc"  'evil-ex-nohighlight
-    "sp"  'counsel-projectile-rg
-    "sb"  'counsel-projectile-switch-to-buffer
-    "sg"  'google-this
-    ;; toggle
-    "t"   '(:ignore t : which-key "toggle")
-    "td"  'diff-hl-mode
-    "tg"  'zoom-mode
-    "tm"  'minimap-mode
-    "tw"  'whitespace-mode
-    "tr"  'rainbow-mode
-    "ts"  'flyspell-mode
-    "tp"  'smartparens-mode
-    ;; windows
-    "w"   '(:ignore t :which-key "windows")
-    "wm"  'maximize-window
-    ;;"wm"  'default-win
-    "wd"  'delete-window
-    "w/"  'split-window-right
-    "w-"  'split-window-below
-    "wh"  'windmove-left
-    "wj"  'windmove-down
-    "wk"  'windmove-up
-    "wl"  'windmove-right
-    "wu"  'winner-undo
-    "wr"  'winner-redo
-    "wH"  'buf-move-left
-    "wJ"  'buf-move-down
-    "wK"  'buf-move-up
-    "wL"  'buf-move-right
-    ;; git
-    "g"   '(:ignore t :which-key "git")
-    "gb"  'magit-blame
-    "gs"  'magit-status
-    "gl"  'magit-log
-    "gt"  'git-timemachine
-    ;; quit
-    "q" 'delete-other-windows
-    ;; others
-    "SPC" (general-simulate-keys "M-x")
-    "TAB" '(switch-to-other-buffer :which-key "prev buffer")
-    "/"   'counsel-rg)
+   :states '(normal insert visual emacs)
+   :prefix "SPC"
+   :non-normal-prefix "C-SPC"
+   ;; Applications
+   "a"   '(:ignore t :which-key "applications")
+   "ar"  'ranger
+   "ad"  'dired
+   ;; buffers
+   "b"   '(:ignore t :which-key "buffers")
+   "bb"  'ivy-switch-buffer
+   "bd"  'kill-this-buffer
+   "bu"  'revert-buffer
+   "be"  'eval-buffer
+   "bn"  (lambda () (interactive) (let (($buf (generate-new-buffer "untitled"))) (switch-to-buffer $buf)))
+   ;; e
+   "ev"  'set-variable
+   ;; files
+   "f"   '(:ignore t :which-key "files")
+   "ff"  'counsel-find-file
+   "fj"  'dired-jump
+   "fr"  'counsel-recentf
+   "ft"  'neotree-toggle
+   "fed" '((lambda () (interactive) (find-file "~/.emacs.d/init.el")) :wk "init.el")
+   ;; project
+   "p"   '(:ignore t :which-key "project")
+   "pp"  'counsel-projectile-switch-project
+   "pf"  'counsel-projectile-find-file
+   "pb"  'counsel-projectile-switch-to-buffer
+   "pg"  'counsel-projectile-rg
+   ;; search
+   "s"   '(:ignore t :which-key "search")
+   "sc"  'evil-ex-nohighlight
+   "sp"  'counsel-projectile-rg
+   "sb"  'counsel-projectile-switch-to-buffer
+   "sg"  'google-this
+   ;; toggle
+   "t"   '(:ignore t : which-key "toggle")
+   "td"  'diff-hl-mode
+   "tg"  'zoom-mode
+   "tm"  'minimap-mode
+   "tw"  'whitespace-mode
+   "tr"  'rainbow-mode
+   "ts"  'flyspell-mode
+   "tp"  'smartparens-mode
+   ;; windows
+   "w"   '(:ignore t :which-key "windows")
+   "wm"  'maximize-window
+   ;;"wm"  'default-win
+   "wd"  'delete-window
+   "w/"  'split-window-right
+   "w-"  'split-window-below
+   "wh"  'windmove-left
+   "wj"  'windmove-down
+   "wk"  'windmove-up
+   "wl"  'windmove-right
+   "wu"  'winner-undo
+   "wr"  'winner-redo
+   "wH"  'buf-move-left
+   "wJ"  'buf-move-down
+   "wK"  'buf-move-up
+   "wL"  'buf-move-right
+   ;; git
+   "g"   '(:ignore t :which-key "git")
+   "gb"  'magit-blame
+   "gs"  'magit-status
+   "gl"  'magit-log
+   "gt"  'git-timemachine
+   ;; quit
+   "q" 'delete-other-windows
+   ;; others
+   "SPC" (general-simulate-keys "M-x")
+   "TAB" '(switch-to-other-buffer :which-key "prev buffer")
+   "/"   'counsel-rg)
+  ;; neotree
+  (general-define-key
+   :states 'normal
+   :keymaps 'neotree-mode-map
+   "c"   'neotree-create-node
+   "d"   'neotree-delete-node
+   "r"   'neotree-rename-node
+   "q"   'neotree-hide
+   "TAB" 'neotree-enter
+   "RET" 'neotree-enter
+   "th"  'neotree-hidden-file-toggle
+   "o"   'neotree-open-file-in-system-application
+   "br"  'neotree-refresh)
+  (general-define-key
+   :states 'normal
+   :prefix ","
+   :keymaps 'dired-mode-map
+   "cf"  'dired-find-file
+   "cd"  'dired-create-directory
+   "dd"  'dired-delete-file)
   ;; Emacs Lisp
   (general-define-key
    :states 'normal
@@ -339,16 +368,22 @@
    "hk"   'describe-key
    "ht"   'describe-function
    "hv"   'describe-variable
-   "gg"   'xref-find-definitions
-   )
+   "gg"   'xref-find-definitions)
   ;; LaTeX
   (general-define-key
    :states 'normal
    :prefix ","
    :keymaps 'LaTeX-mode-map
    "v"      'TeX-view
-   "r"      'TeX-command-run-all
-   )
+   "r"      'TeX-command-run-all)
+  ;; Scala
+  (general-define-key
+   :states 'normal
+   :prefix ","
+   :keymaps 'ensime-mode-map
+   "ht"   'ensime-type-at-point
+   "gg"   'ensime-goto-source-location
+   "ee"   'ensime-print-errors-at-point)
   ;; Haskell
   (general-define-key
    :states 'normal
@@ -387,7 +422,7 @@
  '(minimap-highlight-line nil)
  '(package-selected-packages
    (quote
-    (smartparens git-timemachine google-this rainbow-mode minimap buffer-move haskell-process haskell-interactive-mode flycheck-haskell nix-mode cider evil-magit magit evil pdf-tools use-package)))
+    (ensime yaml-mode smartparens git-timemachine google-this rainbow-mode minimap buffer-move haskell-process haskell-interactive-mode flycheck-haskell nix-mode cider evil-magit magit evil pdf-tools use-package)))
  '(safe-local-variable-values
    (quote
     ((dante-target . "lib:bowling")

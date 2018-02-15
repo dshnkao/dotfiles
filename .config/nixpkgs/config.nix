@@ -16,6 +16,7 @@
         ranger
         ripgrep
         rofi
+        traceroute
         zathura
       ];
     };
@@ -39,6 +40,7 @@
         neofetch
         nmap
         pandoc
+        pdftk
         pmount
         scrot
         skypeforlinux smartmontools
@@ -93,6 +95,7 @@
         clojure
         go
         gradle
+        idris
         kotlin
         leiningen
         maven

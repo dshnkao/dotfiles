@@ -71,24 +71,25 @@ myManageHook = composeAll
       pure $ d && isApp ["Firefox", "Chromium"]
 
 myKeys =
-  [ ((mod4Mask,               xK_bracketleft  ), sendMessage Shrink) -- %! Shrink the master area
-  , ((mod4Mask,               xK_bracketright ), sendMessage Expand) -- %! Shrink the master area
-  , ((mod4Mask .|. shiftMask, xK_bracketleft  ), prevWS)
-  , ((mod4Mask .|. shiftMask, xK_bracketright ), nextWS)
-  , ((mod4Mask,               xK_minus        ), prevWS)
-  , ((mod4Mask,               xK_equal        ), nextWS)
-  , ((mod4Mask .|. shiftMask, xK_i            ), spawn "~/repos/my/scripts/internal.sh")
-  , ((mod4Mask .|. shiftMask, xK_e            ), spawn "~/repos/my/scripts/external.sh")
-  , ((mod4Mask .|. shiftMask, xK_y            ), io exitSuccess)
-  , ((mod4Mask,               xK_y            ), spawn "pkill taffybar; xmonad --recompile && xmonad --restart")
-  , ((mod4Mask .|. shiftMask, xK_q            ), io exitSuccess)
-  , ((mod4Mask,               xK_q            ), spawn "pkill taffybar; xmonad --recompile && xmonad --restart")
-  , ((mod4Mask,               xK_p            ), spawn "rofi -show run -matching fuzzy")
-  , ((mod4Mask,               xK_w            ), spawn "rofi -show window -matching fuzzy")
-  , ((mod4Mask,               xK_r            ), spawn "rofi -show drun -matching fuzzy")
-  , ((mod4Mask,               xK_o            ), spawn "~/repos/my/scripts/pmenu")
-  , ((mod4Mask,               xK_s            ), toggleApp "pavucontrol")
-  , ((mod4Mask,               xK_0            ), scratchpadSpawnActionTerminal myTerminal)
+  [ ((mod4Mask,                 xK_bracketleft  ), sendMessage Shrink) -- %! Shrink the master area
+  , ((mod4Mask,                 xK_bracketright ), sendMessage Expand) -- %! Shrink the master area
+  , ((mod4Mask .|. shiftMask,   xK_bracketleft  ), prevWS)
+  , ((mod4Mask .|. shiftMask,   xK_bracketright ), nextWS)
+  , ((mod4Mask,                 xK_minus        ), prevWS)
+  , ((mod4Mask,                 xK_equal        ), nextWS)
+  , ((mod4Mask .|. shiftMask,   xK_i            ), spawn "~/repos/my/scripts/internal.sh")
+  , ((mod4Mask .|. shiftMask,   xK_e            ), spawn "~/repos/my/scripts/external.sh")
+  , ((mod4Mask .|. shiftMask,   xK_y            ), io exitSuccess)
+  , ((mod4Mask,                 xK_y            ), spawn "pkill taffybar; xmonad --recompile && xmonad --restart")
+  , ((mod4Mask .|. controlMask, xK_q            ), spawn "slock")
+  , ((mod4Mask .|. shiftMask,   xK_q            ), io exitSuccess)
+  , ((mod4Mask,                 xK_q            ), spawn "pkill taffybar; xmonad --recompile && xmonad --restart")
+  , ((mod4Mask,                 xK_p            ), spawn "rofi -show run -matching fuzzy")
+  , ((mod4Mask,                 xK_w            ), spawn "rofi -show window -matching fuzzy")
+  , ((mod4Mask,                 xK_r            ), spawn "rofi -show drun -matching fuzzy")
+  , ((mod4Mask,                 xK_o            ), spawn "~/repos/my/scripts/pmenu")
+  , ((mod4Mask,                 xK_s            ), toggleApp "pavucontrol")
+  , ((mod4Mask,                 xK_0            ), scratchpadSpawnActionTerminal myTerminal)
     -- media keys
   , ((0, 0x1008ff12                           ), spawn "amixer -q sset Master toggle") --f1
   , ((0, 0x1008ff11                           ), spawn "amixer -q sset Master 5%-") --f2

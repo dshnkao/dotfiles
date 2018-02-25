@@ -9,9 +9,11 @@
         fd
         feh
         fzf
+        neovim
         nix-prefetch-git
         nix-prefetch-scripts
         nix-repl
+        nixUnstable
         pass
         ranger
         ripgrep
@@ -64,6 +66,7 @@
     coreDev = with pkgs; buildEnv {
       name = "coreDev";
       paths = [
+        ammonite
         binutils
         cabal2nix
         gcc

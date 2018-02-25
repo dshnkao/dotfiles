@@ -42,7 +42,7 @@ alias r='ranger'
 alias se='sudoedit'
 alias ssh='TERM=xterm-256color ssh'
 alias t='tmux'
-alias vim="nvim"
+alias vi="nvim"
 alias vt='nvim -c terminal -u ~/.vimrc-term'
 alias lx='exa --group-directories-first --git --sort=extension'
 alias l='lx -l'
@@ -52,7 +52,6 @@ alias nixhs='nix-env -f "<nixpkgs>" -qaP -A haskellPackages'
 case $(uname) in
   'Linux')
       #alias ls="ls -X --color"
-      alias vi=/usr/bin/vim
       alias ect="emacsclient -nw"
       alias ecg="emacsclient -nc"
       alias xc="xclip -select c"
@@ -60,7 +59,6 @@ case $(uname) in
       ;;
   'Darwin')
       alias ls="gls -X --color"
-      alias vi=/usr/local/bin/vim
       alias emacs="/usr/local/bin/emacs"
       alias egui="open -a /Applications/Emacs.app -n $1"
       alias edm="/usr/local/opt/emacs-mac/bin/emacs --daemon"
@@ -97,5 +95,4 @@ autoload -Uz _pass
 [ -f ~/.zsh/jmpfunc.zsh ] && source ~/.zsh/jmpfunc.zsh
 # autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && source /usr/local/etc/profile.d/autojump.sh
-
 [ -f /run/current-system/sw/share/autojump/autojump.zsh ] && source  /run/current-system/sw/share/autojump/autojump.zsh

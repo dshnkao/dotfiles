@@ -3,10 +3,11 @@
 ;;; Code:
 (setq gc-cons-threshold 100000000) ;;100MB
 (setq package-enable-at-startup nil)
-(setq package-archives '(("org"       . "http://orgmode.org/elpa/")
-                         ("gnu"       . "http://elpa.gnu.org/packages/")
-                         ("melpa"     . "https://melpa.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")))
+(setq package-archives '(("org"          . "http://orgmode.org/elpa/")
+                         ("gnu"          . "http://elpa.gnu.org/packages/")
+                         ("melpa"        . "https://melpa.org/packages/")
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("marmalade"    . "http://marmalade-repo.org/packages/")))
 (package-initialize)
 
 ;; Bootstrap `use-package'
@@ -159,6 +160,9 @@
   :config
   (which-key-mode))
 
+(use-package fzf
+  :ensure t)
+
 (use-package counsel-projectile
   :ensure t)
 
@@ -256,6 +260,7 @@
 
 (use-package cider
   :ensure t
+  :pin melpa-stable
   :commands cider-mode)
 
 (use-package nix-mode
@@ -272,6 +277,7 @@
    :non-normal-prefix "C-SPC"
    ;; Applications
    "a"   '(:ignore t :which-key "applications")
+   "af"  'fzf
    "ar"  'ranger
    "ad"  'dired
    ;; buffers
@@ -348,7 +354,7 @@
    "d"   'neotree-delete-node
    "r"   'neotree-rename-node
    "q"   'neotree-hide
-   "TAB" 'neotree-enter
+   "TAB" 'neotree-stretch-toggle
    "RET" 'neotree-enter
    "th"  'neotree-hidden-file-toggle
    "o"   'neotree-open-file-in-system-application
@@ -376,6 +382,25 @@
    :keymaps 'LaTeX-mode-map
    "v"      'TeX-view
    "r"      'TeX-command-run-all)
+  ;; Clojure
+  (general-define-key
+   :states 'normal
+   :prefix ","
+   :keymaps 'clojure-mode
+   "ha"   'cider-apropos
+   "hg"   'cider-grimoire
+   "hj"   'cider-javadoc
+   "hn"   'cider-browse-ns
+   "ht"   'cider-doc
+   "eb"   'cider-eval-buffer
+   "ee"   'cider-eval-last-sexp
+   "gb"   'cider-pop-back
+   "ge"   'cider-jump-to-compilation-error
+   "gr"   'cider-jump-to-locref-at-point
+   "sb"   'cider-load-buffer
+   "sx"   'cider-refresh
+   "="    'cider-format-buffer
+   "'"    'cider-jack-in)
   ;; Scala
   (general-define-key
    :states 'normal
@@ -422,7 +447,7 @@
  '(minimap-highlight-line nil)
  '(package-selected-packages
    (quote
-    (ensime yaml-mode smartparens git-timemachine google-this rainbow-mode minimap buffer-move haskell-process haskell-interactive-mode flycheck-haskell nix-mode cider evil-magit magit evil pdf-tools use-package)))
+    (fzf ensime yaml-mode smartparens git-timemachine google-this rainbow-mode minimap buffer-move haskell-process haskell-interactive-mode flycheck-haskell nix-mode cider evil-magit magit evil pdf-tools use-package)))
  '(safe-local-variable-values
    (quote
     ((dante-target . "lib:bowling")

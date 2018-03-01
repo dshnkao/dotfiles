@@ -2,6 +2,11 @@
   allowUnfree = true;
   packageOverrides = pkgs: rec {
 
+    # temporary fix
+    neovim = pkgs.neovim.override { 
+      withRuby = false;
+    };
+
     coreEnv = with pkgs; buildEnv {
       name = "coreEnv";
       paths = [
@@ -9,11 +14,11 @@
         fd
         feh
         fzf
+        multimarkdown
         neovim
         nix-prefetch-git
         nix-prefetch-scripts
         nix-repl
-        nixUnstable
         pass
         ranger
         ripgrep
@@ -94,7 +99,6 @@
     baseDev = with pkgs; buildEnv {
       name = "baseDev";
       paths = [
-        cargo
         clojure
         go
         gradle
@@ -103,7 +107,8 @@
         leiningen
         maven
         nodejs
-        rustc
+        rustracer
+        rustup # rustc, cargo, rustup all in one
       ];
     };
   };

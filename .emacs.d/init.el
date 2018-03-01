@@ -263,6 +263,23 @@
   :pin melpa-stable
   :commands cider-mode)
 
+(use-package rust-mode
+  :ensure t
+  :commands rust-mode)
+
+(use-package racer
+  :ensure t
+  :after rust-mode
+  :config
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (add-hook 'racer-mode-hook #'eldoc-mode)
+  (add-hook 'racer-mode-hook #'company-mode))
+
+(use-package flycheck-rust
+  :ensure t
+  :config
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+
 (use-package nix-mode
   :ensure t
   :commands nix-mode)
@@ -359,13 +376,14 @@
    "th"  'neotree-hidden-file-toggle
    "o"   'neotree-open-file-in-system-application
    "br"  'neotree-refresh)
+  ;; markdown
   (general-define-key
    :states 'normal
    :prefix ","
-   :keymaps 'dired-mode-map
-   "cf"  'dired-find-file
-   "cd"  'dired-create-directory
-   "dd"  'dired-delete-file)
+   :keymaps 'markdown-mode-map
+   "p"    '(:ignore t :which-key "preview")
+   "pl"   'markdown-live-preview-mode
+   "pb"   'markdown-preview)
   ;; Emacs Lisp
   (general-define-key
    :states 'normal
@@ -401,6 +419,15 @@
    "sx"   'cider-refresh
    "="    'cider-format-buffer
    "'"    'cider-jack-in)
+  ;; Rust
+  (general-define-key
+   :states 'normal
+   :prefix ","
+   :keymaps 'rust-mode-map
+   "ht"   'racer-describe
+   "hd"   'racer-find-definition
+   "cc"   'rust-compile
+   "dd"   'racer-debug)
   ;; Scala
   (general-define-key
    :states 'normal
@@ -447,7 +474,7 @@
  '(minimap-highlight-line nil)
  '(package-selected-packages
    (quote
-    (fzf ensime yaml-mode smartparens git-timemachine google-this rainbow-mode minimap buffer-move haskell-process haskell-interactive-mode flycheck-haskell nix-mode cider evil-magit magit evil pdf-tools use-package)))
+    (racer racer-mode flycheck-rust rust-mode ensime yaml-mode smartparens git-timemachine google-this rainbow-mode minimap buffer-move haskell-process haskell-interactive-mode flycheck-haskell nix-mode cider evil-magit magit evil pdf-tools use-package)))
  '(safe-local-variable-values
    (quote
     ((dante-target . "lib:bowling")

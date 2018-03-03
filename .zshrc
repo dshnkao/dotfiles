@@ -49,6 +49,7 @@ alias l='lx -l'
 alias ll='lx -al'
 alias haskellshell='nix-shell -p "haskell.packages.ghc821.ghcWithPackages (pkgs: with pkgs; [ cabal-install ])"'
 alias nixhs='nix-env -f "<nixpkgs>" -qaP -A haskellPackages'
+alias g='umenu ~/.mozilla/firefox/bl0ar52g.default-1507385104150/places.sqlite "fzf --no-sort --exact"'
 case $(uname) in
   'Linux')
       #alias ls="ls -X --color"

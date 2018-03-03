@@ -2,11 +2,10 @@
   allowUnfree = true;
   packageOverrides = pkgs: rec {
 
-    # temporary fix
-    neovim = pkgs.neovim.override { 
-      withRuby = false;
+    sqlite = pkgs.sqlite.override {
+      interactive = true;
+      readline = pkgs.readline;
     };
-
     coreEnv = with pkgs; buildEnv {
       name = "coreEnv";
       paths = [
@@ -43,18 +42,16 @@
         imagemagick
         jq
         ktorrent
-        libreoffice
+        # libreoffice
         neofetch
         nmap
         pandoc
         pdftk
         pmount
+        rlwrap
         scrot
-        skypeforlinux smartmontools
-        spotify
+        smartmontools
         sqlite
-        steam
-        steam-run
         stow
         stress
         texlive.combined.scheme-full
@@ -74,7 +71,6 @@
         ammonite
         binutils
         cabal2nix
-        gcc
         git
         gnumake
         haskellPackages.cabal-install
@@ -83,7 +79,6 @@
         haskellPackages.hlint
         haskellPackages.styx
         haskellPackages.ghcid
-        jetbrains.idea-community
         nodePackages.tern
         openjdk8
         patchelf
@@ -100,6 +95,7 @@
       name = "baseDev";
       paths = [
         clojure
+        fsharp
         go
         gradle
         idris
@@ -109,6 +105,18 @@
         nodejs
         rustracer
         rustup # rustc, cargo, rustup all in one
+      ];
+    };
+
+    # stuff likely to break when upgrade
+    nonFree = with pkgs; buildEnv {
+      name = "nonFree";
+      paths = [
+        jetbrains.idea-community
+        skypeforlinux
+        spotify
+        steam
+        steam-run
       ];
     };
   };

@@ -425,7 +425,7 @@
    :prefix ","
    :keymaps 'rust-mode-map
    "ht"   'racer-describe
-   "hd"   'racer-find-definition
+   "gg"   'racer-find-definition
    "cc"   'rust-compile
    "dd"   'racer-debug)
   ;; Scala

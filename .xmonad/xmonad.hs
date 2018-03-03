@@ -70,6 +70,13 @@ myManageHook = composeAll
       let isApp xs = or (flip List.isInfixOf c <$> xs)
       pure $ d && isApp ["Firefox", "Chromium"]
 
+umenu :: String
+umenu = unwords
+  [ "~/repos/my/scripts/umenu"
+  , "~/.mozilla/firefox/bl0ar52g.default-1507385104150/places.sqlite"
+  , "\"rofi -dmenu -i --no-sort\""
+  ]
+
 myKeys =
   [ ((mod4Mask,                 xK_bracketleft  ), sendMessage Shrink) -- %! Shrink the master area
   , ((mod4Mask,                 xK_bracketright ), sendMessage Expand) -- %! Shrink the master area
@@ -87,6 +94,7 @@ myKeys =
   , ((mod4Mask,                 xK_p            ), spawn "rofi -show run -matching fuzzy")
   , ((mod4Mask,                 xK_w            ), spawn "rofi -show window -matching fuzzy")
   , ((mod4Mask,                 xK_r            ), spawn "rofi -show drun -matching fuzzy")
+  , ((mod4Mask,                 xK_u            ), spawn umenu)
   , ((mod4Mask,                 xK_o            ), spawn "~/repos/my/scripts/pmenu")
   , ((mod4Mask,                 xK_s            ), toggleApp "pavucontrol")
   , ((mod4Mask,                 xK_0            ), scratchpadSpawnActionTerminal myTerminal)

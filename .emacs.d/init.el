@@ -217,6 +217,10 @@
   :init
   (setq org-directory "~/repos/my/org"))
 
+(use-package ox-pandoc
+  :ensure t
+  :after org)
+
 ;; dev
 
 (use-package yaml-mode
@@ -384,6 +388,14 @@
    "p"    '(:ignore t :which-key "preview")
    "pl"   'markdown-live-preview-mode
    "pb"   'markdown-preview)
+  (general-define-key
+   :states 'normal
+   :prefix ","
+   :keymaps 'org-mode-map
+   "e"    '(:ignore t :which-key "export")
+   "em"   'org-pandoc-export-as-gfm
+   "ep"   'org-pandoc-export-as-plain
+   "eh"   'org-pandoc-export-as-html5)
   ;; Emacs Lisp
   (general-define-key
    :states 'normal
@@ -474,7 +486,7 @@
  '(minimap-highlight-line nil)
  '(package-selected-packages
    (quote
-    (racer racer-mode flycheck-rust rust-mode ensime yaml-mode smartparens git-timemachine google-this rainbow-mode minimap buffer-move haskell-process haskell-interactive-mode flycheck-haskell nix-mode cider evil-magit magit evil pdf-tools use-package)))
+    (ox-pandoc org-link-minor-mode racer racer-mode flycheck-rust rust-mode ensime yaml-mode smartparens git-timemachine google-this rainbow-mode minimap buffer-move haskell-process haskell-interactive-mode flycheck-haskell nix-mode cider evil-magit magit evil pdf-tools use-package)))
  '(safe-local-variable-values
    (quote
     ((dante-target . "lib:bowling")

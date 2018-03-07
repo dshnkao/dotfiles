@@ -155,6 +155,16 @@
 (use-package counsel
   :ensure t)
 
+(use-package counsel-dash
+  :ensure t
+  :config
+  ;; (setq helm-dash-browser-func 'eww)
+  (defun counsel-dash-at-point () (interactive) (counsel-dash (thing-at-point 'symbol)))
+  (defun clojure-doc () (interactive) (setq-local helm-dash-docsets '("Clojure")))
+  (defun scala-doc () (interactive) (setq-local helm-dash-docsets '("Scala")))
+  (defun haskell-doc () (interactive) (setq-local helm-dash-docsets '("Haskell")))
+  (defun rust-doc () (interactive) (setq-local helm-dash-docsets '("Rust"))))
+
 (use-package which-key
   :ensure t
   :config
@@ -235,7 +245,9 @@
 
 (use-package ensime
   :ensure t
-  :commands ensime-mode)
+  :commands ensime-mode
+  :init
+  (add-hook 'ensime-mode-hook 'scala-doc))
 
 (use-package flycheck-haskell
   :ensure t
@@ -245,7 +257,9 @@
 
 (use-package haskell-mode
   :ensure t
-  :commands haskell-mode)
+  :commands haskell-mode
+  :init
+  (add-hook 'haskell-mode-hook 'haskell-doc))
 
 (use-package dante
   ;; :load-path "foss/dante/"
@@ -265,7 +279,9 @@
 (use-package cider
   :ensure t
   :pin melpa-stable
-  :commands cider-mode)
+  :commands cider-mode
+  :init
+  (add-hook 'cider-mode-hook 'clojure-doc))
 
 (use-package rust-mode
   :ensure t
@@ -274,10 +290,11 @@
 (use-package racer
   :ensure t
   :after rust-mode
-  :config
+  :init
   (add-hook 'rust-mode-hook #'racer-mode)
   (add-hook 'racer-mode-hook #'eldoc-mode)
-  (add-hook 'racer-mode-hook #'company-mode))
+  (add-hook 'racer-mode-hook #'company-mode)
+  (add-hook 'rust-mode-hook 'rust-doc))
 
 (use-package flycheck-rust
   :ensure t
@@ -298,9 +315,9 @@
    :non-normal-prefix "C-SPC"
    ;; Applications
    "a"   '(:ignore t :which-key "applications")
+   "ad"  'counsel-dash-at-point
    "af"  'fzf
    "ar"  'ranger
-   "ad"  'dired
    ;; buffers
    "b"   '(:ignore t :which-key "buffers")
    "bb"  'ivy-switch-buffer
@@ -364,7 +381,7 @@
    ;; quit
    "q" 'delete-other-windows
    ;; others
-   "SPC" (general-simulate-keys "M-x")
+   "SPC" (general-simulate-key "M-x")
    "TAB" '(switch-to-other-buffer :which-key "prev buffer")
    "/"   'counsel-rg)
   ;; neotree
@@ -486,7 +503,7 @@
  '(minimap-highlight-line nil)
  '(package-selected-packages
    (quote
-    (ox-pandoc org-link-minor-mode racer racer-mode flycheck-rust rust-mode ensime yaml-mode smartparens git-timemachine google-this rainbow-mode minimap buffer-move haskell-process haskell-interactive-mode flycheck-haskell nix-mode cider evil-magit magit evil pdf-tools use-package)))
+    (dante auctex-latexmk zoom counsel-projectile fzf ace-window neotree all-the-icons color-theme-sanityinc-tomorrow diff-hl counsel-dash ox-pandoc org-link-minor-mode racer racer-mode flycheck-rust rust-mode ensime yaml-mode smartparens git-timemachine google-this rainbow-mode minimap buffer-move haskell-process haskell-interactive-mode flycheck-haskell nix-mode cider evil-magit magit evil pdf-tools use-package)))
  '(safe-local-variable-values
    (quote
     ((dante-target . "lib:bowling")

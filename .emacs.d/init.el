@@ -225,7 +225,9 @@
   :ensure t
   :commands org-mode
   :init
-  (setq org-directory "~/repos/my/org"))
+  (setq org-directory "~/repos/my/org")
+  :config
+  (setq org-log-done 'time))
 
 (use-package ox-pandoc
   :ensure t

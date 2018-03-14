@@ -13,5 +13,7 @@ ssh
 !.config/nixpkgs/config.nix
 !.config/taffybar
 
-.emacs.d/
-!.emacs.d/init.el
+/.emacs.d/*
+!/.emacs.d/init.el
+!/.emacs.d/lisp/
+!/.emacs.d/lisp/*

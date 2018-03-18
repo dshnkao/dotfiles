@@ -15,6 +15,7 @@
    "g"    '(:ignore t :which-key "goto")
    "gg"   'xref-find-definitions
    "gr"   'xref-find-references
+   "e"    '(:ignore t :which-key "eval")
    "eb"   'dante-eval-block
    "r"    'dante-restart))
 
@@ -23,19 +24,21 @@
   :after haskell-mode
   :commands 'dante-mode
   :init
-  (setq company-backend 'dante-company)
   (add-hook 'haskell-mode-hook 'dante-mode)
+  (add-hook 'haskell-mode-hook 'flycheck-mode)
   ;; load dir-local dante-target before dante-mode
   (add-hook 'haskell-mode-hook 'hack-dir-local-variables-non-file-buffer)
   (add-hook 'dante-mode-hook
             '(lambda () (flycheck-add-next-checker 'haskell-dante
-                                                   '(warning . haskell-hlint)))))
+                                                   '(warning . haskell-hlint))))
+  :config
+  (setq company-backend 'dante-company))
 
 (use-package flycheck-haskell
   :ensure t
   :commands flycheck-haskell-configure
   :config
-  (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
+  (add-hook 'flycheck-mode-hook 'flycheck-haskell-setup))
 
 
 (provide 'my-haskell)

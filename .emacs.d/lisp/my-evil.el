@@ -5,6 +5,7 @@
   (define-key dired-mode-map (kbd "SPC") nil)
   (setq evil-search-module 'evil-search)
   (setq evil-want-C-u-scroll t)
+  (setq evil-mode-line-format nil)
   :config
   (evil-mode 1))
 

@@ -5,18 +5,6 @@
   (add-hook 'org-mode-hook 'linum-relative-mode)
   (setq linum-relative-current-symbol ""))
 
-;;(use-package smart-mode-line
-;;  :ensure t
-;;  :init
-;;  (setq sml/theme 'respectful)
-;;  (setq sml/shorten-directory t)
-;;  (setq sml/shorten-modes t)
-;;  (setq sml/no-confirm-load-theme t)
-;;  (setq rm-whitelist '(""))
-;;  :config
-;;  (rich-minority-mode 1)
-;;  (sml/setup))
-
 (use-package color-theme-sanityinc-tomorrow
   :ensure t
   :init
@@ -30,5 +18,20 @@
 (use-package all-the-icons
   :ensure t
   :after neotree)
+
+(defun simple-mode-line-render (left right)
+  "Return a string of `window-width' length containing LEFT, and RIGHT aligned respectively."
+  (let* ((available-width (- (window-width) (length left) 2)))
+    (format (format " %%s %%%ds " available-width) left right)))
+
+(setcar mode-line-position
+        '(:eval (format "%3d%%" (/ (window-start) 0.01 (point-max)))))
+
+(setq-default mode-line-format
+              '((:eval (simple-mode-line-render
+                        ;; left
+                        (format-mode-line "%b [%m] [%*]")
+                        ;; right
+                        (format-mode-line "%l/%c %p")))))
 
 (provide 'my-ui)

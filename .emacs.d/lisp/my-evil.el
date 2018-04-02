@@ -21,6 +21,7 @@
    "a"   '(:ignore t :which-key "applications")
    "ad"  'counsel-dash-at-point
    "af"  'counsel-fzf
+   "ay"  'yas-insert-snippet
    ;; buffers
    "b"   '(:ignore t :which-key "buffers")
    "bb"  'ivy-switch-buffer

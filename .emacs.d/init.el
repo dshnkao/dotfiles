@@ -36,6 +36,7 @@
 (require 'my-scala)
 (require 'my-settings)
 (require 'my-shell)
+(require 'my-snippet)
 (require 'my-yaml)
 
 (custom-set-variables

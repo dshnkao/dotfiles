@@ -35,6 +35,7 @@
 (require 'my-rust)
 (require 'my-scala)
 (require 'my-settings)
+(require 'my-shell)
 (require 'my-yaml)
 
 (custom-set-variables

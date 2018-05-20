@@ -16,9 +16,10 @@
   ;; (setq helm-dash-browser-func 'eww)
   (defun counsel-dash-at-point () (interactive) (counsel-dash (thing-at-point 'symbol)))
   (defun clojure-doc () (interactive) (setq-local helm-dash-docsets '("Clojure")))
-  (defun scala-doc () (interactive) (setq-local helm-dash-docsets '("Scala")))
   (defun haskell-doc () (interactive) (setq-local helm-dash-docsets '("Haskell")))
+  (defun python-doc () (interactive) (setq-local helm-dash-docsets '("Python")))
   (defun rust-doc () (interactive) (setq-local helm-dash-docsets '("Rust"))))
+  (defun scala-doc () (interactive) (setq-local helm-dash-docsets '("Scala")))
 
 (use-package counsel-projectile
   :ensure t)

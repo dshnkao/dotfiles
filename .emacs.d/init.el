@@ -32,11 +32,13 @@
 (require 'my-markdown)
 (require 'my-nix)
 (require 'my-org)
+(require 'my-python)
 (require 'my-rust)
 (require 'my-scala)
 (require 'my-settings)
 (require 'my-shell)
 (require 'my-snippet)
+(require 'my-typescript)
 (require 'my-yaml)
 
 (custom-set-variables

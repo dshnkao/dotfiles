@@ -1,9 +1,9 @@
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/Sync/scripts:$PATH"
-export PATH="$HOME/repos/my/scripts:$PATH"
 export PATH="/usr/local/bin:$PATH"
+export PATH="$HOME/repos/my/scripts:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.cabal/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.npm/bin:$PATH"
 
 export FPATH="$HOME/.zsh/zfunc:$FPATH"
 

@@ -8,4 +8,4 @@ mpd_host 192.168.0.5
 mpd_port 6600
 
 TEXT
-Cpu: ^fg(\#909090)${cpu}%^fg() Mem: ^fg(\#909090)${memperc}%^fg() Net: ^fg(\#909090)${downspeedf wlp4s0} / ${upspeedf wlp4s0}^fg() Bat: ^fg(\#909090)${exec acpi | cut -d, -f2}^fg() ${time %a %b %d %H:%M} 
+Wifi: ^fg(\#909090)${wireless_essid wlp4s0}^fg() Cpu: ^fg(\#909090)${cpu}%^fg() Mem: ^fg(\#909090)${memperc}%^fg() Net: ^fg(\#909090)${downspeedf wlp4s0} / ${upspeedf wlp4s0}^fg() Bat: ^fg(\#909090)${exec acpi | cut -d, -f2}^fg()  ${time %F %H:%M} 

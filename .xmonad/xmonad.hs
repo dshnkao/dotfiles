@@ -1,58 +1,72 @@
 {-# LANGUAGE LambdaCase #-}
-import Control.Exception (catch, SomeException)
-import Control.Monad (join, when)
-import Data.Maybe (maybeToList)
-import Data.Bits ((.|.))
+import           Control.Applicative ((<|>))
+import           Control.Exception (catch, SomeException)
+import           Control.Monad (join, when)
+import           Data.Maybe (maybeToList, fromMaybe)
+import           Data.Bits ((.|.))
 import qualified Data.List as List
-import Data.Monoid ((<>))
-import System.Exit (exitSuccess)
-import System.Taffybar.Hooks.PagerHints (pagerHints)
-import XMonad
-import XMonad.Actions.CycleWS (prevWS, nextWS)
-import XMonad.Actions.SpawnOn (manageSpawn)
-import XMonad.Actions.SwapWorkspaces (swapWithCurrent)
-import XMonad.Hooks.DynamicLog (dzen)
-import XMonad.Hooks.EwmhDesktops (fullscreenEventHook, ewmh)
-import XMonad.Hooks.InsertPosition (Position(..), Focus(..), insertPosition)
-import XMonad.Hooks.ManageDocks (docksEventHook, avoidStruts, manageDocks)
-import XMonad.Hooks.ManageHelpers (isDialog, doRectFloat, isFullscreen, doFullFloat)
-import XMonad.Hooks.SetWMName (setWMName)
-import XMonad.Hooks.UrgencyHook (withUrgencyHook, NoUrgencyHook(..))
-import XMonad.Layout.Fullscreen hiding (fullscreenEventHook)
-import XMonad.Layout.NoBorders (lessBorders, Ambiguity(..))
-import XMonad.Util.EZConfig (additionalKeys)
-import XMonad.Util.Run (spawnPipe, runProcessWithInput)
-import XMonad.Util.Scratchpad (scratchpadManageHook, scratchpadSpawnActionTerminal)
+import           Data.Monoid ((<>))
+import           GHC.IO.Handle (Handle)
+import           System.Exit (exitSuccess)
+import           System.Directory (findExecutable)
+-- import           System.Taffybar.Hooks.PagerHints (pagerHints)
+import           XMonad
+import           XMonad.Actions.CycleWS (prevWS, nextWS)
+import           XMonad.Actions.SpawnOn (manageSpawn)
+import           XMonad.Actions.SwapWorkspaces (swapWithCurrent)
+import           XMonad.Config (def)
+import qualified XMonad.Hooks.DynamicLog as DL
+import           XMonad.Hooks.EwmhDesktops (fullscreenEventHook, ewmh)
+import           XMonad.Hooks.InsertPosition (Position(..), Focus(..), insertPosition)
+import           XMonad.Hooks.ManageDocks (docksEventHook, avoidStruts, manageDocks)
+import           XMonad.Hooks.ManageHelpers (isDialog, doRectFloat, isFullscreen, doFullFloat)
+import           XMonad.Hooks.SetWMName (setWMName)
+import           XMonad.Hooks.UrgencyHook (withUrgencyHook, NoUrgencyHook(..))
+import           XMonad.Layout.Fullscreen hiding (fullscreenEventHook)
+import           XMonad.Layout.NoBorders (lessBorders, Ambiguity(..))
+import           XMonad.Util.EZConfig (additionalKeys)
+import           XMonad.Util.Run (spawnPipe, runProcessWithInput, hPutStrLn)
+import           XMonad.Util.Scratchpad (scratchpadManageHook, scratchpadSpawnActionTerminal)
 import qualified XMonad.StackSet as W
 
 main = do
-  taffy <- spawnPipe "taffybar"
+  myTerm <- myTerminal
+  handle <- spawnBar
+  -- set cursor
   spawn "xsetroot -cursor_name left_ptr"
   spawn "xsetroot -solid '#101010'"
-  -- spawn "autocutsel -fork" -- need both, don't delete
+  -- unify clipboard, need both
+  -- spawn "autocutsel -fork"
   -- spawn "autocutsel -selection PRIMARY -fork"
-  xmonad $ ewmh $ pagerHints $ withUrgencyHook NoUrgencyHook $ fullscreenSupport $ defaultConfig
+  xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $ fullscreenSupport $ def
+  -- pagerHints: show Full/Tall/Mirror Tall on TaffyBar
+  -- xmonad $ ewmh $ pagerHints $ withUrgencyHook NoUrgencyHook $ fullscreenSupport $ def
     { manageHook  = myManageHook
     , layoutHook  = myLayoutHook
     , startupHook = setWMName "LG3D" >> addEWMHFullscreen
     , workspaces  = myWorkspaces
     , modMask     = mod4Mask
-    , terminal    = myTerminal
-    , handleEventHook = docksEventHook <+> handleEventHook defaultConfig <+> fullscreenEventHook
-    } `additionalKeys` myKeys
+    , terminal    = myTerm
+    , logHook     = myLogHook handle
+    , handleEventHook = docksEventHook <+> handleEventHook def <+> fullscreenEventHook
+    } `additionalKeys` (myKeys myTerm)
 
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = map show [1..9 :: Int]
 
-myTerminal :: String
-myTerminal = "konsole"
+myTerminal :: IO String
+myTerminal = do
+  k <- findExecutable "konsole"
+  u <- findExecutable "urxvt"
+  pure $ fromMaybe "xterm" $ k <|> u
 
 myLayoutHook =
   fullscreenFull
   $ lessBorders OnlyFloat
   $ avoidStruts
-  $ layoutHook defaultConfig
+  $ layoutHook def
 
+myManageHook :: ManageHook
 myManageHook = composeAll
   [ (not <$> isDialog)       --> insertPosition Below Newer
   , isFFDialog               --> doRectFloat (W.RationalRect 0.25 0.25 0.5 0.5)
@@ -77,7 +91,8 @@ umenu = unwords
   , "\"rofi -dmenu -i --no-sort\""
   ]
 
-myKeys =
+myKeys :: String -> [((KeyMask, KeySym), X ())]
+myKeys myTerm =
   [ ((mod4Mask,                 xK_bracketleft  ), sendMessage Shrink) -- %! Shrink the master area
   , ((mod4Mask,                 xK_bracketright ), sendMessage Expand) -- %! Shrink the master area
   , ((mod4Mask .|. shiftMask,   xK_bracketleft  ), prevWS)
@@ -87,17 +102,17 @@ myKeys =
   , ((mod4Mask .|. shiftMask,   xK_i            ), spawn "~/repos/my/scripts/internal.sh")
   , ((mod4Mask .|. shiftMask,   xK_e            ), spawn "~/repos/my/scripts/external.sh")
   , ((mod4Mask .|. shiftMask,   xK_y            ), io exitSuccess)
-  , ((mod4Mask,                 xK_y            ), spawn "pkill taffybar; xmonad --recompile && xmonad --restart")
+  , ((mod4Mask,                 xK_y            ), spawn $ killBar <> "xmonad --recompile && xmonad --restart")
   , ((mod4Mask .|. controlMask, xK_q            ), spawn "slock")
   , ((mod4Mask .|. shiftMask,   xK_q            ), io exitSuccess)
-  , ((mod4Mask,                 xK_q            ), spawn "pkill taffybar; xmonad --recompile && xmonad --restart")
+  , ((mod4Mask,                 xK_q            ), spawn $ killBar <> "xmonad --recompile && xmonad --restart")
   , ((mod4Mask,                 xK_p            ), spawn "rofi -show run -matching fuzzy")
   , ((mod4Mask,                 xK_w            ), spawn "rofi -show window -matching fuzzy")
   , ((mod4Mask,                 xK_r            ), spawn "rofi -show drun -matching fuzzy")
   , ((mod4Mask,                 xK_u            ), spawn umenu)
   , ((mod4Mask,                 xK_o            ), spawn "~/repos/my/scripts/pmenu")
   , ((mod4Mask,                 xK_s            ), toggleApp "pavucontrol")
-  , ((mod4Mask,                 xK_0            ), scratchpadSpawnActionTerminal myTerminal)
+  , ((mod4Mask,                 xK_0            ), scratchpadSpawnActionTerminal myTerm)
     -- media keys
   , ((0, 0x1008ff12                           ), spawn "amixer -q sset Master toggle") --f1
   , ((0, 0x1008ff11                           ), spawn "amixer -q sset Master 5%-") --f2
@@ -114,6 +129,46 @@ toggleApp app =
   runProcessWithInput "pkill" ["-e", app] "" >>= \case
   "" -> spawn app
   _  -> pure ()
+
+-- Switch between TaffyBar and Dzen
+data MyBar = TaffyBar | Dzen
+
+myBar :: MyBar
+myBar = TaffyBar
+
+spawnBar :: IO (Maybe Handle)
+spawnBar = case myBar of
+  Dzen -> do
+    leftBar <- spawnPipe "dzen2 -ta l -h 30 -w 960 -fn Ubuntu:size=11 -dock"
+    spawn $ "conky -c ~/.xmonad/data/conky/dzen | " ++ "dzen2 -ta r -x 960 -h 30 -fn Ubuntu:size=11"
+    pure $ Just leftBar
+  TaffyBar ->
+    const Nothing <$> spawn "taffybar"
+
+killBar :: String
+killBar = case myBar of
+  TaffyBar -> "pkill taffybar;"
+  Dzen -> "pkill conky; pkill dzen2;"
+
+myLogHook :: Maybe Handle -> X ()
+myLogHook optH = case (myBar, optH) of
+  (Dzen, Just h) -> dzenLogHook h
+  _ -> pure ()
+
+dzenLogHook :: Handle -> X ()
+dzenLogHook h = DL.dynamicLogWithPP $ def
+    { DL.ppCurrent         = DL.dzenColor "#cccccc" "#006788" . DL.pad 
+    , DL.ppHidden          = DL.dzenColor "#cccccc" "" . DL.pad . noScratchPad
+    , DL.ppHiddenNoWindows = DL.dzenColor "#606060" "" . DL.pad . noScratchPad
+    , DL.ppLayout          = DL.dzenColor "#909090" "" . DL.pad 
+    , DL.ppUrgent          = DL.dzenColor "#ff0000" "" . DL.pad . DL.dzenStrip
+    , DL.ppTitle           = DL.shorten 100
+    , DL.ppWsSep           = ""
+    , DL.ppSep             = "  "
+    , DL.ppOutput          = hPutStrLn h
+    }
+    where
+      noScratchPad ws = if ws == "NSP" then "" else ws
 
 -- GLFW
 -- https://github.com/xmonad/xmonad-contrib/pull/109

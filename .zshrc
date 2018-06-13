@@ -40,7 +40,7 @@ alias nrs='sudo nixos-rebuild switch'
 alias passf='pass $(passfzf.sh)'
 alias r='ranger'
 alias se='sudoedit'
-alias ssh='TERM=xterm-256color ssh'
+# alias ssh='TERM=xterm-256color ssh'
 alias t='tmux'
 alias vi="nvim"
 alias vt='nvim -c terminal -u ~/.vimrc-term'

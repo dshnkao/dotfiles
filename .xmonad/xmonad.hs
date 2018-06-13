@@ -2,7 +2,7 @@
 import           Control.Applicative ((<|>))
 import           Control.Exception (catch, SomeException)
 import           Control.Monad (join, when)
-import           Data.Maybe (maybeToList, fromMaybe)
+import           Data.Maybe (maybeToList, fromMaybe, isJust)
 import           Data.Bits ((.|.))
 import qualified Data.List as List
 import           Data.Monoid ((<>))
@@ -11,7 +11,7 @@ import           System.Exit (exitSuccess)
 import           System.Directory (findExecutable)
 -- import           System.Taffybar.Hooks.PagerHints (pagerHints)
 import           XMonad
-import           XMonad.Actions.CycleWS (prevWS, nextWS)
+import           XMonad.Actions.CycleWS (prevWS, nextWS, moveTo, Direction1D(..), WSType(..))
 import           XMonad.Actions.SpawnOn (manageSpawn)
 import           XMonad.Actions.SwapWorkspaces (swapWithCurrent)
 import           XMonad.Config (def)
@@ -55,10 +55,10 @@ myWorkspaces :: [WorkspaceId]
 myWorkspaces = map show [1..9 :: Int]
 
 myTerminal :: IO String
-myTerminal = do
-  k <- findExecutable "konsole"
-  u <- findExecutable "urxvt"
-  pure $ fromMaybe "xterm" $ k <|> u
+myTerminal =
+  fromMaybe "xterm" . join . (List.find isJust) <$> (mapM findExecutable terminals)
+  where
+    terminals = [ "konsole" , "urxvt" , "terminator" , "tilix"]
 
 myLayoutHook =
   fullscreenFull
@@ -95,10 +95,10 @@ myKeys :: String -> [((KeyMask, KeySym), X ())]
 myKeys myTerm =
   [ ((mod4Mask,                 xK_bracketleft  ), sendMessage Shrink) -- %! Shrink the master area
   , ((mod4Mask,                 xK_bracketright ), sendMessage Expand) -- %! Shrink the master area
-  , ((mod4Mask .|. shiftMask,   xK_bracketleft  ), prevWS)
-  , ((mod4Mask .|. shiftMask,   xK_bracketright ), nextWS)
-  , ((mod4Mask,                 xK_minus        ), prevWS)
-  , ((mod4Mask,                 xK_equal        ), nextWS)
+  , ((mod4Mask .|. shiftMask,   xK_bracketleft  ), moveTo Prev (WSIs (pure notNSP)))
+  , ((mod4Mask .|. shiftMask,   xK_bracketright ), moveTo Next (WSIs (pure notNSP)))
+  , ((mod4Mask,                 xK_minus        ), moveTo Prev (WSIs (pure notNSP)))
+  , ((mod4Mask,                 xK_equal        ), moveTo Next (WSIs (pure notNSP)))
   , ((mod4Mask .|. shiftMask,   xK_i            ), spawn "~/repos/my/scripts/internal.sh")
   , ((mod4Mask .|. shiftMask,   xK_e            ), spawn "~/repos/my/scripts/external.sh")
   , ((mod4Mask .|. shiftMask,   xK_y            ), io exitSuccess)
@@ -123,6 +123,8 @@ myKeys myTerm =
   ]
   ++
   [((mod4Mask .|. controlMask, k              ), windows $ swapWithCurrent i) | (i, k) <- zip myWorkspaces [xK_1 ..]]
+  where
+    notNSP (W.Workspace wId _ _) = wId /= "NSP"
 
 toggleApp :: MonadIO m => String -> m ()
 toggleApp app =
@@ -134,7 +136,7 @@ toggleApp app =
 data MyBar = TaffyBar | Dzen
 
 myBar :: MyBar
-myBar = TaffyBar
+myBar = Dzen
 
 spawnBar :: IO (Maybe Handle)
 spawnBar = case myBar of
@@ -174,7 +176,7 @@ dzenLogHook h = DL.dynamicLogWithPP $ def
 -- https://github.com/xmonad/xmonad-contrib/pull/109
 -- https://github.com/xmonad/xmonad-contrib/issues/183
 addNETSupported :: Atom -> X ()
-addNETSupported x   = withDisplay $ \dpy -> do
+addNETSupported x = withDisplay $ \dpy -> do
   r               <- asks theRoot
   a_NET_SUPPORTED <- getAtom "_NET_SUPPORTED"
   a               <- getAtom "ATOM"
@@ -184,7 +186,7 @@ addNETSupported x   = withDisplay $ \dpy -> do
       changeProperty32 dpy r a_NET_SUPPORTED a propModeAppend [fromIntegral x]
 
 addEWMHFullscreen :: X ()
-addEWMHFullscreen   = do
+addEWMHFullscreen = do
   wms <- getAtom "_NET_WM_STATE"
   wfs <- getAtom "_NET_WM_STATE_FULLSCREEN"
   mapM_ addNETSupported [wms, wfs]

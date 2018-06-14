@@ -68,6 +68,10 @@ case $(uname) in
       ;;
 esac
 
+# functions
+# remote edit file using local vi
+viscp () { vi scp://"$1"/"$2" }
+
 # The following lines were added by compinstall
 zstyle ':completion:*' completer _complete _ignored
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}

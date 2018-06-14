@@ -138,6 +138,12 @@ if has("nvim")
 
     """ deoplete
     let g:deoplete#enable_at_startup = 1
+    """ %s/foo/bar live view
+    set inccommand=nosplit
+    """ unify clipboard
+    set clipboard+=unnamedplus
+    """
+    " set termguicolors
 
 endif
 

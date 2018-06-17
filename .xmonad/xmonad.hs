@@ -117,6 +117,7 @@ myKeys myTerm =
   , ((0, 0x1008ff12                           ), spawn "amixer -q sset Master toggle") --f1
   , ((0, 0x1008ff11                           ), spawn "amixer -q sset Master 5%-") --f2
   , ((0, 0x1008ff13                           ), spawn "amixer -q sset Master 5%+") --f3
+  , ((0, 0x1008ffb2                           ), spawn "amixer -c 0 set Master playback 100% unmute") --f4
   , ((0, 0x1008ff03                           ), spawn "xbacklight -5") --f5
   , ((0, 0x1008ff02                           ), spawn "xbacklight +5") --f6
   , ((mod4Mask, 0xff61                        ), spawn "scrot") --prtsc

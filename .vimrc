@@ -41,6 +41,8 @@ command! WQ wq
 command! Wq wq
 command! W w
 command! Q q
+" sudo write file
+command FW execute ":w !sudo tee %"
 
 "save
 nnoremap <Esc>w :w<CR>
@@ -86,6 +88,10 @@ set number
 set rnu
 "spell check
 set spelllang=en_gb
+
+"smartcase
+set ignorecase
+set smartcase
 
 "mac delete problem
 set backspace=2

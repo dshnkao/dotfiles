@@ -15,14 +15,9 @@ export GPG_TTY=$(tty)
 # systemd deletes /run/users/:id/gnpug on logout
 gpgconf --create-socketdir > /dev/null 2>&1
 
-#[ -f ~/repos/my/zsh-git-prompt/zshrc.sh ] && source ~/repos/my/zsh-git-prompt/zshrc.sh
 # prompt
 autoload -U colors && colors
-#GIT_PROMPT_EXECUTABLE="haskell"
-##PS1="%{$fg[blue]%}%m %{$reset_color%}%2c%{$reset_color%}> % "
-#PROMPT='[%F{blue}%n%f@%F{blue}%m%f] '
 PROMPT='[%F{blue}%n%f@%F{blue}%m%f %F{yellow}%1~%f] '
-#RPROMPT='$(git_super_status)'
 RPROMPT=''
 
 setopt prompt_sp
@@ -101,3 +96,14 @@ autoload -Uz _pass
 # autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && source /usr/local/etc/profile.d/autojump.sh
 [ -f /run/current-system/sw/share/autojump/autojump.zsh ] && source  /run/current-system/sw/share/autojump/autojump.zsh
+
+ # emacs tramp
+if [[ "$TERM" == "dumb" ]]
+then
+  unsetopt zle
+  unsetopt prompt_cr
+  unsetopt prompt_subst
+  unfunction precmd
+  unfunction preexec
+  PS1='$ '
+fi

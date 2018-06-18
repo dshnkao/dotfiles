@@ -15,14 +15,18 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'flazz/vim-colorschemes'
+Plug 'chriskempson/base16-vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'LnL7/vim-nix'
 call plug#end()
 
 filetype plugin indent on
 set t_Co=256
-colo Tomorrow-Night
 syntax on
+let base16colorspace=256  " Access colors present in 256 colorspace
+colo base16-tomorrow-night
+"colo Tomorrow-Night
+set background=dark
 
 " save when leave insert mode
 "autocmd InsertLeave * write
@@ -129,14 +133,10 @@ endif
 
 " neovim only
 if has("nvim")
-    if hostname() == "tldr"
-        let g:python3_host_prog = '/usr/local/bin/python3'
-    elseif hostname() == "hertz"
+    if hostname() == "tldr.local"
         let g:python3_host_prog = '/usr/local/bin/python3'
     elseif hostname() == "vaio"
         let g:python3_host_prog = '/run/current-system/sw/bin/nvim-python3'
-    elseif hostname() != "carbon" 
-        let g:python3_host_prog = '/usr/bin/python3'
     endif
     """ terminal buffer
     tnoremap <C-\><C-\> <C-\><C-n>
@@ -149,7 +149,7 @@ if has("nvim")
     """ unify clipboard
     set clipboard+=unnamedplus
     """
-    " set termguicolors
+    set termguicolors
 
 endif
 
@@ -187,6 +187,3 @@ hi PmenuSel     cterm=none ctermfg=Black     ctermbg=37
 :set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
 " parentheses
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
-
-"blue ~
-":hi NonText ctermfg=Black

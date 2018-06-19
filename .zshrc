@@ -1,10 +1,7 @@
-#export TERM=screen-256color
 export EDITOR=nvim
-
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 export LS_COLORS='di=36:ln=1;31:so=37;40:pi=1;33:ex=35:bd=37;40:cd=37;40:su=37;40:sg=37;40:tw=32;40:ow=32;40:'
-
 # encoding
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -19,7 +16,6 @@ gpgconf --create-socketdir > /dev/null 2>&1
 autoload -U colors && colors
 PROMPT='[%F{blue}%n%f@%F{blue}%m%f %F{yellow}%1~%f] '
 RPROMPT=''
-
 setopt prompt_sp
 
 # alias
@@ -64,38 +60,23 @@ case $(uname) in
 esac
 
 # functions
-# remote edit file using local vi
-viscp () { vi scp://"$1"/"$2" }
+viscp () { vi scp://"$1"/"$2" } # remote edit file using local vi
+include() { [[ -f "$1" ]] && source "$1" } # source if file exists
 
-# The following lines were added by compinstall
-zstyle ':completion:*' completer _complete _ignored
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
-
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=100000
-SAVEHIST=100000
-bindkey -e
-# End of lines configured by zsh-newuser-install
-
-# iterm2
-[ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # password-store tab complete
 autoload -Uz _pass
-# cammy
-[ -f ~/.cammyenv ] && source ~/.cammyenv
-# jmp function
-[ -f ~/.zsh/jmpfunc.zsh ] && source ~/.zsh/jmpfunc.zsh
+# iterm2
+include "~/.iterm2_shell_integration.zsh"
+# fzf
+include "~/.fzf.zsh"
 # autojump
-[ -f /usr/local/etc/profile.d/autojump.sh ] && source /usr/local/etc/profile.d/autojump.sh
-[ -f /run/current-system/sw/share/autojump/autojump.zsh ] && source  /run/current-system/sw/share/autojump/autojump.zsh
+include "/usr/local/etc/profile.d/autojump.sh"
+include "/run/current-system/sw/share/autojump/autojump.zsh"
+# zsh syntax highlighting
+include "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+include "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+# cammy
+include "~/.cammyenv"
 
  # emacs tramp
 if [[ "$TERM" == "dumb" ]]
@@ -107,3 +88,18 @@ then
   unfunction preexec
   PS1='$ '
 fi
+
+# The following lines were added by compinstall
+zstyle ':completion:*' completer _complete _ignored
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=100000
+SAVEHIST=100000
+bindkey -e
+# End of lines configured by zsh-newuser-install

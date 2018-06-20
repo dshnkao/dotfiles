@@ -69,6 +69,7 @@ autoload -Uz _pass
 include "~/.iterm2_shell_integration.zsh"
 # fzf
 include "~/.fzf.zsh"
+include "~/.fzf/shell/key-bindings.zsh"
 # autojump
 include "/usr/local/etc/profile.d/autojump.sh"
 include "/run/current-system/sw/share/autojump/autojump.zsh"

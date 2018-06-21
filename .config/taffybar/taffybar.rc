@@ -54,4 +54,4 @@ widget "*Workspace-Container-*-empty*"   style "taffybar-default"
 widget "*Workspace-Container-*-hidden*"  style "taffybar-default"
 widget "*Workspace-Container-*-urgent*" style "taffybar-default"
 
-gtk-font-name="Noto Sans 11"
+gtk-font-name="Noto Sans 8"

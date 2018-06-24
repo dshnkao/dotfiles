@@ -1,6 +1,6 @@
 import Control.Monad (join)
 import Control.Monad.IO.Class (MonadIO(..))
-import Data.Maybe (fromMaybe)
+import Data.Maybe (fromMaybe, listToMaybe)
 import Data.Monoid ((<>))
 import System.Process (readCreateProcess, shell)
 import System.Taffybar
@@ -32,7 +32,7 @@ main =
         , pollingGraphNew memCfg 1 memCallback
         , pollingGraphNew cpuCfg 0.5 cpuCallback
         , networkMonitorNew defaultNetFormat (Just ["wlp4s0"])
-        , pollingLabelNew "\61931 No Connection" 10 wifiCallback
+        , pollingLabelNew "\61931 No Connection" 1 wifiCallback
         ]
       , barPosition = Top
       , barPadding = 0
@@ -86,8 +86,9 @@ cpuCallback = do
 
 wifiCallback :: IO String
 wifiCallback = do
-  out <- readCreateProcess (shell "nmcli -t dev wifi | grep '*'") ""
-  let ssid = case List.splitOn ":" out of
-        "*":ssid:_-> ssid
-        _ -> "No Connection"
-  pure $ "\61931" <> " " <> ssid
+  out <- readCreateProcess (shell "nmcli -t con show --active") ""
+  let ssid = List.intercalate "/" (fmap f (List.lines out))
+  let label = if null ssid then "No Connection" else ssid
+  pure $ "\61931" <> " " <> label
+  where
+    f = fromMaybe "" . listToMaybe . List.splitOn ":"

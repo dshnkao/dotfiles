@@ -24,8 +24,8 @@ filetype plugin indent on
 set t_Co=256
 syntax on
 let base16colorspace=256  " Access colors present in 256 colorspace
-colo base16-tomorrow-night
-"colo Tomorrow-Night
+"colo base16-tomorrow-night
+colo Tomorrow-Night
 set background=dark
 
 " save when leave insert mode

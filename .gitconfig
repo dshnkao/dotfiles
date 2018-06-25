@@ -7,7 +7,7 @@
     c = commit
     ca = commit -a
     co = checkout
-    cob = !git checkout $(git branch --all --verbose | fzf | tr -s ' ' | cut -d' ' -f2)
+    cob = !git checkout $(git branch --all --verbose | fzf | tr -s ' ' | cut -d' ' -f2 | sed s/remotes.origin.//)
     diffc = diff --cached
     force = push --force-with-lease
     hist = log --pretty=format:\"%C(yellow)%h%C(reset) %C(green)%ad%C(reset) %C(red)|%C(reset) %s %C(bold blue)[%an]%C(reset)%C(yellow)%d%C(reset)\" --graph --date=short

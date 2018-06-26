@@ -10,7 +10,8 @@
    "e"    '(:ignore t :which-key "export")
    "em"   'org-pandoc-export-as-gfm
    "ep"   'org-pandoc-export-as-plain
-   "eh"   'org-pandoc-export-as-html5)
+   "eh"   'org-pandoc-export-as-html5
+   "ti"   'org-display-inline-images)
   :config
   (setq org-log-done 'time))
 

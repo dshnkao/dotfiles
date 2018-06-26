@@ -34,4 +34,11 @@
                         ;; right
                         (format-mode-line "%l/%c %p")))))
 
+
+;; kde sets default xresources, annoying
+(setq inhibit-x-resources 't)
+(scroll-bar-mode -1)
+(menu-bar-mode -1)
+
+
 (provide 'my-ui)

@@ -9,8 +9,8 @@
    :keymaps 'scala-mode-map
    "ht"   'ensime-type-at-point
    "gg"   'ensime-goto-source-location
-   "ee"   'ensime-print-errors-at-point)
-  )
+   "ee"   'ensime-print-errors-at-point))
+
 (use-package ensime
   :ensure t
   :commands ensime-mode)

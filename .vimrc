@@ -107,7 +107,7 @@ let g:airline_theme='base16_tomorrow'
 let g:airline_powerline_fonts = 1
 
 "set cscope database
-cs add cscope.out
+"cs add cscope.out
 
 "for crontab to work
 if $VIM_CRONTAB == "true"

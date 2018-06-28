@@ -3,6 +3,7 @@
   :init
   (add-hook 'prog-mode-hook 'linum-relative-mode)
   (add-hook 'org-mode-hook 'linum-relative-mode)
+  (add-hook 'yaml-mode-hook 'linum-relative-mode)
   (setq linum-relative-current-symbol ""))
 
 (use-package color-theme-sanityinc-tomorrow

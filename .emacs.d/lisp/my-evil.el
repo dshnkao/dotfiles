@@ -28,11 +28,12 @@
    "bd"  'kill-this-buffer
    "bu"  'revert-buffer
    "be"  'eval-buffer
-   "bn"  (lambda () (interactive) (let (($buf (generate-new-buffer "untitled"))) (switch-to-buffer $buf)))
+   "bn"  '((lambda () (interactive) (let (($buf (generate-new-buffer "untitled"))) (switch-to-buffer $buf))) :wk "new-buffer")
    ;; e
    "ev"  'set-variable
    ;; files
    "f"   '(:ignore t :which-key "files")
+   "fs"  'save-buffer
    "ff"  'counsel-find-file
    "fj"  'dired-jump
    "fr"  'counsel-recentf
@@ -64,6 +65,7 @@
    "w"   '(:ignore t :which-key "windows")
    "wm"  'maximize-window
    "wd"  'delete-window
+   "wo"  'delete-other-windows
    "w/"  'split-window-right
    "w-"  'split-window-below
    "wh"  'windmove-left
@@ -78,12 +80,16 @@
    "wL"  'buf-move-right
    ;; git
    "g"   '(:ignore t :which-key "git")
+   "gc"  'magit-checkout
    "gb"  'magit-blame
-   "gs"  'magit-status
+   "gfa" 'magit-fetch-all
    "gl"  'magit-log
+   "gs"  'magit-status
    "gt"  'git-timemachine
-   ;; quit
-   "q" 'delete-other-windows
+   ;; extra
+   "x"   '(:ignore t :which-key "extra")
+   "xd"  '(:ignore t :which-key "delete")
+   "xdw" 'delete-trailing-whitespace
    ;; others
    "SPC" (general-simulate-key "M-x"))
   ;; Emacs Lisp

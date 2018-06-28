@@ -30,6 +30,9 @@ PROMPT='[%F{blue}%n%f@%F{blue}%m%f %F{yellow}%1~%f] '
 RPROMPT=''
 setopt prompt_sp
 
+# remove command from history if prepended by space
+setopt histignorespace
+
 # alias
 alias ...="cd ../.."
 alias ..="cd .."
@@ -73,8 +76,8 @@ case $(uname) in
 esac
 
 # functions
-cdf() { 
-    local dir=$(cat <(echo "..") <(find . -maxdepth 1 -type d) | fzf) 
+cdf() {
+    local dir=$(cat <(echo "..") <(find . -maxdepth 1 -type d) | fzf)
     [ "$dir" != "" ] && cd "$dir"
 }
 include() { [[ -f "$1" ]] && source "$1" } # source if file exists
@@ -106,4 +109,3 @@ then
   unfunction preexec
   PS1='$ '
 fi
-

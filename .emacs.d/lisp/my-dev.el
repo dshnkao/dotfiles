@@ -14,4 +14,6 @@
   :config
   (global-flycheck-mode))
 
+(setq auto-save-default nil)
+
 (provide 'my-dev)

@@ -98,6 +98,7 @@ include "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 include "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 # cammy
 include "$HOME/.cammyenv"
+include "$HOME/.carbonenv"
 
  # emacs tramp
 if [[ "$TERM" == "dumb" ]]

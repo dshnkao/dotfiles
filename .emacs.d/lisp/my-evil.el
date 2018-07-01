@@ -48,6 +48,7 @@
    "px"  'projectile-invalidate-cache
    ;; search
    "s"   '(:ignore t :which-key "search")
+   "sa"  'counsel-projectile-grep
    "sc"  'evil-ex-nohighlight
    "sp"  'counsel-projectile-rg
    "sb"  'counsel-projectile-switch-to-buffer

@@ -1,12 +1,15 @@
 export GOPATH="$HOME/.go"
 export FPATH="$HOME/.zsh/zfunc:$FPATH"
-export PATH="/usr/local/bin:$PATH"
-export PATH="$HOME/repos/my/scripts:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.cabal/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.npm/bin:$PATH"
-export PATH="$GOPATH/bin:$PATH"
+path=(
+    $path
+    ~/repos/my/scripts
+    ~/.local/bin
+    ~/.local/bin
+    ~/.cabal/bin
+    ~/.cargo/bin
+    ~/.npm/bin
+    $GOPATH/bin
+)
 
 case $(uname) in
     'Linux')

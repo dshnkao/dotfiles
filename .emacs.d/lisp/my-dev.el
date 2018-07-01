@@ -14,6 +14,19 @@
   :config
   (global-flycheck-mode))
 
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
+
+(use-package whitespace
+  :ensure t
+  :config
+  (setq whitespace-display-mappings
+        '((space-mark 32 [183] [46])
+          (tab-mark 9 [187 9] [92 9]))))
+
 (setq auto-save-default nil)
+(setq-default tab-width 4)
 
 (provide 'my-dev)

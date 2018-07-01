@@ -109,8 +109,9 @@ myKeys myTerm =
   , ((mod4Mask,                 xK_p            ), spawn "rofi -show run -matching fuzzy")
   , ((mod4Mask,                 xK_w            ), spawn "rofi -show window -matching fuzzy")
   , ((mod4Mask,                 xK_r            ), spawn "rofi -show drun -matching fuzzy")
+  , ((mod4Mask,                 xK_i            ), spawn "~/repos/my/scripts/rofi-books.sh")
   , ((mod4Mask,                 xK_u            ), spawn umenu)
-  , ((mod4Mask,                 xK_o            ), spawn "~/repos/my/scripts/pmenu")
+  , ((mod4Mask,                 xK_o            ), spawn "~/repos/my/scripts/rofi-password-store.sh")
   , ((mod4Mask,                 xK_s            ), toggleApp "pavucontrol")
   , ((mod4Mask,                 xK_0            ), scratchpadSpawnActionTerminal myTerm)
     -- media keys

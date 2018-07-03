@@ -4,11 +4,12 @@ path=(
     $path
     ~/repos/my/scripts
     ~/.local/bin
-    ~/.local/bin
     ~/.cabal/bin
     ~/.cargo/bin
     ~/.npm/bin
+    ~/.gem/ruby/2.4.0/bin
     $GOPATH/bin
+    /usr/local/bin
 )
 
 case $(uname) in

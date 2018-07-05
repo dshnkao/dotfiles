@@ -57,6 +57,9 @@ alias ll='lx -al'
 alias haskellshell='nix-shell -p "haskell.packages.ghc821.ghcWithPackages (pkgs: with pkgs; [ cabal-install ])"'
 alias nixhs='nix-env -f "<nixpkgs>" -qaP -A haskellPackages'
 alias g='umenu ~/.mozilla/firefox/bl0ar52g.default-1507385104150/places.sqlite "fzf --no-sort --exact"'
+# docker
+alias docker_rmi_all='docker images -q -a | xargs --no-run-if-empty docker rmi'
+
 case $(uname) in
   'Linux')
       #alias ls="ls -X --color"
@@ -82,6 +85,10 @@ cdf() {
 }
 include() { [[ -f "$1" ]] && source "$1" } # source if file exists
 viscp () { vi scp://"$1"/"$2" } # remote edit file using local vi
+ssh-cammy () {
+    local ip=$(ec2-cammy.sh "$1" "$2")
+    [ "$ip" != "" ] && ssh ubuntu@$ip
+}
 
 # password-store tab complete
 autoload -Uz _pass

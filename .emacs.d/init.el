@@ -18,7 +18,6 @@
 (require 'use-package)
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
-
 (require 'my-ui)
 (require 'my-apps)
 (require 'my-clojure)
@@ -64,12 +63,13 @@
  '(minimap-highlight-line nil)
  '(package-selected-packages
    (quote
-    (white-space ensime flycheck-rust racer rust-mode git-timemachine evil-magit magit cider pdf-tools zoom yaml-mode which-key use-package smartparens smart-mode-line rainbow-mode ox-pandoc nix-mode neotree minimap markdown-mode linum-relative google-this general fzf flycheck-haskell evil diff-hl dante counsel-projectile counsel-dash company color-theme-sanityinc-tomorrow buffer-move auctex-latexmk all-the-icons ace-window)))
+    (evil-org white-space ensime flycheck-rust racer rust-mode git-timemachine evil-magit magit cider pdf-tools zoom yaml-mode which-key use-package smartparens smart-mode-line rainbow-mode ox-pandoc nix-mode neotree minimap markdown-mode linum-relative google-this general fzf flycheck-haskell evil diff-hl dante counsel-projectile counsel-dash company color-theme-sanityinc-tomorrow buffer-move auctex-latexmk all-the-icons ace-window)))
  '(safe-local-variable-values
    (quote
     ((dante-target . "lib:bowling")
      (dante-target . "level07")
      (dante-target . "lib:bmm"))))
+ '(sp-autoinsert-pair nil)
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
@@ -103,8 +103,8 @@
  '(mode-line ((t (:background "firebrick4" :foreground "#c5c8c6" :inverse-video nil :box (:line-width 1 :color "#373b41") :weight normal))))
  '(mode-line-buffer-id ((t (:foreground "gainsboro"))))
  '(mode-line-highlight ((t (:foreground "white" :box nil :weight bold))))
+ '(whitespace-newline ((t (:background "gray15" :foreground "#969896"))))
  '(whitespace-space ((t (:background "gray15" :foreground "#969896"))))
  '(whitespace-tab ((t (:background "gray15" :foreground "#969896"))))
- '(whitespace-trailing ((t (:background "gray40" :foreground "#969896"))))
- '(whitespace-newline ((t (:background "gray15" :foreground "#969896")))))
+ '(whitespace-trailing ((t (:background "gray40" :foreground "#969896")))))
 ;;; init.el ends here

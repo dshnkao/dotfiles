@@ -3,6 +3,7 @@
   :commands org-mode
   :init
   (setq org-directory "~/repos/my/org")
+  (setq org-agenda-files (append (file-expand-wildcards "~/repos/my/org/*.org")))
   (general-define-key
    :states 'normal
    :prefix ","
@@ -13,7 +14,22 @@
    "eh"   'org-pandoc-export-as-html5
    "ti"   'org-display-inline-images)
   :config
-  (setq org-log-done 'time))
+  (setq org-agenda-window-setup "only-window")
+  (setq org-agenda-span 14)
+  (setq org-log-done 'time)
+  (setq org-agenda-todo-ignore-with-date 1)
+  )
+
+(use-package evil-org
+  :ensure t
+  :after org
+  :config
+  (add-hook 'org-mode-hook 'evil-org-mode)
+  (add-hook 'evil-org-mode-hook
+            (lambda ()
+              (evil-org-set-key-theme)))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 
 (use-package ox-pandoc
   :ensure t

@@ -19,6 +19,7 @@
    :non-normal-prefix "C-SPC"
    ;; Applications
    "a"   '(:ignore t :which-key "applications")
+   "aa"  'org-agenda
    "ad"  'counsel-dash-at-point
    "af"  'counsel-fzf
    "ay"  'yas-insert-snippet

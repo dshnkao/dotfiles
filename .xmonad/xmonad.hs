@@ -12,7 +12,7 @@ import           System.Directory (findExecutable)
 import           System.Taffybar.Support.PagerHints (pagerHints)
 import           XMonad
 import           XMonad.Actions.CycleWS (prevWS, nextWS, moveTo, Direction1D(..), WSType(..))
-import           XMonad.Actions.SpawnOn (manageSpawn)
+import           XMonad.Actions.SpawnOn (manageSpawn, spawnOn)
 import           XMonad.Actions.SwapWorkspaces (swapWithCurrent)
 import           XMonad.Config (def)
 import qualified XMonad.Hooks.DynamicLog as DL
@@ -71,6 +71,7 @@ myManageHook = composeAll
   [ (not <$> isDialog)       --> insertPosition Below Newer
   , isFFDialog               --> doRectFloat (W.RationalRect 0.25 0.25 0.5 0.5)
   , appName =? "pavucontrol" --> doRectFloat (W.RationalRect 0.25 0.25 0.5 0.5)
+  , className =? "ktorrent"  --> doShift "9"
   , isFullscreen             --> doFullFloat
   , manageSpawn
   , scratchpadManageHook (W.RationalRect 0 0.6 1 0.4)

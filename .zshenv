@@ -1,4 +1,5 @@
 export GOPATH="$HOME/.go"
+export GOROOT="$HOME/.nix-profile/share/go"
 export FPATH="$HOME/.zsh/zfunc:$FPATH"
 path=(
     $path

@@ -27,4 +27,9 @@
   ;; force update evil keymaps after git-timemachine-mode loaded
   (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps))
 
+(defun mygit-signoff ()
+  "Pull, add, commit -m '', and push."
+  (interactive)
+  (async-shell-command "git signoff"))
+
 (provide 'my-git)

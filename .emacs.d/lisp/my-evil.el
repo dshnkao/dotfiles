@@ -88,6 +88,7 @@
    "gl"  'magit-log
    "gs"  'magit-status
    "gt"  'git-timemachine
+   "gx"  'mygit-signoff
    ;; extra
    "x"   '(:ignore t :which-key "extra")
    "xd"  '(:ignore t :which-key "delete")

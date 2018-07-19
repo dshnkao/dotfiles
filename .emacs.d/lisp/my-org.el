@@ -12,13 +12,13 @@
    "em"   'org-pandoc-export-as-gfm
    "ep"   'org-pandoc-export-as-plain
    "eh"   'org-pandoc-export-as-html5
-   "ti"   'org-display-inline-images)
+   "ti"   'org-toggle-inline-images)
   :config
   (setq org-agenda-window-setup "only-window")
   (setq org-agenda-span 14)
   (setq org-log-done 'time)
   (setq org-agenda-todo-ignore-with-date 1)
-  )
+  (setq org-hide-emphasis-markers t))
 
 (use-package evil-org
   :ensure t

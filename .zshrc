@@ -83,12 +83,7 @@ cdf() {
     local dir=$(cat <(echo "..") <(find . -maxdepth 1 -type d) | fzf)
     [ "$dir" != "" ] && cd "$dir"
 }
-include() { [[ -f "$1" ]] && source "$1" } # source if file exists
 viscp () { vi scp://"$1"/"$2" } # remote edit file using local vi
-ssh-cammy () {
-    local ip=$(ec2-cammy.sh "$1" "$2")
-    [ "$ip" != "" ] && ssh ubuntu@$ip
-}
 
 # password-store tab complete
 autoload -Uz _pass
@@ -103,9 +98,6 @@ include "/run/current-system/sw/share/autojump/autojump.zsh"
 # zsh syntax highlighting
 include "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 include "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-# cammy
-include "$HOME/.cammyenv"
-include "$HOME/.carbonenv"
 
  # emacs tramp
 if [[ "$TERM" == "dumb" ]]

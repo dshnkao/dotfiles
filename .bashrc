@@ -11,10 +11,7 @@ export LANG=en_US.UTF-8
 # disable gpg gui passphrase
 #export PINENTRY_USER_DATA="USE_CURSES=1"
 export GPG_TTY=$(tty)
-
-# prompt
-#PROMPT='[%F{blue}%n%f@%F{blue}%m%f %F{yellow}%1~%f] '
-#RPROMPT=''
+#export PS1='> '
 
 # alias
 alias ...="cd ../.."
@@ -31,7 +28,7 @@ alias r='ranger'
 alias se='sudoedit'
 alias ssh='TERM=xterm-256color ssh'
 alias t='tmux'
-alias vim="nvim"
+alias vi='nvim'
 alias vt='nvim -c terminal -u ~/.vimrc-term'
 alias lx='exa --group-directories-first --git --sort=extension'
 alias l='lx -l'
@@ -39,7 +36,6 @@ alias ll='lx -al'
 case $(uname) in
   'Linux')
       #alias ls="ls -X --color"
-      alias vi=/usr/bin/vim
       alias ect="emacsclient -nw"
       alias ecg="emacsclient -nc"
       alias xc="xclip -select c"
@@ -47,7 +43,6 @@ case $(uname) in
       ;;
   'Darwin')
       alias ls="gls -X --color"
-      alias vi=/usr/local/bin/vim
       alias emacs="/usr/local/bin/emacs"
       alias egui="open -a /Applications/Emacs.app -n $1"
       alias edm="/usr/local/opt/emacs-mac/bin/emacs --daemon"
@@ -55,3 +50,11 @@ case $(uname) in
       alias ect="/usr/local/opt/emacs-mac/bin/emacsclient -nw"
       ;;
 esac
+
+# source if file exists
+include() {
+    [[ -f "$1" ]] && source "$1"
+}
+
+include "$HOME/.carbon.env"
+include "$HOME/.tldr.env"

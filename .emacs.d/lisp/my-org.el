@@ -17,8 +17,7 @@
   (setq org-agenda-window-setup "only-window")
   (setq org-agenda-span 14)
   (setq org-log-done 'time)
-  (setq org-agenda-todo-ignore-with-date 1)
-  (setq org-hide-emphasis-markers t))
+  (setq org-agenda-todo-ignore-with-date 1))
 
 (use-package evil-org
   :ensure t

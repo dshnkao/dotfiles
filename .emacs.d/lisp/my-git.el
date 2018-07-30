@@ -30,6 +30,8 @@
 (defun mygit-signoff ()
   "Pull, add, commit -m '', and push."
   (interactive)
-  (async-shell-command "git signoff"))
+  (progn
+    (shell-command "git signoff")
+    (diff-hl-update)))
 
 (provide 'my-git)

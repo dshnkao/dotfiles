@@ -60,6 +60,7 @@
    "tg"  'zoom-mode
    "tm"  'minimap-mode
    "tw"  'whitespace-mode
+   "tl"  'toggle-truncate-lines
    "tr"  'rainbow-mode
    "ts"  'flyspell-mode
    "tp"  'smartparens-mode

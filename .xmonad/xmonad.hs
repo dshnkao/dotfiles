@@ -139,13 +139,13 @@ toggleApp app =
 data MyBar = TaffyBar | Dzen
 
 myBar :: MyBar
-myBar = TaffyBar
+myBar = Dzen
 
 spawnBar :: IO (Maybe Handle)
 spawnBar = case myBar of
   Dzen -> do
     leftBar <- spawnPipe "dzen2 -ta l -h 30 -w 960 -fn Ubuntu:size=11 -dock"
-    spawn $ "conky -c ~/.xmonad/data/conky/dzen | " ++ "dzen2 -ta r -x 960 -h 30 -fn Ubuntu:size=11"
+    spawn $ "conky -c ~/.xmonad/conky.config | " ++ "dzen2 -ta r -x 960 -h 30 -fn Ubuntu:size=11"
     pure $ Just leftBar
   TaffyBar ->
     const Nothing <$> spawn "taffybar"

@@ -1,21 +1,20 @@
 {-# LANGUAGE LambdaCase #-}
+
 import           Control.Applicative ((<|>))
 import           Control.Exception (catch, SomeException)
 import           Control.Monad (join, when)
-import           Data.Maybe (maybeToList, fromMaybe, isJust)
 import           Data.Bits ((.|.))
-import qualified Data.List as List
+import           Data.Maybe (maybeToList, fromMaybe, isJust)
 import           Data.Monoid ((<>))
 import           GHC.IO.Handle (Handle)
-import           System.Exit (exitSuccess)
 import           System.Directory (findExecutable)
+import           System.Exit (exitSuccess)
 import           System.Taffybar.Support.PagerHints (pagerHints)
 import           XMonad
 import           XMonad.Actions.CycleWS (prevWS, nextWS, moveTo, Direction1D(..), WSType(..))
 import           XMonad.Actions.SpawnOn (manageSpawn, spawnOn)
 import           XMonad.Actions.SwapWorkspaces (swapWithCurrent)
 import           XMonad.Config (def)
-import qualified XMonad.Hooks.DynamicLog as DL
 import           XMonad.Hooks.EwmhDesktops (fullscreenEventHook, ewmh)
 import           XMonad.Hooks.InsertPosition (Position(..), Focus(..), insertPosition)
 import           XMonad.Hooks.ManageDocks (docksEventHook, avoidStruts, manageDocks)
@@ -27,11 +26,16 @@ import           XMonad.Layout.NoBorders (lessBorders, Ambiguity(..))
 import           XMonad.Util.EZConfig (additionalKeys)
 import           XMonad.Util.Run (spawnPipe, runProcessWithInput, hPutStrLn)
 import           XMonad.Util.Scratchpad (scratchpadManageHook, scratchpadSpawnActionTerminal)
+import qualified Codec.Binary.UTF8.String as UTF8
+import qualified DBus as D
+import qualified DBus.Client as D
+import qualified Data.List as List
+import qualified XMonad.Hooks.DynamicLog as DL
 import qualified XMonad.StackSet as W
 
 main = do
   myTerm <- myTerminal
-  handle <- spawnBar
+  myLogHook <- spawnBar
   -- set cursor
   spawn "xsetroot -cursor_name left_ptr"
   spawn "xsetroot -solid '#101010'"
@@ -47,7 +51,7 @@ main = do
     , workspaces  = myWorkspaces
     , modMask     = mod4Mask
     , terminal    = myTerm
-    , logHook     = myLogHook handle
+    , logHook     = myLogHook
     , handleEventHook = docksEventHook <+> handleEventHook def <+> fullscreenEventHook
     } `additionalKeys` (myKeys myTerm)
 
@@ -136,44 +140,77 @@ toggleApp app =
   _  -> pure ()
 
 -- Switch between TaffyBar and Dzen
-data MyBar = TaffyBar | Dzen
+data MyBar = TaffyBar | Dzen | PolyBar
 
 myBar :: MyBar
-myBar = Dzen
+myBar = PolyBar
 
-spawnBar :: IO (Maybe Handle)
+spawnBar :: IO (X ())
 spawnBar = case myBar of
   Dzen -> do
     leftBar <- spawnPipe "dzen2 -ta l -h 30 -w 960 -fn Ubuntu:size=11 -dock"
     spawn $ "conky -c ~/.xmonad/conky.config | " ++ "dzen2 -ta r -x 960 -h 30 -fn Ubuntu:size=11"
-    pure $ Just leftBar
-  TaffyBar ->
-    const Nothing <$> spawn "taffybar"
+    pure $ dzenLogHook leftBar
+  TaffyBar -> do
+    spawn "taffybar"
+    pure $ pure ()
+  PolyBar -> do
+    spawn "polybar top"
+    dbus <- D.connectSession
+    D.requestName dbus (D.busName_ "org.xmonad.Log") [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
+    pure $ polybarLogHook dbus
 
 killBar :: String
 killBar = case myBar of
   TaffyBar -> "pkill taffybar;"
   Dzen -> "pkill conky; pkill dzen2;"
-
-myLogHook :: Maybe Handle -> X ()
-myLogHook optH = case (myBar, optH) of
-  (Dzen, Just h) -> dzenLogHook h
-  _ -> pure ()
+  PolyBar -> "pkill polybar;"
 
 dzenLogHook :: Handle -> X ()
 dzenLogHook h = DL.dynamicLogWithPP $ def
-    { DL.ppCurrent         = DL.dzenColor "#cccccc" "#006788" . DL.pad 
-    , DL.ppHidden          = DL.dzenColor "#cccccc" "" . DL.pad . noScratchPad
-    , DL.ppHiddenNoWindows = DL.dzenColor "#606060" "" . DL.pad . noScratchPad
-    , DL.ppLayout          = DL.dzenColor "#909090" "" . DL.pad 
-    , DL.ppUrgent          = DL.dzenColor "#ff0000" "" . DL.pad . DL.dzenStrip
-    , DL.ppTitle           = DL.shorten 100
-    , DL.ppWsSep           = ""
-    , DL.ppSep             = "  "
-    , DL.ppOutput          = hPutStrLn h
-    }
-    where
-      noScratchPad ws = if ws == "NSP" then "" else ws
+  { DL.ppCurrent         = DL.dzenColor "#cccccc" "#006788" . DL.pad
+  , DL.ppHidden          = DL.dzenColor "#cccccc" "" . DL.pad . noScratchPad
+  , DL.ppHiddenNoWindows = DL.dzenColor "#606060" "" . DL.pad . noScratchPad
+  , DL.ppLayout          = DL.dzenColor "#909090" "" . DL.pad
+  , DL.ppUrgent          = DL.dzenColor "#ff0000" "" . DL.pad . DL.dzenStrip
+  , DL.ppTitle           = DL.shorten 100
+  , DL.ppWsSep           = ""
+  , DL.ppSep             = "  "
+  , DL.ppOutput          = hPutStrLn h
+  }
+  where
+    noScratchPad ws = if ws == "NSP" then "" else ws
+
+-- dbus
+-- Override the PP values as you would otherwise, adding colors etc depending
+-- on  the statusbar used
+polybarLogHook :: D.Client -> X ()
+polybarLogHook dbus = DL.dynamicLogWithPP $ def
+  { DL.ppCurrent         = polyColor "#cccccc" "#006788" . DL.pad
+  , DL.ppHidden          = polyColor "#cccccc" "" . DL.pad . noScratchPad
+  , DL.ppHiddenNoWindows = polyColor "#808080" "" . DL.pad . noScratchPad
+  , DL.ppLayout          = polyColor "#A0A0A0" "" . DL.pad
+  , DL.ppUrgent          = polyColor "#ff0000" "" . DL.pad . DL.dzenStrip
+  , DL.ppTitle           = DL.shorten 100
+  , DL.ppWsSep           = ""
+  , DL.ppSep             = "  "
+  , DL.ppOutput = dbusOutput dbus
+  }
+  where
+    polyColor fg bg s = "%{B" <> bg <> " F" <> fg <> "}" <> s <> "%{B- F-}"
+    noScratchPad ws = if ws == "NSP" then "" else ws
+
+-- Emit a DBus signal on log updates
+dbusOutput :: D.Client -> String -> IO ()
+dbusOutput dbus str = do
+  let signal =
+        (D.signal objectPath interfaceName memberName)
+        {D.signalBody = [D.toVariant $ UTF8.decodeString str]}
+  D.emit dbus signal
+  where
+    objectPath = D.objectPath_ "/org/xmonad/Log"
+    interfaceName = D.interfaceName_ "org.xmonad.Log"
+    memberName = D.memberName_ "Update"
 
 -- GLFW
 -- https://github.com/xmonad/xmonad-contrib/pull/109

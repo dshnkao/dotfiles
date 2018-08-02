@@ -7,11 +7,12 @@ ssh
 !.xmonad/data
 !.xmonad/xmonad.hs
 
-.config/
+.config/*
 !.config/ranger/rifle.conf
 !.config/karabiner/karabiner.json
 !.config/nixpkgs/config.nix
 !.config/taffybar
+!.config/polybar
 
 /.emacs.d/*
 !/.emacs.d/init.el

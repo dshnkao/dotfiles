@@ -89,13 +89,6 @@ myManageHook = composeAll
       let isApp xs = or (flip List.isInfixOf c <$> xs)
       pure $ d && isApp ["Firefox", "Chromium"]
 
-firefox :: String
-firefox = unwords
-  [ "firefox-open.sh"
-  , "~/.mozilla/firefox/bl0ar52g.default-1507385104150/places.sqlite"
-  , "\"rofi -dmenu -i -p url --no-sort\""
-  ]
-
 myKeys :: String -> [((KeyMask, KeySym), X ())]
 myKeys myTerm =
   [ ((mod4Mask,                 xK_bracketleft  ), sendMessage Shrink) -- %! Shrink the master area
@@ -104,20 +97,20 @@ myKeys myTerm =
   , ((mod4Mask .|. shiftMask,   xK_bracketright ), moveTo Next (WSIs (pure notNSP)))
   , ((mod4Mask,                 xK_minus        ), moveTo Prev (WSIs (pure notNSP)))
   , ((mod4Mask,                 xK_equal        ), moveTo Next (WSIs (pure notNSP)))
-  , ((mod4Mask .|. shiftMask,   xK_i            ), safeSpawnProg "carbon-edp.sh")
-  , ((mod4Mask .|. shiftMask,   xK_e            ), safeSpawnProg "carbon-hdmi.sh")
+  , ((mod4Mask .|. shiftMask,   xK_i            ), spawn "carbon-edp.sh")
+  , ((mod4Mask .|. shiftMask,   xK_e            ), spawn "carbon-hdmi.sh")
   , ((mod4Mask .|. shiftMask,   xK_y            ), io exitSuccess)
-  , ((mod4Mask,                 xK_y            ), spawn $ killBar <> "xmonad --recompile && xmonad --restart")
-  , ((mod4Mask .|. controlMask, xK_q            ), safeSpawnProg "slock")
+  , ((mod4Mask,                 xK_y            ), spawn $ killBar <> restartXMonad)
+  , ((mod4Mask .|. controlMask, xK_q            ), spawn "slock")
   , ((mod4Mask .|. shiftMask,   xK_q            ), io exitSuccess)
-  , ((mod4Mask,                 xK_q            ), spawn $ killBar <> "xmonad --recompile && xmonad --restart")
+  , ((mod4Mask,                 xK_q            ), spawn $ killBar <> restartXMonad)
+  , ((mod4Mask,                 xK_u            ), spawn firefox)
   , ((mod4Mask,                 xK_p            ), spawn "rofi -show run -matching fuzzy")
   , ((mod4Mask,                 xK_w            ), spawn "rofi -show window -matching fuzzy")
   , ((mod4Mask,                 xK_r            ), spawn "rofi -show drun -matching fuzzy")
-  , ((mod4Mask,                 xK_i            ), safeSpawnProg "rofi-books.sh")
-  , ((mod4Mask,                 xK_u            ), spawn firefox)
+  , ((mod4Mask,                 xK_i            ), spawn "rofi-books.sh")
   , ((mod4Mask,                 xK_o            ), spawn "rofi-password-store.sh")
-  , ((mod4Mask,                 xK_s            ), toggleApp "pavucontrol")
+  , ((mod4Mask,                 xK_s            ), spawn "pavucontrol")
   , ((mod4Mask,                 xK_0            ), scratchpadSpawnActionTerminal myTerm)
   , ((0, 0x1008ff12                             ), spawn "amixer -q sset Master toggle") --f1
   , ((0, 0x1008ff11                             ), spawn "amixer -q sset Master 5%-") --f2
@@ -128,17 +121,20 @@ myKeys myTerm =
   , ((mod4Mask, 0xff61                          ), spawn "scrot") --prtsc
   ]
   ++
-  [((mod4Mask .|. controlMask, k              ), windows $ swapWithCurrent i) | (i, k) <- zip myWorkspaces [xK_1 ..]]
+  [((mod4Mask .|. controlMask, k), windows $ swapWithCurrent i) | (i, k) <- zip myWorkspaces [xK_1 ..]]
   where
     notNSP (W.Workspace wId _ _) = wId /= "NSP"
+    firefox = unwords
+      [ "firefox-open.sh"
+      , "~/.mozilla/firefox/bl0ar52g.default-1507385104150/places.sqlite"
+      , "\"rofi -dmenu -i -p url --no-sort\""
+      ]
+    restartXMonad = "xmonad --recompile && xmonad --restart"
+    killBar = case myBar of
+      Dzen     -> "pkill conky; pkill dzen2;"
+      PolyBar  -> "pkill polybar;"
+      TaffyBar -> "pkill taffybar;"
 
-toggleApp :: MonadIO m => String -> m ()
-toggleApp app =
-  runProcessWithInput "pkill" ["-e", app] "" >>= \case
-  "" -> spawn app
-  _  -> pure ()
-
--- Switch between TaffyBar and Dzen
 data MyBar = TaffyBar | Dzen | PolyBar
 
 myBar :: MyBar
@@ -158,12 +154,6 @@ spawnBar = case myBar of
     dbus <- D.connectSession
     D.requestName dbus (D.busName_ "org.xmonad.Log") [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
     pure $ polybarLogHook dbus
-
-killBar :: String
-killBar = case myBar of
-  TaffyBar -> "pkill taffybar;"
-  Dzen -> "pkill conky; pkill dzen2;"
-  PolyBar -> "pkill polybar;"
 
 dzenLogHook :: Handle -> X ()
 dzenLogHook h = DL.dynamicLogWithPP $ def

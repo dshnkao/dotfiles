@@ -3,7 +3,6 @@ export GOROOT="$HOME/.nix-profile/share/go"
 export FPATH="$HOME/.zsh/zfunc:$FPATH"
 path=(
     $path
-    ~/repos/my/scripts
     ~/.local/bin
     ~/.cabal/bin
     ~/.cargo/bin

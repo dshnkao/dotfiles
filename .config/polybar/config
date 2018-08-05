@@ -80,7 +80,7 @@ monitor-fallback = ${env:MONITOR:HDMI1}
 
 modules-left = xmonad
 modules-center =
-modules-right = wifi cpu memory battery date
+modules-right = wifi tun0 cpu memory battery date
 
 [bar/bottom]
 inherit = bar/base
@@ -156,6 +156,12 @@ format-prefix-foreground = ${colors.foreground}
 format-underline = ${colors.grey}
 label = %percentage_used%%
 
+[module/tun0]
+type = internal/network
+interface = tun0
+interval = 3.0
+label-connected = "%ifname%"
+
 [module/wifi]
 type = internal/network
 interface = wlp4s0
@@ -165,7 +171,7 @@ format-connected-underline = ${colors.grey}
 format-connected-prefix = " "
 format-connected-prefix-foreground = ${colors.foreground}
 label-connected = "%essid%  %upspeed%  %downspeed%"
-label-disconnected = not connected
+label-disconnected = " not connected"
 
 [module/date]
 type = internal/date

@@ -37,28 +37,23 @@ setopt histignorespace
 alias ...="cd ../.."
 alias ..="cd .."
 alias bctl='bluetoothctl'
-alias confnix='sudoedit /etc/nixos/configuration.nix'
-alias gitdelmerged='git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d'
 alias grep="grep --color=auto"
-alias gs='git status -sb'
-alias gst='git status -sb'
 alias hibernate='systemctl hibernate'
 alias nrs='sudo nixos-rebuild switch'
-alias passf='pass $(passfzf.sh)'
+alias passf='pass $(fzf-password-store.sh)'
 alias r='ranger'
 alias se='sudoedit'
-# alias ssh='TERM=xterm-256color ssh'
 alias t='tmux'
 alias vi="nvim"
 alias vt='nvim -c terminal -u ~/.vimrc-term'
 alias lx='exa --group-directories-first --git --sort=extension'
 alias l='lx -l'
 alias ll='lx -al'
-alias haskellshell='nix-shell -p "haskell.packages.ghc821.ghcWithPackages (pkgs: with pkgs; [ cabal-install ])"'
-alias nixhs='nix-env -f "<nixpkgs>" -qaP -A haskellPackages'
-alias g='umenu ~/.mozilla/firefox/bl0ar52g.default-1507385104150/places.sqlite "fzf --no-sort --exact"'
+alias f="firefox-open.sh ${FIREFOX_DB} "fzf --no-sort --exact""
+alias ff="firefox-open.sh ${FIREFOX_DB} "rofi -dmenu -i -p url --no-sort""
+#alias 
 # docker
-alias docker_rmi_all='docker images -q -a | xargs --no-run-if-empty docker rmi'
+alias docker-rmi-all='docker images -q -a | xargs --no-run-if-empty docker rmi'
 
 case $(uname) in
   'Linux')

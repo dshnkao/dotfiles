@@ -24,7 +24,7 @@ import           XMonad.Hooks.UrgencyHook (withUrgencyHook, NoUrgencyHook(..))
 import           XMonad.Layout.Fullscreen hiding (fullscreenEventHook)
 import           XMonad.Layout.NoBorders (lessBorders, Ambiguity(..))
 import           XMonad.Util.EZConfig (additionalKeys)
-import           XMonad.Util.Run (spawnPipe, runProcessWithInput, hPutStrLn)
+import           XMonad.Util.Run (safeSpawn, safeSpawnProg, spawnPipe, runProcessWithInput, hPutStrLn)
 import           XMonad.Util.Scratchpad (scratchpadManageHook, scratchpadSpawnActionTerminal)
 import qualified Codec.Binary.UTF8.String as UTF8
 import qualified DBus as D
@@ -89,11 +89,11 @@ myManageHook = composeAll
       let isApp xs = or (flip List.isInfixOf c <$> xs)
       pure $ d && isApp ["Firefox", "Chromium"]
 
-umenu :: String
-umenu = unwords
-  [ "~/repos/my/scripts/umenu"
+firefox :: String
+firefox = unwords
+  [ "firefox-open.sh"
   , "~/.mozilla/firefox/bl0ar52g.default-1507385104150/places.sqlite"
-  , "\"rofi -dmenu -i --no-sort\""
+  , "\"rofi -dmenu -i -p url --no-sort\""
   ]
 
 myKeys :: String -> [((KeyMask, KeySym), X ())]
@@ -104,29 +104,28 @@ myKeys myTerm =
   , ((mod4Mask .|. shiftMask,   xK_bracketright ), moveTo Next (WSIs (pure notNSP)))
   , ((mod4Mask,                 xK_minus        ), moveTo Prev (WSIs (pure notNSP)))
   , ((mod4Mask,                 xK_equal        ), moveTo Next (WSIs (pure notNSP)))
-  , ((mod4Mask .|. shiftMask,   xK_i            ), spawn "~/repos/my/scripts/internal.sh")
-  , ((mod4Mask .|. shiftMask,   xK_e            ), spawn "~/repos/my/scripts/external.sh")
+  , ((mod4Mask .|. shiftMask,   xK_i            ), safeSpawnProg "carbon-edp.sh")
+  , ((mod4Mask .|. shiftMask,   xK_e            ), safeSpawnProg "carbon-hdmi.sh")
   , ((mod4Mask .|. shiftMask,   xK_y            ), io exitSuccess)
   , ((mod4Mask,                 xK_y            ), spawn $ killBar <> "xmonad --recompile && xmonad --restart")
-  , ((mod4Mask .|. controlMask, xK_q            ), spawn "slock")
+  , ((mod4Mask .|. controlMask, xK_q            ), safeSpawnProg "slock")
   , ((mod4Mask .|. shiftMask,   xK_q            ), io exitSuccess)
   , ((mod4Mask,                 xK_q            ), spawn $ killBar <> "xmonad --recompile && xmonad --restart")
   , ((mod4Mask,                 xK_p            ), spawn "rofi -show run -matching fuzzy")
   , ((mod4Mask,                 xK_w            ), spawn "rofi -show window -matching fuzzy")
   , ((mod4Mask,                 xK_r            ), spawn "rofi -show drun -matching fuzzy")
-  , ((mod4Mask,                 xK_i            ), spawn "~/repos/my/scripts/rofi-books.sh")
-  , ((mod4Mask,                 xK_u            ), spawn umenu)
-  , ((mod4Mask,                 xK_o            ), spawn "~/repos/my/scripts/rofi-password-store.sh")
+  , ((mod4Mask,                 xK_i            ), safeSpawnProg "rofi-books.sh")
+  , ((mod4Mask,                 xK_u            ), spawn firefox)
+  , ((mod4Mask,                 xK_o            ), spawn "rofi-password-store.sh")
   , ((mod4Mask,                 xK_s            ), toggleApp "pavucontrol")
   , ((mod4Mask,                 xK_0            ), scratchpadSpawnActionTerminal myTerm)
-    -- media keys
-  , ((0, 0x1008ff12                           ), spawn "amixer -q sset Master toggle") --f1
-  , ((0, 0x1008ff11                           ), spawn "amixer -q sset Master 5%-") --f2
-  , ((0, 0x1008ff13                           ), spawn "amixer -q sset Master 5%+") --f3
-  , ((0, 0x1008ffb2                           ), spawn "amixer -c 0 set Master playback 100% unmute") --f4
-  , ((0, 0x1008ff03                           ), spawn "xbacklight -5") --f5
-  , ((0, 0x1008ff02                           ), spawn "xbacklight +5") --f6
-  , ((mod4Mask, 0xff61                        ), spawn "scrot") --prtsc
+  , ((0, 0x1008ff12                             ), spawn "amixer -q sset Master toggle") --f1
+  , ((0, 0x1008ff11                             ), spawn "amixer -q sset Master 5%-") --f2
+  , ((0, 0x1008ff13                             ), spawn "amixer -q sset Master 5%+") --f3
+  , ((0, 0x1008ffb2                             ), spawn "amixer -c 0 set Master playback 100% unmute") --f4
+  , ((0, 0x1008ff03                             ), spawn "xbacklight -5") --f5
+  , ((0, 0x1008ff02                             ), spawn "xbacklight +5") --f6
+  , ((mod4Mask, 0xff61                          ), spawn "scrot") --prtsc
   ]
   ++
   [((mod4Mask .|. controlMask, k              ), windows $ swapWithCurrent i) | (i, k) <- zip myWorkspaces [xK_1 ..]]

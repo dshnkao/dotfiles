@@ -15,13 +15,12 @@ import           XMonad.Actions.CycleWS (prevWS, nextWS, moveTo, Direction1D(..)
 import           XMonad.Actions.SpawnOn (manageSpawn, spawnOn)
 import           XMonad.Actions.SwapWorkspaces (swapWithCurrent)
 import           XMonad.Config (def)
-import           XMonad.Hooks.EwmhDesktops (fullscreenEventHook, ewmh)
+import           XMonad.Hooks.EwmhDesktops (fullscreenEventHook, ewmh, ewmhDesktopsEventHook)
 import           XMonad.Hooks.InsertPosition (Position(..), Focus(..), insertPosition)
-import           XMonad.Hooks.ManageDocks (docksEventHook, avoidStruts, manageDocks)
+import           XMonad.Hooks.ManageDocks (docks, docksEventHook, avoidStruts, manageDocks)
 import           XMonad.Hooks.ManageHelpers (isDialog, doRectFloat, isFullscreen, doFullFloat)
 import           XMonad.Hooks.SetWMName (setWMName)
 import           XMonad.Hooks.UrgencyHook (withUrgencyHook, NoUrgencyHook(..))
-import           XMonad.Layout.Fullscreen hiding (fullscreenEventHook)
 import           XMonad.Layout.NoBorders (lessBorders, Ambiguity(..))
 import           XMonad.Util.EZConfig (additionalKeys)
 import           XMonad.Util.Run (safeSpawn, safeSpawnProg, spawnPipe, runProcessWithInput, hPutStrLn)
@@ -31,6 +30,7 @@ import qualified DBus as D
 import qualified DBus.Client as D
 import qualified Data.List as List
 import qualified XMonad.Hooks.DynamicLog as DL
+import qualified XMonad.Layout.Fullscreen as LF
 import qualified XMonad.StackSet as W
 
 main = do
@@ -42,17 +42,15 @@ main = do
   -- unify clipboard, need both
   -- spawn "autocutsel -fork"
   -- spawn "autocutsel -selection PRIMARY -fork"
-  -- xmonad $ ewmh $ withUrgencyHook NoUrgencyHook $ fullscreenSupport $ def
-  -- pagerHints: show Full/Tall/Mirror Tall on TaffyBar
-  xmonad $ ewmh $ pagerHints $ withUrgencyHook NoUrgencyHook $ fullscreenSupport $ def
+  xmonad $ ewmh $ docks $ pagerHints $ withUrgencyHook NoUrgencyHook $ LF.fullscreenSupport $ def
     { manageHook  = myManageHook
     , layoutHook  = myLayoutHook
-    , startupHook = setWMName "LG3D" >> addEWMHFullscreen
+    , startupHook = addEWMHFullscreen --setWMName "LG3D" >> addEWMHFullscreen
     , workspaces  = myWorkspaces
     , modMask     = mod4Mask
     , terminal    = myTerm
     , logHook     = myLogHook
-    , handleEventHook = docksEventHook <+> handleEventHook def <+> fullscreenEventHook
+    , handleEventHook = handleEventHook def
     } `additionalKeys` (myKeys myTerm)
 
 myWorkspaces :: [WorkspaceId]
@@ -64,11 +62,7 @@ myTerminal =
   where
     terminals = [ "konsole" , "urxvt" , "terminator" , "tilix"]
 
-myLayoutHook =
-  fullscreenFull
-  $ lessBorders OnlyFloat
-  $ avoidStruts
-  $ layoutHook def
+myLayoutHook = lessBorders OnlyFloat $ avoidStruts $ layoutHook def
 
 myManageHook :: ManageHook
 myManageHook = composeAll
@@ -79,8 +73,6 @@ myManageHook = composeAll
   , isFullscreen             --> doFullFloat
   , manageSpawn
   , scratchpadManageHook (W.RationalRect 0 0.6 1 0.4)
-  , manageDocks
-  , fullscreenManageHook
   ]
   where
     isFFDialog = do

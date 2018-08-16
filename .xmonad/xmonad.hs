@@ -42,15 +42,15 @@ main = do
   -- unify clipboard, need both
   -- spawn "autocutsel -fork"
   -- spawn "autocutsel -selection PRIMARY -fork"
-  xmonad $ ewmh $ docks $ pagerHints $ withUrgencyHook NoUrgencyHook $ LF.fullscreenSupport $ def
+  xmonad $ ewmh $ docks $ pagerHints $ def
     { manageHook  = myManageHook
     , layoutHook  = myLayoutHook
-    , startupHook = addEWMHFullscreen --setWMName "LG3D" >> addEWMHFullscreen
+    , startupHook = setWMName "LG3D" >> addEWMHFullscreen
     , workspaces  = myWorkspaces
     , modMask     = mod4Mask
     , terminal    = myTerm
     , logHook     = myLogHook
-    , handleEventHook = handleEventHook def
+    , handleEventHook = handleEventHook def <+> fullscreenEventHook
     } `additionalKeys` (myKeys myTerm)
 
 myWorkspaces :: [WorkspaceId]
@@ -62,12 +62,12 @@ myTerminal =
   where
     terminals = [ "konsole" , "urxvt" , "terminator" , "tilix"]
 
-myLayoutHook = lessBorders OnlyFloat $ avoidStruts $ layoutHook def
+myLayoutHook = lessBorders OnlyScreenFloat $ avoidStruts $ layoutHook def
 
 myManageHook :: ManageHook
 myManageHook = composeAll
   [ (not <$> isDialog)       --> insertPosition Below Newer
-  , isFFDialog               --> doRectFloat (W.RationalRect 0.25 0.25 0.5 0.5)
+  , isAppDialog              --> doRectFloat (W.RationalRect 0.25 0.25 0.5 0.5)
   , appName =? "pavucontrol" --> doRectFloat (W.RationalRect 0.25 0.25 0.5 0.5)
   , className =? "ktorrent"  --> doShift "9"
   , isFullscreen             --> doFullFloat
@@ -75,11 +75,8 @@ myManageHook = composeAll
   , scratchpadManageHook (W.RationalRect 0 0.6 1 0.4)
   ]
   where
-    isFFDialog = do
-      d <- isDialog
-      c <- className
-      let isApp xs = or (flip List.isInfixOf c <$> xs)
-      pure $ d && isApp ["Firefox", "Chromium"]
+    xs = ["Firefox", "Chromium"]
+    isAppDialog = isDialog <&&> fmap or (traverse (className =?) xs)
 
 myKeys :: String -> [((KeyMask, KeySym), X ())]
 myKeys myTerm =

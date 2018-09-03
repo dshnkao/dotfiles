@@ -133,11 +133,10 @@ spawnBar :: IO (X ())
 spawnBar = case myBar of
   Dzen -> do
     leftBar <- spawnPipe "dzen2 -ta l -h 30 -w 960 -fn Ubuntu:size=11 -dock"
-    spawn $ "conky -c ~/.xmonad/conky.conf | " ++ "dzen2 -ta r -x 960 -h 30 -fn Ubuntu:size=11"
+    spawn $ "conky -c ~/.xmonad/conky.conf | dzen2 -ta r -x 960 -h 30 -fn Ubuntu:size=11"
     pure $ dzenLogHook leftBar
-  TaffyBar -> do
-    spawn "taffybar"
-    pure $ pure ()
+  TaffyBar ->
+    fmap pure $ spawn "taffybar"
   PolyBar -> do
     spawn "polybar top"
     dbus <- D.connectSession
@@ -151,7 +150,7 @@ dzenLogHook h = DL.dynamicLogWithPP $ def
   , DL.ppHiddenNoWindows = DL.dzenColor "#606060" "" . DL.pad . noScratchPad
   , DL.ppLayout          = DL.dzenColor "#909090" "" . DL.pad
   , DL.ppUrgent          = DL.dzenColor "#ff0000" "" . DL.pad . DL.dzenStrip
-  , DL.ppTitle           = DL.shorten 100
+  , DL.ppTitle           = DL.shorten 50
   , DL.ppWsSep           = ""
   , DL.ppSep             = "  "
   , DL.ppOutput          = hPutStrLn h
@@ -169,7 +168,7 @@ polybarLogHook dbus = DL.dynamicLogWithPP $ def
   , DL.ppHiddenNoWindows = polyColor "#808080" "" . DL.pad . noScratchPad
   , DL.ppLayout          = polyColor "#A0A0A0" "" . DL.pad
   , DL.ppUrgent          = polyColor "#ff0000" "" . DL.pad . DL.dzenStrip
-  , DL.ppTitle           = DL.shorten 100
+  , DL.ppTitle           = DL.shorten 50
   , DL.ppWsSep           = ""
   , DL.ppSep             = "  "
   , DL.ppOutput = dbusOutput dbus

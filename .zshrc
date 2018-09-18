@@ -51,9 +51,10 @@ alias l='lx -l'
 alias ll='lx -al'
 alias f="firefox-open.sh ${FIREFOX_DB} "fzf --no-sort --exact""
 alias ff="firefox-open.sh ${FIREFOX_DB} "rofi -dmenu -i -p url --no-sort""
-#alias 
 # docker
 alias docker-rmi-all='docker images -q -a | xargs --no-run-if-empty docker rmi'
+alias docker-rm-exited='docker rm $(docker ps -q -f status=exited)'
+alias docker-run-ubuntu='docker run -dit ubuntu'
 
 case $(uname) in
   'Linux')
@@ -79,6 +80,13 @@ cdf() {
     [ "$dir" != "" ] && cd "$dir"
 }
 viscp () { vi scp://"$1"/"$2" } # remote edit file using local vi
+
+ssh-add-all () {
+    ssh-add ~/asb
+    ssh-add ~/.ssh/id_rsa
+    ssh-add ~/.ssh/id_rsa_cammy
+    ssh-add ~/.ssh/ap-southeast-2_staging2.pem
+}
 
 # password-store tab complete
 autoload -Uz _pass

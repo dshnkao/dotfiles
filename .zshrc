@@ -82,10 +82,7 @@ cdf() {
 viscp () { vi scp://"$1"/"$2" } # remote edit file using local vi
 
 ssh-add-all () {
-    ssh-add ~/asb
-    ssh-add ~/.ssh/id_rsa
-    ssh-add ~/.ssh/id_rsa_cammy
-    ssh-add ~/.ssh/ap-southeast-2_staging2.pem
+    find ~/.ssh/ -regex '.*id_rsa.*' | grep -v pub | xargs ssh-add
 }
 
 # password-store tab complete

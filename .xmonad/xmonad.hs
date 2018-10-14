@@ -2,7 +2,7 @@
 
 import           Control.Applicative ((<|>))
 import           Control.Exception (catch, SomeException)
-import           Control.Monad (join, when)
+import           Control.Monad (join, when, msum)
 import           Data.Bits ((.|.))
 import           Data.Maybe (maybeToList, fromMaybe, isJust)
 import           Data.Monoid ((<>))
@@ -58,7 +58,7 @@ myWorkspaces = map show [1..9 :: Int]
 
 myTerminal :: IO String
 myTerminal =
-  fromMaybe "xterm" . join . (List.find isJust) <$> (mapM findExecutable terminals)
+  fromMaybe "xterm" . msum <$> (mapM findExecutable terminals)
   where
     terminals = [ "konsole" , "urxvt" , "terminator" , "tilix"]
 

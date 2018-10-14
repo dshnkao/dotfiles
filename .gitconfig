@@ -11,9 +11,10 @@
     diffc = diff --cached
     force = push --force-with-lease
     hist = log --pretty=format:\"%C(yellow)%h%C(reset) %C(green)%ad%C(reset) %C(red)|%C(reset) %s %C(bold blue)[%an]%C(reset)%C(yellow)%d%C(reset)\" --graph --date=short
+    pu = push -u origin HEAD
+    signoff = !git pull && git add . && git commit -m '-' && git push
     st = status -sb
     stash-all = stash save --include-untracked
-    signoff = !git pull && git add . && git commit -m '-' && git push
 
 [log]
     decorate = full

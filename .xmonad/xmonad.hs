@@ -66,7 +66,7 @@ myLayoutHook = lessBorders OnlyScreenFloat $ avoidStruts $ layoutHook def
 
 myManageHook :: ManageHook
 myManageHook = composeAll
-  [ (not <$> isDialog)       --> insertPosition Below Newer
+  [ (not <$> (isDialog <||> appName =? "pinentry")) --> insertPosition Below Newer
   , isAppDialog              --> doRectFloat (W.RationalRect 0.25 0.25 0.5 0.5)
   , appName =? "pavucontrol" --> doRectFloat (W.RationalRect 0.25 0.25 0.5 0.5)
   , className =? "ktorrent"  --> doShift "9"

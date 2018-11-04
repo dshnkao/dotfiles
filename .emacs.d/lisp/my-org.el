@@ -15,6 +15,7 @@
    "ti"   'org-toggle-inline-images)
   :config
   (setq org-agenda-window-setup "only-window")
+  (setq org-src-fontify-natively t)
   (setq org-agenda-span 14)
   (setq org-log-done 'time)
   (setq org-agenda-todo-ignore-with-date 1))

@@ -20,6 +20,17 @@
   :ensure t
   :after neotree)
 
+(use-package evil-terminal-cursor-changer
+  :ensure t
+  :init
+  (setq evil-motion-state-cursor 'box)
+  (setq evil-visual-state-cursor 'box)
+  (setq evil-normal-state-cursor 'box)
+  (setq evil-insert-state-cursor 'bar)
+  (setq evil-emacs-state-cursor  'hbar)
+  :config
+  (evil-terminal-cursor-changer-activate))
+
 (defun simple-mode-line-render (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT aligned respectively."
   (let* ((available-width (- (window-width) (length left) 2)))

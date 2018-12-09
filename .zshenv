@@ -2,6 +2,7 @@ export GOPATH="$HOME/.go"
 export GOROOT="$HOME/.nix-profile/share/go"
 export FPATH="$HOME/.zsh/zfunc:$FPATH"
 path=(
+    ~/.local/bin/firejail
     ~/.local/bin
     ~/.cabal/bin
     ~/.cargo/bin

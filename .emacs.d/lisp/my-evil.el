@@ -4,9 +4,10 @@
   :init
   (define-key dired-mode-map (kbd "SPC") nil)
   (setq evil-search-module 'evil-search)
-  (setq evil-want-C-u-scroll t)
+  ;;(setq evil-want-C-u-scroll t)
   (setq evil-mode-line-format nil)
   :config
+  (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
   (evil-mode 1))
 
 (use-package general

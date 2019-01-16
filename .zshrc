@@ -8,6 +8,7 @@ compinit
 HISTFILE=~/.histfile
 HISTSIZE=100000
 SAVEHIST=100000
+# emacs mode
 bindkey -e
 #
 
@@ -97,7 +98,10 @@ function jj() {
         -e 's/" "/"\n"/g' \
         -e 's/"//g' | fzf --exact)
     [ "$dir" != "" ] && cd "$dir"
+    zle reset-prompt &> /dev/null
 }
+zle -N jj
+bindkey '^j' jj
 
 # password-store tab complete
 autoload -Uz _pass

@@ -74,15 +74,29 @@ case $(uname) in
       ;;
 esac
 
-# functions
-cdf() {
+# change directory using fzf
+function cdf() {
     local dir=$(cat <(echo "..") <(find . -maxdepth 1 -type d) | fzf)
     [ "$dir" != "" ] && cd "$dir"
 }
-viscp () { vi scp://"$1"/"$2" } # remote edit file using local vi
-
-ssh-add-all () {
+# remote edit file using local vi
+function viscp () { 
+    vi scp://"$1"/"$2" 
+}
+# add all ssh keys
+function ssh-add-all() {
     find ~/.ssh/ -regex '.*id_rsa.*' | grep -v pub | xargs ssh-add
+}
+# cd into a project using emacs-projectile-bookmark and fzf
+function jj() {
+    local data=$(cat ~/.emacs.d/projectile-bookmarks.eld)
+    local dir=$(echo $data | \
+        sed -e 's/^(//' \
+        -e 's/)$//' \
+        -e "s#~#$HOME#g" \
+        -e 's/" "/"\n"/g' \
+        -e 's/"//g' | fzf --exact)
+    [ "$dir" != "" ] && cd "$dir"
 }
 
 # password-store tab complete

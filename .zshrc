@@ -103,6 +103,11 @@ function jj() {
 zle -N jj
 bindkey '^j' jj
 
+function wiki() {
+    local org=$(fd . ~/repos/my/wiki -t f -x basename | sort --reverse | fzf --exact)
+    bat "$HOME/repos/my/wiki/$org"
+}
+
 # password-store tab complete
 autoload -Uz _pass
 # iterm2

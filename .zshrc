@@ -8,6 +8,11 @@ compinit
 HISTFILE=~/.histfile
 HISTSIZE=100000
 SAVEHIST=100000
+# share history for multiple shells
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+# remove command from history if prepended by space
+setopt histignorespace
 # emacs mode
 bindkey -e
 #
@@ -30,9 +35,6 @@ autoload -U colors && colors
 PROMPT='[%F{blue}%n%f@%F{blue}%m%f %F{yellow}%1~%f] '
 RPROMPT=''
 setopt prompt_sp
-
-# remove command from history if prepended by space
-setopt histignorespace
 
 # alias
 alias ...="cd ../.."
@@ -115,6 +117,7 @@ include "$HOME/.iterm2_shell_integration.zsh"
 # fzf
 include "$HOME/.fzf.zsh"
 include "$(fzf-share 2>/dev/null)/key-bindings.zsh"
+export FZF_CTRL_R_OPTS='--exact'
 # autojump
 include "/usr/local/etc/profile.d/autojump.sh"
 include "/run/current-system/sw/share/autojump/autojump.zsh"

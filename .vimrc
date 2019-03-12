@@ -135,6 +135,7 @@ endif
 if has("nvim")
     if hostname() == "tldr.local"
         let g:python3_host_prog = '/usr/local/bin/python3'
+        let g:python2_host_prog = '/usr/local/bin/python2'
     elseif hostname() == "vaio"
         let g:python3_host_prog = '/run/current-system/sw/bin/nvim-python3'
     endif

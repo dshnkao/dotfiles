@@ -1,4 +1,5 @@
 # generated
+TERM=xterm-256color
 zstyle ':completion:*' completer _complete _ignored
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
@@ -125,6 +126,7 @@ include "/run/current-system/sw/share/autojump/autojump.zsh"
 include "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 include "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
+
  # emacs tramp
 if [[ "$TERM" == "dumb" ]]
 then
@@ -135,3 +137,9 @@ then
   unfunction preexec
   PS1='$ '
 fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi

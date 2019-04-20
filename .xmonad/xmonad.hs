@@ -9,7 +9,7 @@ import           Data.Monoid ((<>))
 import           GHC.IO.Handle (Handle)
 import           System.Directory (findExecutable)
 import           System.Exit (exitSuccess)
-import           System.Taffybar.Support.PagerHints (pagerHints)
+-- import           System.Taffybar.Support.PagerHints (pagerHints)
 import           XMonad
 import           XMonad.Actions.CycleWS (prevWS, nextWS, moveTo, Direction1D(..), WSType(..))
 import           XMonad.Actions.SpawnOn (manageSpawn, spawnOn)
@@ -42,7 +42,8 @@ main = do
   -- unify clipboard, need both
   -- spawn "autocutsel -fork"
   -- spawn "autocutsel -selection PRIMARY -fork"
-  xmonad $ ewmh $ docks $ pagerHints $ def
+  -- xmonad $ ewmh $ docks $ pagerHints $ def
+  xmonad $ ewmh $ docks $ def
     { manageHook  = myManageHook
     , layoutHook  = myLayoutHook
     , startupHook = setWMName "LG3D" >> addEWMHFullscreen

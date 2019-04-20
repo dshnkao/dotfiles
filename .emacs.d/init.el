@@ -28,6 +28,7 @@
 (require 'my-haskell)
 (require 'my-ivy)
 (require 'my-latex)
+(require 'my-lsp)
 (require 'my-macos)
 (require 'my-markdown)
 (require 'my-nix)

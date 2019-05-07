@@ -111,6 +111,25 @@ function wiki() {
     bat "$HOME/repos/my/wiki/$org"
 }
 
+function aws-cred() {
+    [ "$1" = "" ] && echo "usage: aws-cred \$profile" && return
+    local profile_name="$1"
+    local profile=$(grep --after-context=2 "^\[$profile_name\]$" ~/.aws/credentials)
+    local key=$(echo "$profile" | grep aws_access_key_id | cut -d' ' -f3)
+    local secret=$(echo "$profile" | grep aws_secret_access_key | cut -d' ' -f3)
+    echo "exporting aws profile \`$profile_name\`"
+    echo AWS_ACCESS_KEY_ID=$key
+    local mask_secret=$(echo $secret | sed 's/.\{35\}$/****************/' )
+    echo AWS_SECRET_ACCESS_KEY=$mask_secret
+    export AWS_ACCESS_KEY_ID=$key
+    export AWS_SECRET_ACCESS_KEY=$secret
+}
+
+function aws-cred-unset() {
+    unset AWS_ACCESS_KEY_ID
+    unset AWS_SECRET_ACCESS_KEY
+}
+
 # password-store tab complete
 autoload -Uz _pass
 # iterm2

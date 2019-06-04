@@ -44,7 +44,7 @@ alias bctl='bluetoothctl'
 alias grep="grep --color=auto"
 alias hibernate='systemctl hibernate'
 alias nrs='sudo nixos-rebuild switch'
-alias passf='pass $(fzf-password-store.sh)'
+alias passf='pass "$(fzf-password-store.sh)"'
 alias r='ranger'
 alias se='sudoedit'
 alias t='tmux'

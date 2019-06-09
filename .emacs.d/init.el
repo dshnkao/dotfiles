@@ -64,7 +64,7 @@
  '(minimap-highlight-line nil)
  '(package-selected-packages
    (quote
-    (evil-terminal-cursor-changer evil-org white-space ensime flycheck-rust racer rust-mode git-timemachine evil-magit magit cider pdf-tools zoom yaml-mode which-key use-package smartparens smart-mode-line rainbow-mode ox-pandoc nix-mode neotree minimap markdown-mode linum-relative google-this general fzf flycheck-haskell evil diff-hl dante counsel-projectile counsel-dash company color-theme-sanityinc-tomorrow buffer-move auctex-latexmk all-the-icons ace-window)))
+    (nix-buffer evil-terminal-cursor-changer evil-org white-space ensime flycheck-rust racer rust-mode git-timemachine evil-magit magit cider pdf-tools zoom yaml-mode which-key use-package smartparens smart-mode-line rainbow-mode ox-pandoc nix-mode neotree minimap markdown-mode linum-relative google-this general fzf flycheck-haskell evil diff-hl dante counsel-projectile counsel-dash company color-theme-sanityinc-tomorrow buffer-move auctex-latexmk all-the-icons ace-window)))
  '(safe-local-variable-values
    (quote
     ((dante-target . "lib:bowling")

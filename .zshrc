@@ -111,6 +111,10 @@ function wiki() {
     bat "$HOME/repos/my/wiki/$org"
 }
 
+function op-signin() {
+    eval $(op signin "$1")
+}
+
 function aws-cred() {
     [ "$1" = "" ] && echo "usage: aws-cred \$profile" && return
     local profile_name="$1"

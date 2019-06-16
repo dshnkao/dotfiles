@@ -12,7 +12,8 @@
    "em"   'org-pandoc-export-as-gfm
    "ep"   'org-pandoc-export-as-plain
    "eh"   'org-pandoc-export-as-html5
-   "ti"   'org-toggle-inline-images)
+   "ti"   'org-toggle-inline-images
+   "tl"   'org-toggle-link-display)
   :config
   (setq org-agenda-window-setup "only-window")
   (setq org-src-fontify-natively t)

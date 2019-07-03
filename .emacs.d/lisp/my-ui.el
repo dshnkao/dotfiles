@@ -52,8 +52,9 @@
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 
-(add-to-list 'default-frame-alist
-             '(font . "Dejavu Sans Mono-11"))
-
+;; set font on linux
+(when (eq system-type 'gnu/linux)
+  (add-to-list 'default-frame-alist
+               '(font . "Dejavu Sans Mono-11")))
 
 (provide 'my-ui)

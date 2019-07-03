@@ -90,10 +90,10 @@ myKeys myTerm =
   , ((mod4Mask .|. shiftMask,   xK_i            ), spawn "carbon-edp.sh")
   , ((mod4Mask .|. shiftMask,   xK_e            ), spawn "carbon-hdmi.sh")
   , ((mod4Mask .|. shiftMask,   xK_y            ), io exitSuccess)
-  , ((mod4Mask,                 xK_y            ), spawn $ killBar <> restartXMonad)
+  , ((mod4Mask,                 xK_y            ), spawn $ killBar <> restartXMonad <> runBar)
   , ((mod4Mask .|. controlMask, xK_q            ), spawn "slock")
   , ((mod4Mask .|. shiftMask,   xK_q            ), io exitSuccess)
-  , ((mod4Mask,                 xK_q            ), spawn $ killBar <> restartXMonad)
+  , ((mod4Mask,                 xK_q            ), spawn $ killBar <> restartXMonad <> runBar)
   , ((mod4Mask,                 xK_u            ), spawn firefox)
   , ((mod4Mask,                 xK_p            ), spawn "rofi -show run -matching fuzzy")
   , ((mod4Mask,                 xK_w            ), spawn "rofi -show window -matching fuzzy")
@@ -124,6 +124,10 @@ myKeys myTerm =
       Dzen     -> "pkill conky; pkill dzen2;"
       PolyBar  -> "pkill polybar;"
       TaffyBar -> "pkill taffybar;"
+    runBar = case myBar of
+      Dzen     -> ""
+      PolyBar  -> "polybar top"
+      TaffyBar -> ""
 
 data MyBar = TaffyBar | Dzen | PolyBar
 

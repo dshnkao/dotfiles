@@ -35,10 +35,17 @@
     program = gpg
 
 [commit]
-    gpgSign = true
+    gpgSign = false
 
 [status]
     showUntrackedFiles = all
 
 [core]
     excludesfile = ~/.global-gitignore
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[protocol]
+	version = 2

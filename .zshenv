@@ -10,6 +10,7 @@ path=(
     ~/.gem/ruby/2.4.0/bin
     $GOPATH/bin
     /usr/local/bin
+    ~/bin
     $path
 )
 

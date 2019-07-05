@@ -148,7 +148,8 @@ include "/run/current-system/sw/share/autojump/autojump.zsh"
 # zsh syntax highlighting
 include "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 include "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-
+# profile
+include "$HOME/.profile"
 
  # emacs tramp
 if [[ "$TERM" == "dumb" ]]
@@ -166,3 +167,4 @@ if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/
 
 # The next line enables shell command completion for gcloud.
 if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
+

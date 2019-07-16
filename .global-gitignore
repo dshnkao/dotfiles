@@ -6,3 +6,4 @@ dk.org
 .ensime
 typescript
 .dir-locals.el
+.ignore

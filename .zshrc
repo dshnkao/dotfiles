@@ -50,7 +50,7 @@ alias se='sudoedit'
 alias t='tmux'
 alias vi="nvim"
 alias vt='nvim -c terminal -u ~/.vimrc-term'
-alias lx='exa --group-directories-first --git --sort=extension'
+alias lx='exa --group-directories-first --sort=extension'
 alias l='lx -l'
 alias ll='lx -al'
 alias f="firefox-open.sh ${FIREFOX_DB} "fzf --no-sort --exact""

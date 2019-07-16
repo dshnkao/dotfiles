@@ -105,6 +105,7 @@
  '(mode-line ((t (:background "firebrick4" :foreground "#c5c8c6" :inverse-video nil :box (:line-width 1 :color "#373b41") :weight normal))))
  '(mode-line-buffer-id ((t (:foreground "gainsboro"))))
  '(mode-line-highlight ((t (:foreground "white" :box nil :weight bold))))
+ '(org-block ((t (:inherit shadow :background "#15ed177018f4" :foreground "snow"))))
  '(whitespace-newline ((t (:background "gray15" :foreground "#969896"))))
  '(whitespace-space ((t (:background "gray15" :foreground "#969896"))))
  '(whitespace-tab ((t (:background "gray15" :foreground "#969896"))))

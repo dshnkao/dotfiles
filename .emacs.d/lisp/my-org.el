@@ -15,8 +15,12 @@
    "ti"   'org-toggle-inline-images
    "tl"   'org-toggle-link-display)
   :config
+  (set-face-attribute 'org-block nil :background (color-darken-name (face-attribute 'default :background) 3))
   (setq org-agenda-window-setup "only-window")
   (setq org-src-fontify-natively t)
+  (setq org-src-tab-acts-natively t)
+  (setq org-confirm-babel-evaluate nil)
+  (setq org-edit-src-content-indentation 0)
   (setq org-agenda-span 14)
   (setq org-log-done 'time)
   (setq org-agenda-todo-ignore-with-date 1)

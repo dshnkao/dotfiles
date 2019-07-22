@@ -106,9 +106,10 @@ function jj() {
 zle -N jj
 bindkey '^j' jj
 
+WIKI_LOC="$HOME/repos/my/wiki"
 function wiki() {
-    local org=$(fd . ~/repos/my/wiki -t f -x basename | sort --reverse | fzf --exact)
-    bat "$HOME/repos/my/wiki/$org"
+    local org=$(fd . "$WIKI_LOC" -t f -x basename | sort --reverse | fzf --exact)
+    bat "$WIKI_LOC/$org"
 }
 
 function op-signin() {

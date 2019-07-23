@@ -76,7 +76,7 @@ tray-background = ${root.background}
 [bar/top]
 inherit = bar/base
 monitor = ${env:MONITOR:eDP-1}
-monitor-fallback = ${env:MONITOR:HDMI-1}
+monitor-fallback = ${env:MONITOR:DP-1}
 
 modules-left = xmonad
 modules-center =

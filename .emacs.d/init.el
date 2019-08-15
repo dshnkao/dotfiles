@@ -106,6 +106,8 @@
  '(mode-line-buffer-id ((t (:foreground "gainsboro"))))
  '(mode-line-highlight ((t (:foreground "white" :box nil :weight bold))))
  '(org-block ((t (:inherit shadow :background "#15ed177018f4" :foreground "gainsboro"))))
+ '(org-block-begin-line ((t (:background "#373b41" :foreground "#969896" :underline nil :slant italic))))
+ '(org-block-end-line ((t (:background "#373b41" :foreground "#969896" :overline nil :slant italic))))
  '(whitespace-newline ((t (:background "gray15" :foreground "#969896"))))
  '(whitespace-space ((t (:background "gray15" :foreground "#969896"))))
  '(whitespace-tab ((t (:background "gray15" :foreground "#969896"))))

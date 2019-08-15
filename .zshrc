@@ -67,6 +67,7 @@ case $(uname) in
       alias ecg="emacsclient -nc"
       alias xc="xclip -select c"
       alias ecga='emacsclient -t --eval "(org-agenda-list)" "(delete-other-windows)"'
+      alias fzfcp="fzf --print0 | xclip -select c"
       ;;
   'Darwin')
       alias ls="gls -X --color"
@@ -75,6 +76,7 @@ case $(uname) in
       alias edm="/usr/local/opt/emacs-mac/bin/emacs --daemon"
       alias ecg="/usr/local/opt/emacs-mac/bin/emacsclient -nc"
       alias ect="/usr/local/opt/emacs-mac/bin/emacsclient -nw"
+      alias fzfcp="fzf --print0 | pbcopy"
       ;;
 esac
 
@@ -133,6 +135,12 @@ function aws-cred() {
 function aws-cred-unset() {
     unset AWS_ACCESS_KEY_ID
     unset AWS_SECRET_ACCESS_KEY
+}
+
+function cdp() {
+    local dir=$(cat)
+    [ "$dir" != "" ] && cd "$dir"
+    zle reset-prompt &> /dev/null
 }
 
 # password-store tab complete

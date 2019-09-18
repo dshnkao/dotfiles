@@ -13,7 +13,8 @@
    "ep"   'org-pandoc-export-as-plain
    "eh"   'org-pandoc-export-as-html5
    "ti"   'org-toggle-inline-images
-   "tl"   'org-toggle-link-display)
+   "tl"   'org-toggle-link-display
+   "ta"   'outline-show-all)
   :config
   (set-face-attribute 'org-block nil :background (color-darken-name (face-attribute 'default :background) 3))
   (setq org-agenda-window-setup "only-window")

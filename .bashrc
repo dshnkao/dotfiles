@@ -58,3 +58,5 @@ include() {
 
 include "$HOME/.carbon.env"
 include "$HOME/.tldr.env"
+
+source /home/dennis/.config/broot/launcher/bash/br

@@ -85,7 +85,7 @@ modules-right = wifi tun0 cpu memory battery date
 [bar/bottom]
 inherit = bar/base
 bottom = true
-monitor = ${env:MONITOR:eDP1}
+monitor = ${env:MONITOR:eDP-1}
 monitor-fallback = ${env:MONITOR:HDMI1}
 
 modules-left =

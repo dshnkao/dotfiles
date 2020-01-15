@@ -147,6 +147,10 @@ function cdp() {
 autoload -Uz _pass
 # iterm2
 include "$HOME/.iterm2_shell_integration.zsh"
+# readline key bindings, not supported by zsh
+# and iterm2 maps, which prints annoying characters
+bindkey "^[[1;5D" backward-word 
+bindkey "^[[1;5C" forward-word
 # fzf
 include "$HOME/.fzf.zsh"
 include "$(fzf-share 2>/dev/null)/key-bindings.zsh"
@@ -176,6 +180,3 @@ if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/
 
 # The next line enables shell command completion for gcloud.
 if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
-
-
-source /home/dennis/.config/broot/launcher/bash/br

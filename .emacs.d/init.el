@@ -50,22 +50,21 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
- '(ansi-color-names-vector
-   (vector "#373b41" "#cc6666" "#b5bd68" "#f0c674" "#81a2be" "#b294bb" "#8abeb7" "#c5c8c6"))
  '(beacon-color "#cc6666")
  '(custom-safe-themes
    (quote
-    ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
+    ("ae65ccecdcc9eb29ec29172e1bfb6cadbe68108e1c0334f3ae52414097c501d2" "4cf9ed30ea575fb0ca3cff6ef34b1b87192965245776afa9e9e20c17d115f3fb" "939ea070fb0141cd035608b2baabc4bd50d8ecc86af8528df9d41f4d83664c6a" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
  '(dante-load-flags
    (quote
     ("+c" "-fdefer-typed-holes" "-fno-diagnostics-show-caret")))
  '(fci-rule-color "#373b41")
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
+ '(frame-background-mode (quote dark))
  '(inhibit-startup-screen t)
  '(minimap-highlight-line nil)
  '(package-selected-packages
    (quote
-    (terraform-mode nix-buffer evil-terminal-cursor-changer evil-org white-space ensime flycheck-rust racer rust-mode git-timemachine evil-magit magit cider pdf-tools zoom yaml-mode which-key use-package smartparens smart-mode-line rainbow-mode ox-pandoc nix-mode neotree minimap markdown-mode linum-relative google-this general fzf flycheck-haskell evil diff-hl dante counsel-projectile counsel-dash company color-theme-sanityinc-tomorrow buffer-move auctex-latexmk all-the-icons ace-window)))
+    (moe-theme gruvbox-theme terraform-mode nix-buffer evil-terminal-cursor-changer evil-org white-space ensime flycheck-rust racer rust-mode git-timemachine evil-magit magit cider pdf-tools zoom yaml-mode which-key use-package smartparens smart-mode-line rainbow-mode ox-pandoc nix-mode neotree minimap markdown-mode linum-relative google-this general fzf flycheck-haskell evil diff-hl dante counsel-projectile counsel-dash company color-theme-sanityinc-tomorrow buffer-move auctex-latexmk all-the-icons ace-window)))
  '(safe-local-variable-values
    (quote
     ((dante-target . "lib:bowling")
@@ -94,22 +93,15 @@
      (340 . "#f0c674")
      (360 . "#b5bd68"))))
  '(vc-annotate-very-old-color nil)
+ '(window-divider-mode nil)
  '(zoom-size (quote (0.618 . 0.618))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(cursor ((t (:background "IndianRed4"))))
  '(minimap-active-region-background ((t (:background "gray0"))))
- '(mode-line ((t (:background "firebrick4" :foreground "#c5c8c6" :inverse-video nil :box (:line-width 1 :color "#373b41") :weight normal))))
- '(mode-line-buffer-id ((t (:foreground "gainsboro"))))
  '(mode-line-highlight ((t (:foreground "white" :box nil :weight bold))))
- '(org-block ((t (:inherit shadow :background "#15ed177018f4" :foreground "gainsboro"))))
- '(org-block-begin-line ((t (:background "#373b41" :foreground "#969896" :underline nil :slant italic))))
- '(org-block-end-line ((t (:background "#373b41" :foreground "#969896" :overline nil :slant italic))))
- '(whitespace-newline ((t (:background "gray15" :foreground "#969896"))))
- '(whitespace-space ((t (:background "gray15" :foreground "#969896"))))
- '(whitespace-tab ((t (:background "gray15" :foreground "#969896"))))
- '(whitespace-trailing ((t (:background "gray40" :foreground "#969896")))))
+ '(org-level-1 ((t (:inherit outline-1 :foreground "light coral" :height 1.15))))
+ '(org-level-2 ((t (:inherit outline-2 :foreground "wheat" :height 1.1)))))
 ;;; init.el ends here

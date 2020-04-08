@@ -28,6 +28,7 @@ export LANG=en_US.UTF-8
 # disable gpg gui passphrase
 # export PINENTRY_USER_DATA="USE_CURSES=1"
 export GPG_TTY=$(tty)
+#
 # systemd deletes /run/users/:id/gnpug on logout
 # gpgconf --create-socketdir > /dev/null 2>&1
 
@@ -155,6 +156,7 @@ bindkey "^[[1;5C" forward-word
 include "$HOME/.fzf.zsh"
 include "$(fzf-share 2>/dev/null)/key-bindings.zsh"
 export FZF_CTRL_R_OPTS='--exact'
+export FZF_DEFAULT_COMMAND='fd --type f'
 # autojump
 include "/usr/local/etc/profile.d/autojump.sh"
 include "/run/current-system/sw/share/autojump/autojump.zsh"
@@ -174,9 +176,3 @@ then
   unfunction preexec
   PS1='$ '
 fi
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi

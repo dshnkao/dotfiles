@@ -4,17 +4,19 @@
   (add-hook 'prog-mode-hook 'linum-relative-mode)
   (add-hook 'org-mode-hook 'linum-relative-mode)
   (add-hook 'yaml-mode-hook 'linum-relative-mode)
-  (setq linum-relative-current-symbol ""))
+  (setq linum-relative-current-symbol "")
+  :config
+  (set-face-attribute 'linum-relative-current-face nil :height 110))
 
 (use-package color-theme-sanityinc-tomorrow
-   :ensure t
-   :init
-   :config
-   (load-theme 'sanityinc-tomorrow-night t)
-   (set-face-attribute 'fringe nil :background "#1d1f21")
-   (add-to-list 'default-frame-alist '(left-fringe . 5))
-   (add-to-list 'default-frame-alist '(right-fringe . 5))
-   (set-face-attribute 'linum nil :background "#1d1f21"))
+  :ensure t
+  :init
+  :config
+  (load-theme 'sanityinc-tomorrow-night t)
+  (set-face-attribute 'fringe nil :background "#1d1f21")
+  (add-to-list 'default-frame-alist '(left-fringe . 5))
+  (add-to-list 'default-frame-alist '(right-fringe . 5))
+  (set-face-attribute 'linum nil :background "#1d1f21" :height 110))
 
 (use-package all-the-icons
   :ensure t
